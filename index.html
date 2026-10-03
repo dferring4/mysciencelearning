@@ -903,7 +903,9 @@ function home(){
   <h2 class="sec">Your progress</h2>
   <div class="grid">${Object.entries(DECKS).map(([k,d])=>{const m=mastered(k),t=d.items.length;return `<a class="card deck" href="#cards/${k}" style="--accent:${d.color}"><div class="row sb"><span class="emoji">${d.emoji}</span><span class="pct">${Math.round(m/t*100)}%</span></div><h3>${d.label}</h3><div class="bar"><i style="width:${m/t*100}%"></i></div><div class="sm muted">${m} of ${t} mastered (3 correct in a row)</div></a>`}).join('')}</div>
   <h2 class="sec">Pick a way to study</h2>
-  ${tilesHTML()}`;
+  ${tilesHTML()}
+  <div class="center sec"><button class="linkbtn" id="resetAll">Reset all progress</button></div>`;
+  $('#resetAll').onclick=()=>{if(!confirm('Reset all progress? This clears XP, streak, mastered cards, weak spots, best scores and the exam date. Your pinned images are kept.'))return;Object.assign(S,{srs:{},missed:{},stats:{answered:0,correct:0,xp:0,streak:0,lastDay:null},best:{},daily:{day:null,n:0},examDate:''});FC=null;Q=null;save();home();window.scrollTo(0,0)};
   const ei=$('#examIn');if(ei)ei.addEventListener('change',()=>{S.examDate=ei.value;save();home()});
   const ec=$('#examClr');if(ec)ec.onclick=()=>{S.examDate='';save();home()};
 }
