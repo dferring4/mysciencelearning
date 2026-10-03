@@ -15,7 +15,7 @@
   --bg:#eef3fa;--surface:#ffffff;--surface2:#e6edf7;--text:#1d1b3a;--muted:#5d6280;--line:#d9e2ef;
   --bone:#e0a823;--muscle:#ff4d6d;--nerve:#00a3a3;--mark:#7c4dff;--term:#2f80ed;
   --good:#12a150;--bad:#e5294b;
-  --skBone:#f7ebd2;--skEdge:#a88c5c;--skHover:#ffd76e;--skBg:#dbe8fb;
+  --skBone:#f7ebd2;--skEdge:#a88c5c;--skHover:#ffd76e;--skBg:#dbe8fb;--skin:#f4d6c1;--skinEdge:#c99a7d;--mu1:#e5636f;--mu2:#cf4b5d;--mu3:#f08a8a;--muEdge:#8e2b3a;
   --shadow:0 2px 0 var(--line),0 10px 24px rgba(29,27,58,.07);
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
   color-scheme:light;
@@ -23,12 +23,12 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#12122a;--surface:#1d1d3d;--surface2:#28284f;--text:#f2f1ff;--muted:#a9abcf;--line:#33335e;
   --bone:#f2c14e;--muscle:#ff6b85;--nerve:#2fd0c8;--mark:#a586ff;--term:#62a3ff;--good:#2fcf72;--bad:#ff5c79;
-  --skBone:#f1e3c4;--skEdge:#8a7650;--skHover:#ffd76e;--skBg:#232350;
+  --skBone:#f1e3c4;--skEdge:#8a7650;--skHover:#ffd76e;--skBg:#232350;--skin:#d9b49c;--skinEdge:#9c7660;--mu1:#e5636f;--mu2:#c94458;--mu3:#ef8686;--muEdge:#6e1f2c;
   --shadow:0 2px 0 rgba(0,0,0,.35),0 10px 24px rgba(0,0,0,.3);color-scheme:dark;}}
 :root[data-theme="dark"]{
   --bg:#12122a;--surface:#1d1d3d;--surface2:#28284f;--text:#f2f1ff;--muted:#a9abcf;--line:#33335e;
   --bone:#f2c14e;--muscle:#ff6b85;--nerve:#2fd0c8;--mark:#a586ff;--term:#62a3ff;--good:#2fcf72;--bad:#ff5c79;
-  --skBone:#f1e3c4;--skEdge:#8a7650;--skHover:#ffd76e;--skBg:#232350;
+  --skBone:#f1e3c4;--skEdge:#8a7650;--skHover:#ffd76e;--skBg:#232350;--skin:#d9b49c;--skinEdge:#9c7660;--mu1:#e5636f;--mu2:#c94458;--mu3:#ef8686;--muEdge:#6e1f2c;
   --shadow:0 2px 0 rgba(0,0,0,.35),0 10px 24px rgba(0,0,0,.3);color-scheme:dark;}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:border-box}
@@ -226,6 +226,38 @@ details.acc[open] summary::after{content:"–"}
 .trick{border-top:8px solid var(--accent)}
 .trick .mn{font-size:1.3rem;font-weight:600;color:var(--accent);margin:4px 0 8px;line-height:1.2}
 
+.dg .bn{fill:var(--skBone);stroke:var(--skEdge);stroke-width:1.6;stroke-linejoin:round}
+.dg .bn2{fill:color-mix(in srgb,var(--skBone) 78%,var(--skEdge));stroke:var(--skEdge);stroke-width:1.2}
+.dg .ln{fill:none;stroke:var(--skEdge);stroke-width:1.6;stroke-linecap:round}
+.dg .dash{stroke-dasharray:4 4}
+.dg .dc{fill:var(--skBg);stroke:var(--skEdge);stroke-width:1.4}
+.dg .rough{fill:var(--skEdge);opacity:.35}
+.dg .skin{fill:var(--skin);stroke:var(--skinEdge);stroke-width:1.4}
+.dg .mu{fill:var(--mu1);stroke:var(--muEdge);stroke-width:1.2;stroke-linejoin:round}
+.dg .mu2{fill:var(--mu2);stroke:var(--muEdge);stroke-width:1.2;stroke-linejoin:round}
+.dg .mu3{fill:var(--mu3);stroke:var(--muEdge);stroke-width:1.2;stroke-linejoin:round}
+.dg.skel .ln{stroke:var(--skBone);fill:none}
+.stage{position:relative;margin:0 auto;background:var(--skBg);border-radius:18px;overflow:hidden;border:2px solid var(--line);width:100%}
+.stage>svg,.stage>img{display:block;width:100%;height:100%;object-fit:contain;-webkit-user-select:none;user-select:none}
+.pin{position:absolute;transform:translate(-50%,-50%);min-width:24px;height:24px;padding:0 5px;border-radius:999px;background:var(--bone);border:2.5px solid #1d1b3a;color:#1d1b3a;font:800 .74rem/1 Nunito,sans-serif;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:2}
+.pin.sel{background:var(--term);color:#fff}
+.pin.dot{min-width:12px;width:12px;height:12px;padding:0;border-width:2px;cursor:default}
+.pin.active{min-width:18px;width:18px;height:18px;padding:0;background:var(--muscle);border:3px solid #fff;box-shadow:0 0 0 2.5px #1d1b3a,0 3px 10px rgba(0,0,0,.5);cursor:default}
+.pin.active::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:3px solid var(--muscle);animation:ping 1.5s ease-out infinite}
+.pin.still::after{display:none}
+@keyframes ping{from{transform:scale(.3);opacity:1}to{transform:scale(1.3);opacity:0}}
+.plab{position:absolute;left:calc(100% + 6px);top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--text);color:var(--bg);font:700 .78rem/1.3 Nunito,sans-serif;padding:3px 8px;border-radius:8px;pointer-events:none}
+.plab.l{left:auto;right:calc(100% + 6px)}
+.station{display:grid;gap:14px;margin-top:12px}
+@media(min-width:820px){.station{grid-template-columns:1.15fr 1fr;align-items:start}}
+.ans{width:100%;font:inherit;font-size:1.12rem;font-weight:700;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--text)}
+.ans:focus{border-color:var(--term);outline:none}
+.ans:disabled{opacity:.7}
+.res{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;margin-top:10px;align-items:start}
+.st-ok{color:var(--good)}.st-close{color:var(--bone)}.st-miss{color:var(--bad)}
+.thumbgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.thumbgrid .stage{max-width:100%!important}
+.optl{cursor:pointer}.optl input{width:22px;height:22px;flex:none;accent-color:var(--muscle)}
 /* ---------- confetti ---------- */
 .cf{position:fixed;top:-16px;width:9px;height:14px;border-radius:2px;z-index:99;pointer-events:none;animation:fall 2s ease-in forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
@@ -236,7 +268,7 @@ details.acc[open] summary::after{content:"–"}
 <header class="topbar">
   <a class="brand" href="#home"><span class="logo" aria-hidden="true">🦴</span>Bone Up!</a>
   <nav class="topnav" aria-label="Main">
-    <a data-nav="home" href="#home">Home</a><a data-nav="learn" href="#learn">Study</a><a data-nav="map" href="#map">Skeleton</a><a data-nav="cards" href="#cards">Flashcards</a><a data-nav="games" href="#games">Games</a>
+    <a data-nav="home" href="#home">Home</a><a data-nav="learn" href="#learn">Study</a><a data-nav="lab" href="#lab">Practical</a><a data-nav="cards" href="#cards">Flashcards</a><a data-nav="games" href="#games">Games</a>
   </nav>
   <button class="iconbtn" id="themeBtn" aria-label="Switch light or dark mode">🌓</button>
 </header>
@@ -244,7 +276,7 @@ details.acc[open] summary::after{content:"–"}
 <nav class="tabbar" aria-label="Main">
   <a data-nav="home" href="#home"><span>🏠</span>Home</a>
   <a data-nav="learn" href="#learn"><span>📚</span>Study</a>
-  <a data-nav="map" href="#map"><span>💀</span>Skeleton</a>
+  <a data-nav="lab" href="#lab"><span>📌</span>Practical</a>
   <a data-nav="cards" href="#cards"><span>🃏</span>Cards</a>
   <a data-nav="games" href="#games"><span>🎮</span>Games</a>
 </nav>
@@ -634,6 +666,87 @@ const HOWTO = [
 ["Teach it to Dad","Explaining a muscle's origin, insertion, action and nerve out loud to someone else is one of the fastest ways to find the gaps."],
 ["Sleep on it","Memories lock in while you sleep. A good night before the exam beats an all-nighter."],
 ];
+/* ===================== PIN DIAGRAMS ===================== */
+// pin: [x, y, answer, deck, referenceName, extraAlternates]
+const mirrorPath=(d,W)=>d.replace(/(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)/g,(m,x,y)=>`${W-x} ${y}`);
+
+const HUM='M70 95 C66 70 78 50 100 48 C112 30 150 28 164 56 C176 80 160 108 140 114 C130 118 124 122 120 130 L118 300 C118 380 124 440 150 470 C160 480 166 492 162 505 C158 520 146 528 134 530 L76 530 C62 528 54 518 56 505 C58 492 66 484 72 474 C84 450 86 400 84 300 L82 140 C80 120 72 110 70 95 Z';
+const FEM='M58 64 C58 44 80 36 94 48 L100 64 L150 78 L160 96 C150 108 138 112 132 124 C140 130 146 140 140 150 C134 156 126 154 122 150 L122 180 C122 330 130 470 150 540 C166 552 176 572 170 592 C164 610 146 614 132 608 C126 604 120 604 114 608 L110 608 C102 614 84 612 74 600 C64 584 66 560 80 546 C92 480 92 330 84 180 C80 140 64 120 58 100 Z';
+
+const DIAGRAMS=[
+{id:'humerus-ant',kind:'bone',title:'Humerus, anterior view',sub:'Right humerus seen from the front. Lateral is on your left.',w:220,h:560,ctx:['humerus','humeral'],
+ svg:()=>`<path class="bn" d="${HUM}"/>
+ <path class="ln" d="M104 54 C118 80 132 100 146 112"/><path class="ln" d="M98 66 C100 90 102 110 104 140"/>
+ <ellipse class="bn2" cx="114" cy="100" rx="8" ry="11"/><ellipse class="rough" cx="86" cy="250" rx="5" ry="24"/>
+ <ellipse class="dc" cx="120" cy="486" rx="10" ry="8"/><ellipse class="dc" cx="90" cy="490" rx="7" ry="6"/>
+ <circle class="bn2" cx="90" cy="516" r="13"/><path class="bn2" d="M106 506 C104 520 108 530 120 530 C132 530 136 520 134 506 C128 512 112 512 106 506 Z"/>`,
+ pins:[[148,66,'Head of humerus','marks','Head of humerus'],[142,108,'Anatomical neck','marks','Anatomical neck'],[80,80,'Greater tubercle','marks','Greater tubercle'],[114,100,'Lesser tubercle','marks','Lesser tubercle'],[102,124,'Intertubercular sulcus','marks','Intertubercular sulcus'],[100,165,'Surgical neck','marks','Surgical neck'],[86,250,'Deltoid tuberosity','marks','Deltoid tuberosity'],[60,503,'Lateral epicondyle','marks','Lateral epicondyle of humerus'],[160,500,'Medial epicondyle','marks','Medial epicondyle of humerus'],[90,518,'Capitulum','marks','Capitulum'],[120,520,'Trochlea','marks','Trochlea'],[120,486,'Coronoid fossa','marks','Coronoid fossa']]},
+{id:'humerus-post',kind:'bone',title:'Humerus, posterior view',sub:'Right humerus seen from behind. Lateral is on your right.',w:220,h:560,ctx:['humerus','humeral'],
+ svg:()=>`<path class="bn" d="${mirrorPath(HUM,220)}"/>
+ <path class="ln" d="M116 54 C102 80 88 100 74 112"/><path class="ln dash" d="M92 190 C110 240 130 290 146 330"/>
+ <ellipse class="dc" cx="108" cy="490" rx="17" ry="15"/>`,
+ pins:[[72,66,'Head of humerus','marks','Head of humerus'],[78,108,'Anatomical neck','marks','Anatomical neck'],[140,80,'Greater tubercle','marks','Greater tubercle'],[118,165,'Surgical neck','marks','Surgical neck'],[118,258,'Radial groove','marks','Radial groove'],[108,490,'Olecranon fossa','marks','Olecranon fossa'],[60,500,'Medial epicondyle','marks','Medial epicondyle of humerus'],[160,503,'Lateral epicondyle','marks','Lateral epicondyle of humerus']]},
+{id:'femur-ant',kind:'bone',title:'Femur, anterior view',sub:'Right femur seen from the front. Medial is on your right.',w:240,h:640,ctx:['femur','femoral'],
+ svg:()=>`<path class="bn" d="${FEM}"/><circle class="bn" cx="170" cy="62" r="28"/>
+ <path class="ln dash" d="M100 70 C110 100 122 130 128 150"/><ellipse class="bn2" cx="116" cy="584" rx="18" ry="14"/><circle class="bn2" cx="156" cy="530" r="5"/>`,
+ pins:[[170,64,'Head of femur','marks','Head of femur'],[132,86,'Neck of femur','marks','Neck of femur'],[72,52,'Greater trochanter','marks','Greater trochanter'],[140,138,'Lesser trochanter','marks','Lesser trochanter'],[112,112,'Intertrochanteric line','marks','Intertrochanteric line'],[116,584,'Patellar surface','marks','Patellar surface'],[160,590,'Medial condyle','marks','Medial and lateral condyles of femur',['medial femoral condyle']],[82,592,'Lateral condyle','marks','Medial and lateral condyles of femur',['lateral femoral condyle']],[166,562,'Medial epicondyle','marks','Medial and lateral epicondyles of femur'],[156,528,'Adductor tubercle','marks','Adductor tubercle']]},
+{id:'femur-post',kind:'bone',title:'Femur, posterior view',sub:'Right femur seen from behind. Medial is on your left.',w:240,h:640,ctx:['femur','femoral'],
+ svg:()=>`<path class="bn" d="${mirrorPath(FEM,240)}"/><circle class="bn" cx="70" cy="62" r="28"/><circle class="dc" cx="60" cy="58" r="4"/>
+ <path class="ln" d="M166 66 C150 100 120 120 104 136" stroke-width="4"/><ellipse class="rough" cx="160" cy="175" rx="5" ry="20"/>
+ <path class="ln" d="M134 200 C132 330 132 420 126 480"/><path class="ln" d="M142 200 C144 330 146 420 154 480"/><ellipse class="dc" cx="118" cy="594" rx="12" ry="16"/>`,
+ pins:[[74,70,'Head of femur','marks','Head of femur'],[60,58,'Fovea capitis','marks','Fovea capitis'],[168,52,'Greater trochanter','marks','Greater trochanter'],[100,138,'Lesser trochanter','marks','Lesser trochanter'],[140,102,'Intertrochanteric crest','marks','Intertrochanteric crest'],[160,175,'Gluteal tuberosity','marks','Gluteal tuberosity'],[138,320,'Linea aspera','marks','Linea aspera'],[118,592,'Intercondylar fossa','marks','Intercondylar fossa'],[80,592,'Medial condyle','marks','Medial and lateral condyles of femur',['medial femoral condyle']],[160,594,'Lateral condyle','marks','Medial and lateral condyles of femur',['lateral femoral condyle']]]},
+{id:'scapula-post',kind:'bone',title:'Scapula, posterior view',sub:'Right scapula seen from behind. Lateral is on your right.',w:260,h:360,ctx:['scapula','scapular'],
+ svg:()=>`<path class="bn" d="M178 76 C186 56 206 48 222 54 C226 58 222 64 214 64 C202 64 194 72 190 82 Z"/>
+ <path class="bn" d="M60 60 L150 66 L160 76 L170 70 C182 72 188 80 198 86 C212 90 218 102 214 116 C208 132 198 142 192 160 L120 330 C114 344 100 344 96 330 L58 90 Z"/>
+ <path class="bn2" d="M62 136 L200 72 L246 56 C254 58 254 70 246 78 L206 92 L68 150 Z"/><ellipse class="ln" cx="214" cy="110" rx="5" ry="15"/>`,
+ pins:[[110,92,'Supraspinous fossa','marks','Supraspinous fossa'],[125,215,'Infraspinous fossa','marks','Infraspinous fossa'],[140,106,'Spine of scapula','marks','Spine of scapula'],[240,66,'Acromion','marks','Acromion'],[80,220,'Medial border','marks','Medial (vertebral) border'],[154,250,'Lateral border','marks','Lateral (axillary) border'],[106,334,'Inferior angle','marks','Inferior angle'],[62,64,'Superior angle',null,null],[214,112,'Glenoid cavity','marks','Glenoid cavity'],[212,56,'Coracoid process','marks','Coracoid process'],[160,72,'Suprascapular notch','marks','Suprascapular notch']]},
+{id:'coxae-lat',kind:'bone',title:'Os coxae, lateral view',sub:'Right hip bone seen from the side. Anterior is on your right.',w:280,h:380,ctx:['os','coxae','hip','coxal'],
+ svg:()=>`<path class="bn" d="M60 150 C50 90 100 40 170 40 C210 42 236 70 232 104 L222 120 L226 136 C222 160 214 174 206 186 L252 236 C258 244 258 262 252 272 L204 300 L152 330 C132 350 104 348 100 328 C96 300 92 274 94 250 L78 238 L90 226 C108 212 96 182 66 172 Z"/>
+ <circle class="bn2" cx="160" cy="200" r="32"/><circle class="dc" cx="160" cy="204" r="14"/><ellipse class="dc" cx="198" cy="262" rx="24" ry="17"/>
+ <path class="ln dash" d="M120 120 C140 150 150 165 155 170"/>`,
+ pins:[[140,46,'Iliac crest','marks','Iliac crest'],[232,102,'Anterior superior iliac spine','marks','Anterior superior iliac spine (ASIS)',['asis']],[226,138,'Anterior inferior iliac spine','marks','Anterior inferior iliac spine (AIIS)',['aiis']],[56,120,'Posterior superior iliac spine','marks','Posterior superior iliac spine (PSIS)',['psis']],[86,196,'Greater sciatic notch','marks','Greater sciatic notch'],[80,236,'Ischial spine','marks','Ischial spine'],[112,336,'Ischial tuberosity','marks','Ischial tuberosity'],[160,190,'Acetabulum','marks','Acetabulum'],[198,262,'Obturator foramen','marks','Obturator foramen'],[228,234,'Superior pubic ramus','marks','Superior pubic ramus'],[226,288,'Inferior pubic ramus','marks','Inferior pubic ramus'],[160,322,'Ischial ramus','marks','Ischial ramus'],[140,90,'Ilium','bones','Ilium'],[125,300,'Ischium','bones','Ischium'],[244,252,'Pubis','bones','Pubis']]},
+{id:'skull-lat',kind:'bone',title:'Skull, lateral view',sub:'Right side of the skull. The face is on your right.',w:320,h:380,ctx:['skull'],
+ svg:()=>`<path class="bn" d="M66 200 C40 120 90 40 175 38 C245 38 285 85 283 150 C282 168 276 180 272 186 L292 232 L276 238 L282 268 C280 280 270 288 258 288 L214 286 C206 270 196 258 186 250 L160 250 C150 262 140 268 128 266 C110 262 92 250 80 236 C72 226 68 214 66 200 Z"/>
+ <path class="bn" d="M258 292 C270 300 272 322 262 336 C250 352 220 354 196 348 L162 340 C150 336 146 326 148 316 L156 262 L168 258 L176 268 L182 294 L194 262 L204 266 L206 292 C224 294 242 293 258 292 Z"/>
+ <ellipse class="dc" cx="250" cy="190" rx="20" ry="22"/>
+ <path class="bn2" d="M232 222 C210 226 186 228 168 232 L170 242 C190 240 214 238 236 236 Z"/><path class="bn2" d="M232 206 C246 212 256 226 252 242 L234 240 Z"/>
+ <path class="ln" d="M206 214 C214 200 228 198 236 206 L232 222 C222 226 212 224 206 214 Z"/>
+ <circle class="dc" cx="150" cy="236" r="8"/><path class="bn2" d="M128 252 C128 270 140 280 148 264 Z"/><line x1="160" y1="254" x2="172" y2="298" class="ln" stroke-width="3"/>
+ <path class="ln dash" d="M196 42 C204 100 200 160 206 214"/><path class="ln dash" d="M112 214 C130 176 180 168 214 210"/><path class="ln dash" d="M98 70 C84 110 74 160 78 214"/>
+ <path class="ln" d="M272 186 L276 200 L292 232"/>`,
+ pins:[[236,96,'Frontal bone','bones','Frontal'],[140,90,'Parietal bone','bones','Parietal'],[74,180,'Occipital bone','bones','Occipital'],[180,206,'Temporal bone','bones','Temporal'],[221,212,'Sphenoid bone','bones','Sphenoid',['greater wing of sphenoid']],[244,228,'Zygomatic bone','bones','Zygomatic'],[196,234,'Zygomatic arch','marks','Zygomatic process',['zygomatic process']],[284,216,'Nasal bone','bones','Nasal'],[268,262,'Maxilla','bones','Maxilla'],[232,342,'Mandible','bones','Mandible'],[166,302,'Ramus of mandible','marks','Ramus of mandible'],[162,258,'Mandibular condyle','marks','Mandibular condyle'],[198,270,'Coronoid process','marks','Coronoid process (mandible)'],[136,266,'Mastoid process','marks','Mastoid process'],[150,236,'External acoustic meatus','marks','External acoustic meatus'],[168,286,'Styloid process','marks','Styloid process (temporal)'],[201,120,'Coronal suture','marks','Coronal suture'],[150,180,'Squamous suture','marks','Squamous suture'],[84,130,'Lambdoid suture','marks','Lambdoid suture']]},
+{id:'vertebra-sup',kind:'bone',title:'Typical vertebra, superior view',sub:'Looking down on a vertebra. Anterior (the body) is at the top.',w:300,h:310,ctx:['vertebra','vertebral'],
+ svg:()=>`<path class="bn" d="M110 125 L95 160 L40 165 C30 170 32 190 44 192 L100 192 L130 230 L140 288 C145 296 155 296 160 288 L170 230 L200 192 L256 192 C268 190 270 170 260 165 L205 160 L190 125 Z"/>
+ <ellipse class="bn" cx="150" cy="86" rx="62" ry="52"/><ellipse class="dc" cx="150" cy="178" rx="27" ry="23"/>
+ <ellipse class="bn2" cx="114" cy="170" rx="9" ry="7"/><ellipse class="bn2" cx="186" cy="170" rx="9" ry="7"/>`,
+ pins:[[150,80,'Vertebral body','marks','Vertebral body',['body']],[150,180,'Vertebral foramen','marks','Vertebral foramen'],[104,148,'Pedicle','marks','Pedicle'],[126,212,'Lamina','marks','Lamina'],[150,268,'Spinous process','marks','Spinous process'],[48,178,'Transverse process','marks','Transverse process'],[186,170,'Superior articular process','marks','Superior and inferior articular processes',['superior articular facet']]]},
+{id:'muscles-front',kind:'muscle',title:'Superficial muscles, anterior view',sub:'Front of the body. The figure\'s right side is on your left.',w:300,h:640,ctx:['muscle'],
+ svg:()=>{const L=x=>x,R=x=>300-x;let s=`<ellipse class="skin" cx="150" cy="50" rx="28" ry="34"/><rect class="skin" x="136" y="78" width="28" height="32"/><path class="skin" d="M136 104 L164 104 C190 110 212 116 216 130 L206 190 C204 230 200 260 204 300 L196 320 L104 320 L96 300 C100 260 96 230 94 190 L84 130 C88 116 110 110 136 104 Z"/>`;
+  const P=(f,d)=>d.replace(/(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)/g,(m,x,y)=>`${f(+x)} ${y}`);
+  for(const f of [L,R]){s+=`<path class="skin" d="${P(f,'M86 124 C70 128 64 150 66 180 L68 250 C64 290 60 330 62 362 L80 362 C84 330 90 290 92 252 L98 190 Z')}"/><ellipse class="skin" cx="${f(70)}" cy="384" rx="11" ry="22"/><path class="skin" d="${P(f,'M100 316 C96 360 98 410 106 452 C102 500 108 550 114 592 L134 592 C138 550 144 500 140 452 C146 410 150 360 150 320 Z')}"/><ellipse class="skin" cx="${f(122)}" cy="606" rx="16" ry="8"/>`;
+   const mu=(c,d)=>`<path class="${c}" d="${P(f,d)}"/>`;
+   s+=mu('mu','M132 80 L139 80 L149 110 L142 112 Z')+mu('mu2','M108 116 C90 112 74 122 70 146 C68 166 74 180 80 190 L90 176 C94 160 100 140 110 128 Z')+mu('mu3','M148 122 L148 176 C130 180 112 176 100 160 L96 146 C104 130 124 122 148 122 Z')
+   +mu('mu2','M98 168 L110 176 L102 184 L112 194 L102 202 L96 196 Z')+mu('mu','M134 182 C120 186 106 196 100 210 C100 250 102 280 112 300 L136 296 C134 260 134 220 134 182 Z')+mu('mu3','M137 180 L149 180 L149 300 L139 300 C137 260 135 220 137 180 Z')
+   +mu('mu','M80 190 C76 210 76 232 80 248 L92 248 C96 230 96 206 92 186 Z')+mu('mu3','M70 252 C64 270 64 290 66 302 L74 302 C78 282 80 264 80 254 Z')
+   +mu('mu2','M104 318 C100 332 100 346 104 358 L112 352 C112 338 110 326 108 318 Z')+mu('mu','M104 342 C98 382 100 420 112 448 L120 444 C114 410 112 372 116 332 Z')+mu('mu3','M120 330 C114 370 116 410 124 438 L134 438 C138 410 138 370 132 330 Z')
+   +mu('mu2','M149 322 L140 330 L138 372 L147 372 Z')+mu('mu','M138 410 C146 420 148 438 140 450 L130 446 C132 432 132 420 138 410 Z')+mu('mu2','M108 312 L116 312 L146 440 L140 450 Z')
+   +mu('mu3','M114 470 C112 510 114 550 120 580 L126 578 C124 550 124 510 124 466 Z')+mu('mu2','M132 466 C142 480 144 510 138 530 L130 526 C132 510 130 490 128 470 Z');}
+  return s;},
+ pins:[[140,96,'Sternocleidomastoid','muscles','Sternocleidomastoid'],[82,150,'Deltoid','muscles','Deltoid'],[124,150,'Pectoralis major','muscles','Pectoralis major'],[86,218,'Biceps brachii','muscles','Biceps brachii'],[71,278,'Brachioradialis','muscles','Brachioradialis'],[103,186,'Serratus anterior','muscles','Serratus anterior'],[143,240,'Rectus abdominis','muscles','Rectus abdominis'],[114,250,'External oblique','muscles','External oblique'],[106,338,'Tensor fasciae latae','muscles','Tensor fasciae latae'],[122,356,'Sartorius','muscles','Sartorius'],[122,402,'Rectus femoris','muscles','Rectus femoris'],[107,404,'Vastus lateralis','muscles','Vastus lateralis'],[133,442,'Vastus medialis','muscles','Vastus medialis'],[144,350,'Adductor longus','muscles','Adductor longus'],[119,522,'Tibialis anterior','muscles','Tibialis anterior'],[136,498,'Gastrocnemius','muscles','Gastrocnemius']]},
+{id:'muscles-back',kind:'muscle',title:'Superficial muscles, posterior view',sub:'Back of the body. The figure\'s left side is on your left.',w:300,h:640,ctx:['muscle'],
+ svg:()=>{const L=x=>x,R=x=>300-x;let s=`<ellipse class="skin" cx="150" cy="50" rx="28" ry="34"/><rect class="skin" x="136" y="78" width="28" height="32"/><path class="skin" d="M136 104 L164 104 C190 110 212 116 216 130 L206 190 C204 230 200 260 204 300 L196 320 L104 320 L96 300 C100 260 96 230 94 190 L84 130 C88 116 110 110 136 104 Z"/>`;
+  const P=(f,d)=>d.replace(/(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)/g,(m,x,y)=>`${f(+x)} ${y}`);
+  for(const f of [L,R]){s+=`<path class="skin" d="${P(f,'M86 124 C70 128 64 150 66 180 L68 250 C64 290 60 330 62 362 L80 362 C84 330 90 290 92 252 L98 190 Z')}"/><ellipse class="skin" cx="${f(70)}" cy="384" rx="11" ry="22"/><path class="skin" d="${P(f,'M100 316 C96 360 98 410 106 452 C102 500 108 550 114 592 L134 592 C138 550 144 500 140 452 C146 410 150 360 150 320 Z')}"/><ellipse class="skin" cx="${f(122)}" cy="606" rx="16" ry="8"/>`;
+   const mu=(c,d)=>`<path class="${c}" d="${P(f,d)}"/>`;
+   s+=mu('mu3','M108 140 L134 150 L128 182 L108 172 Z')+mu('mu2','M106 176 L128 186 L114 198 L98 190 Z')+mu('mu','M130 190 L150 240 L150 290 C130 282 110 252 100 214 L98 194 L114 200 Z')
+   +mu('mu2','M150 86 L150 236 L132 190 L104 128 C112 116 124 110 138 104 L144 90 Z')+mu('mu3','M108 116 C90 112 74 122 70 146 C68 166 74 180 80 190 L90 176 C94 160 100 140 110 128 Z')
+   +mu('mu','M68 176 C64 204 66 230 72 250 L90 250 C96 226 96 198 92 180 Z')
+   +mu('mu2','M104 300 C100 312 104 322 112 326 L140 318 C136 306 124 300 104 300 Z')+mu('mu','M106 322 C100 346 108 368 128 372 C140 374 149 368 149 350 L149 330 C140 322 124 320 106 322 Z')
+   +mu('mu3','M106 380 C104 410 108 430 116 450 L125 448 C121 420 119 400 121 378 Z')+mu('mu2','M127 378 C127 410 131 430 139 450 L146 446 C146 420 147 400 147 378 Z')
+   +mu('mu','M112 460 C104 480 106 510 118 528 L129 528 L129 462 Z')+mu('mu','M131 462 L131 528 L141 528 C149 510 147 480 139 460 Z')+mu('mu3','M112 530 C114 550 117 566 122 574 L131 574 C137 560 140 546 142 530 Z');}
+  return s;},
+ pins:[[136,140,'Trapezius','muscles','Trapezius'],[82,150,'Deltoid','muscles','Deltoid'],[113,162,'Infraspinatus','muscles','Infraspinatus'],[109,188,'Teres major','muscles','Teres major'],[124,242,'Latissimus dorsi','muscles','Latissimus dorsi'],[80,214,'Triceps brachii','muscles','Triceps brachii'],[118,312,'Gluteus medius','muscles','Gluteus medius'],[128,348,'Gluteus maximus','muscles','Gluteus maximus'],[114,416,'Biceps femoris','muscles','Biceps femoris'],[137,416,'Semitendinosus','muscles','Semitendinosus'],[120,496,'Gastrocnemius','muscles','Gastrocnemius'],[127,556,'Soleus','muscles','Soleus']]},
+];
 (function(){
 'use strict';
 /* ===================== HELPERS ===================== */
@@ -729,10 +842,10 @@ function makeQ(d,it,focus){
   }
   return {d,id:it.id,q,sub,ans,opts};
 }
-function buildQs(deck,topic,focus,n){
+function buildQs(deck,topic,focus,n,style){
   let pool=deck==='mix'?Object.keys(DECKS).flatMap(d=>DECKS[d].items.map(it=>({d,it}))):itemsFor(deck,topic).map(it=>({d:deck,it}));
   pool=shuffle(pool);const out=[];
-  for(let i=0;out.length<n&&pool.length;i++){const {d,it}=pool[i%pool.length];out.push(makeQ(d,it,d==='muscles'?focus:'mix'))}
+  for(let i=0;out.length<n&&pool.length;i++){const {d,it}=pool[i%pool.length];out.push(style==='type'?makeTypedQ(d,it):makeQ(d,it,d==='muscles'?focus:'mix'))}
   return out;
 }
 const PRAISE=['Nailed it! 🎯','Bone-afide genius 🦴','Textbook! 📖','Muscle memory 💪','You make this look easy ✨','Correct, and stylishly so 😎','Ossome! 💀','Your professor would be proud 🎓'];
@@ -752,16 +865,16 @@ const setClean=f=>{cleanup=f};
 function go(){
   if(cleanup){try{cleanup()}catch(e){}cleanup=null}
   const parts=(location.hash.replace(/^#/,'')||'home').split('/');const r=parts[0];
-  const R={home,learn,map:mapView,cards,games,quiz,match,blitz,weak,tricks};
+  const R={home,learn,map:mapView,cards,games,quiz,match,blitz,weak,tricks,lab};
   (R[r]||home)(parts.slice(1));
-  const nav={quiz:'games',match:'games',blitz:'games',weak:'games',tricks:'learn'}[r]||(R[r]?r:'home');
+  const nav={quiz:'games',match:'games',blitz:'games',weak:'games',tricks:'learn',map:'lab'}[r]||(R[r]?r:'home');
   $$('[data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===nav));
   window.scrollTo(0,0);
 }
 window.addEventListener('hashchange',go);
 
 /* ===================== HOME ===================== */
-const TILES=[['#cards','🃏','Flashcards','Cards that come back until you know them','var(--muscle)'],['#quiz','⚡','Quiz','Multiple choice with instant explanations','var(--term)'],['#match','🧩','Match-up','Pair them up against the clock','var(--mark)'],['#blitz','⏱️','Bone Blitz','60 seconds, as many as you can','var(--bone)'],['#map/find','💀','Find the bone','Tap the right bone on the skeleton','var(--nerve)'],['#weak','🎯','Weak spots','Drill only what you keep missing','var(--muscle)'],['#learn','📚','Study guide','Every bone, marking and muscle','var(--term)'],['#tricks','🧠','Memory tricks','Mnemonics that stick','var(--mark)']];
+const TILES=[['#lab','📌','Practical mode','Timed pin stations, type the answer','var(--muscle)'],['#lab/mine','➕','Pin your own images','Turn textbook figures into stations','var(--nerve)'],['#cards','🃏','Flashcards','Cards that come back until you know them','var(--muscle)'],['#quiz','⚡','Quiz','Multiple choice with instant explanations','var(--term)'],['#match','🧩','Match-up','Pair them up against the clock','var(--mark)'],['#blitz','⏱️','Bone Blitz','60 seconds, as many as you can','var(--bone)'],['#map/find','💀','Find the bone','Tap the right bone on the skeleton','var(--nerve)'],['#weak','🎯','Weak spots','Drill only what you keep missing','var(--muscle)'],['#learn','📚','Study guide','Every bone, marking and muscle','var(--term)'],['#tricks','🧠','Memory tricks','Mnemonics that stick','var(--mark)']];
 const tilesHTML=(list=TILES)=>`<div class="tiles">${list.map(([h,e,t,s,c])=>`<a class="tile" href="${h}" style="--accent:${c}"><span class="te">${e}</span><b>${t}</b><span class="ts">${s}</span></a>`).join('')}</div>`;
 function home(){
   const st=S.stats,acc=st.answered?Math.round(100*st.correct/st.answered):0;
@@ -775,8 +888,8 @@ function home(){
     <div>
       <div class="bonestack" aria-hidden="true"><i style="width:46px;background:var(--bone)"></i><i style="width:30px;background:var(--muscle)"></i><i style="width:22px;background:var(--nerve)"></i><i style="width:14px;background:var(--mark)"></i></div>
       <h1>206 bones, ${marks.length} markings, ${muscles.length} muscles. Let's own them.</h1>
-      <p>Flashcards that bring back what you miss, quizzes that explain every answer, and games for when your brain needs a break from being a textbook.</p>
-      <div class="row"><a class="btn primary" href="#cards">🃏 Start flashcards</a><a class="btn" href="#quiz">⚡ Quick quiz</a></div>
+      <p>Timed pin stations like the real lab practical, typed answers with no word bank, flashcards that bring back what you miss, and games for when your brain needs a break.</p>
+      <div class="row"><a class="btn primary" href="#lab">📌 Practice the practical</a><a class="btn" href="#cards">🃏 Flashcards</a><a class="btn" href="#quiz">⌨️ Typing quiz</a></div>
     </div>
     <div class="exam">${examBox}</div>
   </section>
@@ -796,7 +909,7 @@ function home(){
 }
 function games(){
   const n=Object.keys(S.missed).length;
-  app.innerHTML=`<h1>🎮 Games</h1><p class="lead">Pick your challenge. Every answer counts toward your progress.</p>${tilesHTML(TILES.slice(0,6))}
+  app.innerHTML=`<h1>🎮 Games</h1><p class="lead">Pick your challenge. Every answer counts toward your progress.</p>${tilesHTML(TILES.slice(0,8))}
   <div class="card sec"><div class="row sb"><span><b>🎯 Weak spots:</b> ${n?`${n} item${n===1?'':'s'} to fix`:'nothing yet'}</span><a class="btn sm" href="#weak">Open</a></div></div>`;
 }
 
@@ -913,18 +1026,19 @@ function answerCard(ok){
 /* ===================== QUIZ ===================== */
 let Q=null;
 function quiz([sub]){
-  const key=e=>{if(location.hash!=='#quiz/run'||!Q||e.target.matches('input,select'))return;
+  const key=e=>{if(location.hash!=='#quiz/run'||!Q||e.target.matches('input,select')||e.target.closest('button'))return;
     if(Q.answered&&(e.key==='Enter'||e.key===' ')){e.preventDefault();nextQ();return}
     const k='1234'.indexOf(e.key)>=0?'1234'.indexOf(e.key):'abcd'.indexOf(e.key.toLowerCase());
     if(k>=0&&!Q.answered&&Q.qs[Q.i]&&k<Q.qs[Q.i].opts.length)pickOpt(k)};
   document.addEventListener('keydown',key);setClean(()=>document.removeEventListener('keydown',key));
   if(sub==='run'&&Q)return drawQ();
-  const P=Object.assign({deck:'mix',topic:'all',focus:'mix',n:10},S.qprefs);
+  const P=Object.assign({deck:'mix',topic:'all',focus:'mix',n:10,style:'type'},S.qprefs);
   app.innerHTML=`<h1>⚡ Quiz</h1>
   <div class="card setup">
     <span class="lbl" style="margin-top:0">What do you want to be quizzed on?</span>
     <div class="chips" id="qDeck">${[['mix','🌈 Everything mixed'],...Object.entries(DECKS).map(([k,d])=>[k,d.emoji+' '+d.label])].map(([k,l])=>`<button class="chip ${k===P.deck?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>
     <div id="qOpts"></div>
+    <span class="lbl">Answer style</span><div class="chips" id="qStyle">${[['type','⌨️ Type it, no choices (like the practical)'],['mc','🔘 Multiple choice']].map(([k,l])=>`<button class="chip ${k===P.style?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>
     <span class="lbl">How many questions?</span>
     <div class="chips" id="qN">${[10,20,40].map(n=>`<button class="chip ${n===P.n?'on':''}" data-v="${n}">${n}</button>`).join('')}</div>
     <button class="btn primary big" id="qGo">Start quiz 🚀</button>
@@ -935,9 +1049,9 @@ function quiz([sub]){
     ${P.deck==='muscles'?`<span class="lbl">Question type</span><div class="chips" id="qFocus">${[['mix','🌈 Mixed'],['who','🏷️ Name the muscle'],['a','🏃 Actions'],['n','⚡ Nerves'],['o','📌 Origins'],['i','🎯 Insertions']].map(([k,l])=>`<button class="chip ${k===P.focus?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>`:''}`;
     $('#qTopic').onchange=e=>{P.topic=e.target.value};const f=$('#qFocus');if(f)chipGroup(f,v=>{P.focus=v})};
   chipGroup($('#qDeck'),v=>{P.deck=v;P.topic='all';drawOpts()});
-  chipGroup($('#qN'),v=>{P.n=+v});
+  chipGroup($('#qN'),v=>{P.n=+v});chipGroup($('#qStyle'),v=>{P.style=v});
   drawOpts();
-  $('#qGo').onclick=()=>{S.qprefs=P;save();const label=(P.deck==='mix'?'Everything mixed':DECKS[P.deck].label)+(P.deck!=='mix'&&P.topic!=='all'?': '+P.topic:'');startQuiz(buildQs(P.deck,P.topic,P.focus,P.n),label)};
+  $('#qGo').onclick=()=>{S.qprefs=P;save();const label=(P.deck==='mix'?'Everything mixed':DECKS[P.deck].label)+(P.deck!=='mix'&&P.topic!=='all'?': '+P.topic:'');startQuiz(buildQs(P.deck,P.topic,P.focus,P.n,P.style),label+(P.style==='type'?' (typed)':''))};
 }
 function startQuiz(qs,label){Q={qs,i:0,score:0,streak:0,best:0,answered:false,missed:[],label};if(location.hash!=='#quiz/run')location.hash='#quiz/run';else go()}
 const optsHTML=q=>`<div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}"><span class="key">${'ABCD'[k]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
@@ -948,9 +1062,10 @@ function drawQ(){
   <div class="bar thin" style="--accent:${D.color}"><i style="width:${Q.i/Q.qs.length*100}%"></i></div>
   <div class="card qcard" style="--accent:${D.color}">
     <div class="row sb sm muted"><span>${D.emoji} ${D.label}</span><span>Question ${Q.i+1} of ${Q.qs.length}</span></div>
-    <h2>${esc(q.q)}</h2>${q.sub?`<p class="qsub">${esc(q.sub)}</p>`:''}${optsHTML(q)}<div id="fb"></div>
+    <h2>${esc(q.q)}</h2>${q.sub?`<p class="qsub">${esc(q.sub)}</p>`:''}${q.kind==='type'?`<form id="tf" autocomplete="off"><input class="ans" id="ta" placeholder="Type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done"><div class="row" style="margin-top:10px"><button class="btn primary" type="submit">Check</button><button class="btn ghost" type="button" id="idk">I don't know</button></div></form>`:optsHTML(q)}<div id="fb"></div>
   </div>`;
   $$('.opt').forEach(b=>b.onclick=()=>pickOpt(+b.dataset.k));
+  const tf=$('#tf');if(tf){tf.onsubmit=e=>{e.preventDefault();if($('#ta').value.trim())typedAnswer($('#ta').value)};$('#idk').onclick=()=>typedAnswer('');if(window.innerWidth>=820)$('#ta').focus({preventScroll:true})}
 }
 function pickOpt(k){
   if(Q.answered)return;Q.answered=true;const q=Q.qs[Q.i],ok=q.opts[k]===q.ans;grade(q.d,q.id,ok);
@@ -963,15 +1078,26 @@ function pickOpt(k){
   if(ok&&Q.streak>=5&&Q.streak%5===0)confetti(40);
   $('#next').onclick=nextQ;
 }
+function typedAnswer(val){
+  if(Q.answered)return;const q=Q.qs[Q.i];Q.answered=true;
+  const st=checkAns(val,q.answers),ok=st!=='miss';grade(q.d,q.id,ok);
+  const inp=$('#ta');inp.disabled=true;inp.blur();$$('#tf button').forEach(b=>b.disabled=true);
+  if(ok){Q.score++;Q.streak++;Q.best=Math.max(Q.best,Q.streak);if(st==='close')Q.close=(Q.close||0)+1}else{Q.streak=0;Q.missed.push(q)}
+  const D=DECKS[q.d];
+  $('#fb').innerHTML=`<div class="fb ${ok?'good':'miss'}"><b>${st==='ok'?pick(PRAISE):st==='close'?'Right! Check the spelling: '+esc(q.ans):val.trim()?'Not quite. The answer is: '+esc(q.ans):'The answer is: '+esc(q.ans)}</b>${!ok&&val.trim()?`<div class="sm">You typed: ${esc(val)}</div>`:''}</div>
+  <details class="explain" ${ok?'':'open'}><summary>See the full card</summary>${D.detail(D.byId[q.id])}</details>
+  <button class="btn primary big" id="next">${Q.i+1<Q.qs.length?'Next question':'See my results 🏁'}</button>`;
+  $('#next').onclick=nextQ;
+}
 function nextQ(){Q.i++;drawQ();window.scrollTo(0,0)}
 function quizDone(){
   const n=Q.qs.length,p=Math.round(Q.score/n*100);
   const msg=p===100?'Perfect score. Your professor should be nervous. 🏆':p>=90?"Outstanding. That's an A! 🌟":p>=80?"Solid! Clean up the misses and you're golden. 💪":p>=70?'Getting there. Review the misses below, then retry them. 📈':'Every miss shows you exactly what to study. Retry them now while they are fresh. 🔁';
   if(p>=80)confetti();
-  app.innerHTML=`<div class="card done"><div class="huge">${p>=90?'🏆':p>=70?'🎉':'💪'}</div><h1>${Q.score} / ${n}</h1><div class="bigpct">${p}%</div><p>${msg}</p><p class="sm muted">Best streak: ${Q.best} 🔥</p>
+  app.innerHTML=`<div class="card done"><div class="huge">${p>=90?'🏆':p>=70?'🎉':'💪'}</div><h1>${Q.score} / ${n}</h1><div class="bigpct">${p}%</div><p>${msg}</p><p class="sm muted">Best streak: ${Q.best} 🔥${Q.close?`. ${Q.close} right but misspelled.`:''}</p>
   <div class="row center">${Q.missed.length?`<button class="btn primary" id="redo">🔁 Retry my ${uniqBy(Q.missed,q=>q.d+q.id).length} misses</button>`:''}<a class="btn" href="#quiz">New quiz</a><a class="btn" href="#cards">Flashcards</a></div></div>
   ${Q.missed.length?`<h2 class="sec">Review what you missed</h2><div class="grid">${uniqBy(Q.missed,q=>q.d+q.id).map(q=>`<div class="card item" style="--accent:${DECKS[q.d].color}">${DECKS[q.d].detail(DECKS[q.d].byId[q.id])}</div>`).join('')}</div>`:''}`;
-  const r=$('#redo');if(r)r.onclick=()=>{const items=uniqBy(Q.missed,q=>q.d+q.id);startQuiz(shuffle(items).map(q=>makeQ(q.d,DECKS[q.d].byId[q.id])),'Retry misses')};
+  const r=$('#redo');if(r)r.onclick=()=>{const items=uniqBy(Q.missed,q=>q.d+q.id);startQuiz(shuffle(items).map(q=>q.kind==='type'?makeTypedQ(q.d,DECKS[q.d].byId[q.id]):makeQ(q.d,DECKS[q.d].byId[q.id])),'Retry misses')};
 }
 
 /* ===================== MATCH-UP ===================== */
@@ -1062,7 +1188,7 @@ function weak(){
   ${list.length?`<div class="row"><button class="btn primary" id="wGo">🔁 Drill my top ${Math.min(20,list.length)}</button><button class="btn ghost" id="wClr">Clear the list</button></div>
   <div class="wlist">${list.map(x=>`<details class="card wrow" style="--accent:${DECKS[x.d].color}"><summary><span>${DECKS[x.d].emoji}</span><b>${esc(DECKS[x.d].title(x.it))}</b><span class="pill">missed ${x.n}×</span></summary>${DECKS[x.d].detail(x.it)}</details>`).join('')}</div>`
   :`<div class="card empty"><div class="huge">✨</div><p>No weak spots yet. Take a quiz or play Bone Blitz, and anything you miss will show up here.</p><a class="btn primary" href="#quiz">Take a quiz</a></div>`}`;
-  const g=$('#wGo');if(g)g.onclick=()=>{const top=list.slice(0,20);startQuiz(shuffle([...top,...top.slice(0,10)]).map(x=>makeQ(x.d,x.it)),'Weak-spot drill')};
+  const g=$('#wGo');if(g)g.onclick=()=>{const top=list.slice(0,20);startQuiz(shuffle([...top,...top.slice(0,10)]).map(x=>makeTypedQ(x.d,x.it)),'Weak-spot drill (typed)')};
   const c=$('#wClr');if(c)c.onclick=()=>{if(confirm('Clear your weak-spot list?')){S.missed={};save();weak()}};
 }
 
@@ -1153,10 +1279,240 @@ function findTap(part){
   setTimeout(()=>{if(!F)return;hl(null,'ok');hl(null,'bad');F.i++;F.lock=false;drawFind()},ok?700:1900);
 }
 
+/* ===================== TYPED ANSWERS ===================== */
+const ALT={
+ 'fibularis longus':['peroneus longus'],'fibularis brevis':['peroneus brevis'],
+ 'intertubercular sulcus':['bicipital groove','intertubercular groove'],'groove (sulcus)':['sulcus'],
+ 'os coxae (hip bone)':['hip bone','coxal bone','innominate bone','os coxae','pelvic bone'],
+ 'olecranon':['olecranon process'],'acromion':['acromion process'],'glenoid cavity':['glenoid fossa'],
+ 'external acoustic meatus':['external auditory meatus'],'internal acoustic meatus':['internal auditory meatus'],
+ 'tensor fasciae latae':['tensor fascia latae','tensor fascia lata'],'clavicle':['collarbone'],'scapula':['shoulder blade'],
+ 'patella':['kneecap'],'sternum':['breastbone'],'coccyx':['tailbone'],'calcaneus':['heel bone'],'mandible':['lower jaw'],
+ 'maxilla':['upper jaw'],'erector spinae':['sacrospinalis'],'trochlea':['trochlea of humerus'],
+};
+function altsFor(name){
+  const out=[name];const m=String(name).match(/^(.*?)\s*\((.*?)\)\s*(.*)$/);
+  if(m){const [,a,b,c]=m;if(c){out.push(a+' '+c,b+' '+c)}else{out.push(a);if(/\s/.test(b))out.push(b)}}
+  const x=ALT[String(name).toLowerCase()];if(x)out.push(...x);return out;
+}
+const FILLER=new Set(['the','of','a','an','bone','bones','muscle','muscles','nerve','nerves','m','n']);
+const sing=w=>w.length>3&&w.endsWith('s')&&!/(ss|is|us)$/.test(w)?w.slice(0,-1):w;
+function akey(s,ctx){return String(s).toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9 ]+/g,' ').split(/\s+/).filter(t=>t&&!FILLER.has(t)&&!ctx.has(t)).map(sing).sort().join(' ')}
+const CONTRAST=new Set(['major','minor','medial','lateral','superior','inferior','anterior','posterior','greater','lesser','longus','brevis','internal','external','maximus','medius','minimus','superficialis','profundus','proximal','distal','upper','lower','intermedius','magnus']);
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=Array.from({length:n+1},(_,j)=>j);for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function checkAns(input,answers,ctx=[]){
+  const c=new Set(ctx.map(x=>x.toLowerCase()));const ik=akey(input,c);if(!ik)return 'miss';
+  let close=false;const it=new Set(ik.split(' '));
+  for(const a of answers){const ak=akey(a,c);if(!ak)continue;if(ak===ik)return 'ok';
+    const at=new Set(ak.split(' '));if([...it].some(t=>!at.has(t)&&CONTRAST.has(t)))continue;
+    const allow=ak.length<=4?0:ak.length<=8?1:Math.max(1,Math.floor(ak.length*.15));if(lev(ik,ak)<=allow)close=true}
+  return close?'close':'miss';
+}
+function makeTypedQ(d,it){
+  let q,sub;
+  if(d==='bones'){q='Name this bone';sub=mask(it.clue,it.name)}
+  else if(d==='terms'){q='Name this bone-marking term';sub=it.def}
+  else if(d==='marks'){q=`Name this marking on the ${it.bone.replace(/\s*\(.*?\)/,'').toLowerCase()}`;sub=mask(it.desc,it.name)}
+  else{if(Math.random()<.5){q='Name the muscle with this action';sub=it.a}else{q='Name this muscle';sub=`Origin: ${it.o}. Insertion: ${it.i}.`}}
+  const name=d==='terms'?it.term:it.name;
+  return {d,id:it.id,q,sub,kind:'type',ans:name,answers:altsFor(name)};
+}
+const nerveAnswers=m=>{const base=altsFor(m.n.replace(/\s*\((?!CN)[^)]*\)/g,'').trim());base.push(nerveKey(m));if(m.name==='Pectoralis major')base.push('pectoral nerves','medial pectoral','lateral pectoral');return base};
+const findItem=(d,name)=>d&&name?DECKS[d].items.find(i=>DECKS[d].title(i).toLowerCase()===String(name).toLowerCase()):null;
+function findRefByName(name){for(const d of Object.keys(DECKS)){const it=DECKS[d].items.find(i=>altsFor(DECKS[d].title(i)).some(a=>akey(a,new Set())===akey(name,new Set())));if(it)return {d,id:it.id}}return null}
+const statusIcon=s=>s==='ok'?'<b class="st-ok">✓</b>':s==='close'?'<b class="st-close">≈</b>':'<b class="st-miss">✗</b>';
+
+/* ===================== MY IMAGES (IndexedDB) ===================== */
+const IDB={db:null,
+  open(){return new Promise((res,rej)=>{if(this.db)return res(this.db);if(!window.indexedDB)return rej(new Error('no idb'));const r=indexedDB.open('boneup',1);r.onupgradeneeded=()=>r.result.createObjectStore('images',{keyPath:'id'});r.onsuccess=()=>{this.db=r.result;res(this.db)};r.onerror=()=>rej(r.error)})},
+  async tx(mode,fn){const db=await this.open();return new Promise((res,rej)=>{const t=db.transaction('images',mode);const st=t.objectStore('images');const r=fn(st);t.oncomplete=()=>res(r&&r.result);t.onerror=()=>rej(t.error)})},
+  all(){return this.tx('readonly',s=>s.getAll())},put(o){return this.tx('readwrite',s=>s.put(o))},del(id){return this.tx('readwrite',s=>s.delete(id))}};
+let MINE=[],IDB_OK=true;
+async function loadMine(){try{MINE=(await IDB.all())||[];MINE.sort((a,b)=>a.created-b.created)}catch(e){IDB_OK=false;MINE=[]}}
+const saveImg=im=>IDB.put(im).catch(()=>{});
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function fileToImg(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const max=1600,sc=Math.min(1,max/Math.max(img.width,img.height));const w=Math.round(img.width*sc),h=Math.round(img.height*sc);const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(img,0,0,w,h);res({id:uid(),title:(file.name||'Pasted image').replace(/\.[a-z0-9]+$/i,''),src:c.toDataURL('image/jpeg',.85),w,h,pins:[],created:Date.now()})};img.onerror=rej;img.src=r.result};r.onerror=rej;r.readAsDataURL(file)})}
+
+/* ===================== STAGE (image + pins) ===================== */
+const dgPins=D=>D.pins.map(([x,y,a,d,r,alts])=>({x:x/D.w,y:y/D.h,a,d,r,alts:alts||[]}));
+function stage(st,pins,extra=''){
+  const inner=st.svg?`<svg class="dg ${st.cls||''}" viewBox="0 0 ${st.w} ${st.h}" xmlns="http://www.w3.org/2000/svg">${st.svg}</svg>`:`<img src="${st.src}" alt="">`;
+  return `<div class="stage" ${extra} style="aspect-ratio:${st.w}/${st.h};max-width:min(100%,calc(52vh * ${(st.w/st.h).toFixed(3)}))">${inner}${pins.map((p,k)=>`<button type="button" class="pin ${p.cls||''}" data-k="${k}" style="left:${(p.x*100).toFixed(2)}%;top:${(p.y*100).toFixed(2)}%" aria-label="Pin ${p.n||k+1}">${p.n||''}${p.label?`<span class="plab ${p.x>.55?'l':''}">${esc(p.label)}</span>`:''}</button>`).join('')}</div>`;
+}
+const SKEL_PINS={cranium:[150,30],mandible:[150,112],cervical:[150,140],clavicle:[118,156],scapula:[98,174],ribs:[112,204],sternum:[150,196],humerus:[92,220],radius:[74,322],ulna:[89,322],carpals:[77,380],metacarpals:[72,402],phalangesH:[64,434],lumbar:[150,272],sacrum:[150,322],coccyx:[150,356],coxae:[104,312],femur:[125,415],patella:[131,486],tibia:[138,548],fibula:[122,548],tarsals:[131,612],metatarsals:[127,630],phalangesF:[128,650]};
+function allDiagrams(){
+  return [...DIAGRAMS,{id:'skeleton',kind:'skel',title:'Full skeleton, anterior view',sub:'Front view in anatomical position. The skeleton\'s right side is on your left.',w:300,h:664,ctx:[],cls:'skel',svg:skeleton,
+    pins:Object.entries(SKEL_PINS).map(([k,[x,y]])=>{const b=bones.find(b=>b.map===k&&b.name.toLowerCase().startsWith(PARTS[k].toLowerCase().slice(0,5)));return [x,y,PARTS[k].replace(' (cranium and face)',''),b?'bones':null,b?b.name:null,k==='cranium'?['cranium']:k==='ribs'?['rib','true ribs']:[]]})}];
+}
+
+/* ===================== PRACTICAL ===================== */
+let PR=null;
+const PDEF={src:{bone:true,muscle:true,skel:true,mine:true},n:20,sec:60,fu:true,strict:false,fb:'end'};
+function pinPool(src,only){
+  const pool=[];
+  for(const D of allDiagrams()){if(only?D.id!==only:!src[D.kind])continue;dgPins(D).forEach(p=>pool.push({D,p}))}
+  if(!only&&src.mine)for(const im of MINE)im.pins.filter(p=>p.a).forEach(p=>pool.push({im,p}));
+  return pool;
+}
+function stationFrom(e,fu){
+  if(e.D){const {D,p}=e;const it=findItem(p.d,p.r);
+    const parts=[{q:'Identify the pinned structure',answers:[...altsFor(p.a),...p.alts],display:p.a,ctx:D.ctx||[],ref:it?{d:p.d,id:it.id}:null}];
+    if(fu&&p.d==='muscles'&&it)parts.push({q:'What nerve supplies it?',answers:nerveAnswers(it),display:nerveKey(it),ctx:[],ref:null});
+    return {st:{svg:D.svg(),w:D.w,h:D.h,cls:D.cls},pin:p,title:D.title,parts};}
+  const {im,p}=e;const parts=[{q:'Identify the pinned structure',answers:[p.a,...(p.alts||[])],display:p.a,ctx:[],ref:findRefByName(p.a)}];
+  if(fu&&p.fq&&p.fa)parts.push({q:p.fq,answers:[p.fa,...altsFor(p.fa)],display:p.fa,ctx:[],ref:null});
+  return {st:{src:im.src,w:im.w,h:im.h},pin:p,title:im.title,parts};
+}
+function prStart(cfg,only){
+  const pool=shuffle(pinPool(cfg.src,only));if(!pool.length)return false;
+  PR={cfg,st:pool.slice(0,Math.min(cfg.n,pool.length)).map(e=>stationFrom(e,cfg.fu)),i:0,res:[],tick:null,waiting:false};
+  if(location.hash!=='#lab/run')location.hash='#lab/run';else go();return true;
+}
+function labTabs(t){return `<div class="chips">${[['practical','📌 Practical'],['diagrams','🖼️ Diagrams'],['mine','➕ My images']].map(([k,l])=>`<a class="chip ${k===t?'on':''}" href="#lab/${k}">${l}</a>`).join('')}</div>`}
+function lab([tab='practical',arg]){
+  setClean(()=>{if(PR&&PR.tick)clearInterval(PR.tick);document.onpaste=null});
+  if(tab==='run'&&PR)return drawStation();
+  if(tab==='results'&&PR)return prResults();
+  if(tab==='diagrams')return arg?diagramView(arg):diagramList();
+  if(tab==='mine')return arg?editImg(arg):mineList();
+  const C=JSON.parse(JSON.stringify(Object.assign({},PDEF,S.prefsPR||{})));
+  const ds=allDiagrams(),cnt=k=>ds.filter(d=>d.kind===k).reduce((s,d)=>s+d.pins.length,0),mineN=MINE.reduce((s,i)=>s+i.pins.filter(p=>p.a).length,0);
+  const tog=(id,on,label,sub)=>`<label class="opt optl"><input type="checkbox" id="${id}" ${on?'checked':''}><span><b>${label}</b><br><span class="sm muted">${sub}</span></span></label>`;
+  app.innerHTML=`<h1>📌 Practical mode</h1>${labTabs('practical')}
+  <div class="card setup">
+    <p class="lead" style="margin-top:0">One pinned structure per station. Type the name, no choices given. The clock keeps moving and there's no going back.</p>
+    <span class="lbl">Pull stations from</span>
+    <div class="opts">${tog('s_bone',C.src.bone,'Bone diagrams',cnt('bone')+' pins: humerus, femur, scapula, hip bone, skull, vertebra')}${tog('s_muscle',C.src.muscle,'Muscle maps',cnt('muscle')+' pins: superficial muscles, front and back')}${tog('s_skel',C.src.skel,'Full skeleton',cnt('skel')+' pins: whole bones')}${tog('s_mine',C.src.mine,'My images',mineN?mineN+' pins you added':'None yet. Add some under My images.')}</div>
+    <span class="lbl">Stations</span><div class="chips" id="pN">${[10,20,30,40].map(n=>`<button class="chip ${n===C.n?'on':''}" data-v="${n}">${n}</button>`).join('')}</div>
+    <span class="lbl">Seconds per station</span><div class="chips" id="pS">${[30,45,60,90].map(n=>`<button class="chip ${n===C.sec?'on':''}" data-v="${n}">${n}s</button>`).join('')}</div>
+    <span class="lbl">Options</span>
+    <div class="opts">${tog('o_fu',C.fu,'Follow-up questions','Name the nerve for pinned muscles, plus any follow-ups you wrote on your own images')}${tog('o_strict',C.strict,'Strict spelling','Close-but-misspelled answers count as wrong, like a picky grader')}${tog('o_fb',C.fb==='each','Show answers after each station','Off is more realistic: you see everything at the end')}</div>
+    <button class="btn primary big" id="pGo">Start the practical ⏱️</button><p class="sm muted center" id="pErr"></p>
+  </div>`;
+  chipGroup($('#pN'),v=>{C.n=+v});chipGroup($('#pS'),v=>{C.sec=+v});
+  $('#pGo').onclick=()=>{C.src={bone:$('#s_bone').checked,muscle:$('#s_muscle').checked,skel:$('#s_skel').checked,mine:$('#s_mine').checked};C.fu=$('#o_fu').checked;C.strict=$('#o_strict').checked;C.fb=$('#o_fb').checked?'each':'end';S.prefsPR=C;save();
+    if(!prStart(C))$('#pErr').textContent='Pick at least one source that has pins.'};
+}
+function drawStation(){
+  if(PR.tick)clearInterval(PR.tick);
+  if(PR.i>=PR.st.length){location.hash='#lab/results';return}
+  const s=PR.st[PR.i],sec=PR.cfg.sec;PR.waiting=false;
+  app.innerHTML=`<div class="row sb hud"><span class="score">Station ${PR.i+1} of ${PR.st.length}</span><span class="timer"><b id="pT">${sec}</b>s</span></div>
+  <div class="bar thin timebar"><i id="pBar" style="width:100%"></i></div>
+  <div class="station"><div>${stage(s.st,[{x:s.pin.x,y:s.pin.y,cls:'active'}])}<div class="sm muted center" style="margin-top:6px">${esc(s.title)}</div></div>
+  <form class="card" id="sf" autocomplete="off">${s.parts.map((p,k)=>`<label class="lbl" for="a${k}" ${k?'':'style="margin-top:0"'}>${k+1}. ${esc(p.q)}</label><input class="ans" id="a${k}" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="${k<s.parts.length-1?'next':'done'}">`).join('')}
+  <div id="sfb"></div><button class="btn primary big" type="submit" id="sBtn">${PR.i+1<PR.st.length?'Next station':'Finish'}</button>
+  <div class="row sb sm muted" style="margin-top:8px"><span>No going back, just like the real thing.</span><button type="button" class="linkbtn" id="pQuit">End early</button></div></form></div>`;
+  const ins=$$('.ans');ins.forEach((el,k)=>el.addEventListener('keydown',e=>{if(e.key==='Enter'&&k<ins.length-1){e.preventDefault();ins[k+1].focus()}}));
+  if(window.innerWidth>=820)ins[0].focus({preventScroll:true});
+  $('#pQuit').onclick=()=>{if(confirm('End the practical now? Unanswered stations count as misses.')){while(PR.res.length<PR.st.length)recordStation(PR.st[PR.res.length],[]);PR.i=PR.st.length;clearInterval(PR.tick);location.hash='#lab/results'}};
+  const end=Date.now()+sec*1000;
+  PR.tick=setInterval(()=>{const left=Math.max(0,end-Date.now()),t=$('#pT');if(!t)return;t.textContent=Math.ceil(left/1000);$('#pBar').style.width=(left/(sec*10))+'%';if(left<=0)submitStation()},100);
+  $('#sf').onsubmit=e=>{e.preventDefault();if(PR.waiting){PR.i++;drawStation();window.scrollTo(0,0)}else submitStation()};
+}
+function recordStation(s,vals){
+  const st=s.parts.map((p,k)=>checkAns(vals[k]||'',p.answers,p.ctx));
+  s.parts.forEach((p,k)=>{if(p.ref)grade(p.ref.d,p.ref.id,st[k]==='ok'||(st[k]==='close'&&!PR.cfg.strict))});
+  PR.res.push({vals,st});return st;
+}
+function submitStation(){
+  if(!PR||PR.waiting||PR.res.length>PR.i)return;clearInterval(PR.tick);
+  const s=PR.st[PR.i],vals=$$('.ans').map(i=>i.value.trim());const st=recordStation(s,vals);
+  if(PR.cfg.fb==='each'){PR.waiting=true;$$('.ans').forEach(i=>i.disabled=true);
+    $('#sfb').innerHTML=`<div class="fb ${st.every(x=>x==='ok')?'good':'miss'}">${s.parts.map((p,k)=>`<div>${statusIcon(st[k])} ${esc(p.display)}${st[k]==='close'?' <span class="sm">(check your spelling)</span>':''}</div>`).join('')}</div>`;
+    $('#sBtn').textContent=PR.i+1<PR.st.length?'Next station':'See results';$('#sBtn').focus({preventScroll:true});
+  }else{PR.i++;drawStation();window.scrollTo(0,0)}
+}
+function prResults(){
+  if(PR.tick)clearInterval(PR.tick);
+  const strict=PR.cfg.strict;let pts=0,tot=0,close=0;
+  PR.res.forEach(r=>r.st.forEach(s=>{tot++;if(s==='ok')pts++;else if(s==='close'){close++;if(!strict)pts++}}));
+  const p=tot?Math.round(pts/tot*100):0;if(p>=80)confetti();
+  const missedIdx=PR.res.map((r,i)=>r.st.some(s=>s==='miss'||(strict&&s==='close'))?i:-1).filter(i=>i>=0);
+  app.innerHTML=`<div class="card done"><div class="huge">${p>=90?'🏆':p>=70?'🎉':'💪'}</div><h1>${pts} / ${tot}</h1><div class="bigpct">${p}%</div>
+  <p>${p>=90?'That would be an A on the practical.':p>=80?'Strong. Fix the misses below and run it again.':p>=70?'Getting there. Study the misses, then retry just those.':'Each miss below is a structure to learn. Retry them now while they are fresh.'}</p>
+  ${close?`<p class="sm">${close} answer${close===1?' was':'s were'} right but misspelled${strict?' and counted wrong (strict spelling)':''}.</p>`:''}
+  <div class="row center">${missedIdx.length?`<button class="btn primary" id="rMiss">🔁 Retry my ${missedIdx.length} missed station${missedIdx.length===1?'':'s'}</button>`:''}<a class="btn" href="#lab">New practical</a></div></div>
+  <h2 class="sec">Station by station</h2>
+  <div class="thumbgrid">${PR.res.map((r,i)=>{const s=PR.st[i];return `<div class="card item" style="--accent:${r.st.every(x=>x==='ok')?'var(--good)':r.st.some(x=>x==='miss')?'var(--bad)':'var(--bone)'}"><div class="sm muted">Station ${i+1}</div>${stage(s.st,[{x:s.pin.x,y:s.pin.y,cls:'active still'}])}
+    <div class="res">${s.parts.map((p,k)=>`${statusIcon(r.st[k])}<div><b>${esc(p.display)}</b>${r.st[k]!=='ok'?`<br><span class="sm muted">You: ${esc(r.vals[k]||'(blank)')}</span>`:''}</div>`).join('')}</div></div>`}).join('')}</div>`;
+  const b=$('#rMiss');if(b)b.onclick=()=>{PR={...PR,st:shuffle(missedIdx.map(i=>PR.st[i])),i:0,res:[],tick:null,waiting:false};location.hash='#lab/run'};
+}
+
+/* ===================== DIAGRAM EXPLORER ===================== */
+function diagramList(){
+  app.innerHTML=`<h1>🖼️ Diagrams</h1>${labTabs('diagrams')}<p class="lead">Learn the pins here first, then test yourself in Practical mode.</p>
+  <div class="thumbgrid">${allDiagrams().map(D=>`<a class="card item" href="#lab/diagrams/${D.id}" style="--accent:${D.kind==='muscle'?'var(--muscle)':'var(--bone)'};text-decoration:none">${stage({svg:D.svg(),w:D.w,h:D.h,cls:D.cls},[])}<h3 style="margin-top:10px">${esc(D.title)}</h3><div class="sm muted">${D.pins.length} pins</div></a>`).join('')}</div>`;
+}
+function diagramView(id){
+  const D=allDiagrams().find(d=>d.id===id);if(!D)return diagramList();
+  const pins=dgPins(D),shown=new Set();
+  const draw=()=>{$('#dstage').innerHTML=stage({svg:D.svg(),w:D.w,h:D.h,cls:D.cls},pins.map((p,k)=>({x:p.x,y:p.y,n:k+1,label:shown.has(k)?p.a:'',cls:shown.has(k)?'sel':''})));
+    $('#dlist').innerHTML=pins.map((p,k)=>`<li><button class="linkbtn rv" data-k="${k}" style="text-decoration:none;color:inherit"><b>${k+1}.</b> ${shown.has(k)?esc(p.a):'<span class="muted">tap to reveal</span>'}</button></li>`).join('')};
+  app.innerHTML=`<a class="btn sm ghost" href="#lab/diagrams">← All diagrams</a><h1>${esc(D.title)}</h1><p class="muted">${esc(D.sub)}</p>
+  <div class="station"><div id="dstage"></div><div class="card"><div class="row"><button class="btn sm" id="dAll">Show all</button><button class="btn sm" id="dNone">Hide all</button><button class="btn sm primary" id="dQuiz">Quiz me on this one</button></div><ol class="mlist" id="dlist" style="list-style:none;padding:0"></ol><p class="sm muted">Tap a pin or a number to reveal its name. Try to say it out loud first.</p></div></div>`;
+  const tgl=k=>{shown.has(k)?shown.delete(k):shown.add(k);draw()};
+  $('#dstage').addEventListener('click',e=>{const b=e.target.closest('.pin');if(b)tgl(+b.dataset.k)});
+  $('#dlist').addEventListener('click',e=>{const b=e.target.closest('.rv');if(b)tgl(+b.dataset.k)});
+  $('#dAll').onclick=()=>{pins.forEach((_,k)=>shown.add(k));draw()};$('#dNone').onclick=()=>{shown.clear();draw()};
+  $('#dQuiz').onclick=()=>prStart({...PDEF,n:99,sec:60,fb:'each',fu:false},D.id);
+  draw();
+}
+
+/* ===================== MY IMAGES: PIN BUILDER ===================== */
+function mineList(){
+  app.innerHTML=`<h1>➕ My images</h1>${labTabs('mine')}
+  <div class="card"><p class="lead" style="margin-top:0">Turn any anatomy picture into practical stations.</p>
+  <p>Use figures from your textbook, lab manual, lecture slides, or an anatomy app. A phone photo of a textbook page or a screenshot works great. Drop pins on the structures you need to know and type their names.</p>
+  <div class="row"><label class="btn primary">📷 Add images<input type="file" id="fIn" accept="image/*" multiple hidden></label><span class="sm muted">On a computer you can also paste a screenshot here (Ctrl/Cmd + V).</span></div>
+  <p class="sm muted">Images stay private on this device and this browser.</p>
+  ${IDB_OK?'':'<p class="badtxt">This browser is blocking storage, so images can\'t be saved here.</p>'}</div>
+  <div class="thumbgrid sec" id="mlist">${MINE.length?MINE.map(im=>`<div class="card item" style="--accent:var(--term)">${stage(im,im.pins.map(p=>({x:p.x,y:p.y,cls:'dot'})))}<h3 style="margin-top:10px">${esc(im.title)}</h3><div class="sm muted">${im.pins.length} pin${im.pins.length===1?'':'s'}</div><div class="row" style="margin-top:8px"><a class="btn sm primary" href="#lab/mine/${im.id}">Edit pins</a><button class="btn sm ghost" data-del="${im.id}">Delete</button></div></div>`).join(''):'<div class="card empty"><div class="huge">🖼️</div><p>No images yet. Add your first one above.</p></div>'}</div>
+  ${MINE.length?`<div class="row sec"><button class="btn sm" id="exp">⬇️ Back up all (file)</button><label class="btn sm">⬆️ Restore from backup<input type="file" id="imp" accept=".json,application/json" hidden></label><span class="sm muted">Handy for sharing a set with a study partner.</span></div>`:`<div class="row sec"><label class="btn sm">⬆️ Restore from backup<input type="file" id="imp" accept=".json,application/json" hidden></label></div>`}`;
+  const add=async files=>{let last=null;for(const f of files){if(!f.type.startsWith('image/'))continue;try{const im=await fileToImg(f);MINE.push(im);await saveImg(im);last=im}catch(e){}}if(last)location.hash='#lab/mine/'+last.id};
+  $('#fIn').onchange=e=>add([...e.target.files]);
+  document.onpaste=e=>{const fs=[...(e.clipboardData&&e.clipboardData.files||[])];if(fs.length)add(fs)};
+  $('#mlist').addEventListener('click',async e=>{const b=e.target.closest('[data-del]');if(!b||!confirm('Delete this image and its pins?'))return;MINE=MINE.filter(i=>i.id!==b.dataset.del);await IDB.del(b.dataset.del).catch(()=>{});mineList()});
+  const ex=$('#exp');if(ex)ex.onclick=()=>{const blob=new Blob([JSON.stringify({app:'boneup',v:1,images:MINE})],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='bone-up-images.json';document.body.appendChild(a);a.click();a.remove()};
+  $('#imp').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());for(const im of (data.images||[])){if(!im.src||!im.w)continue;if(MINE.some(m=>m.id===im.id))im.id=uid();MINE.push(im);await saveImg(im)}mineList()}catch(err){alert('That file is not a Bone Up backup.')}};
+}
+function editImg(id){
+  const im=MINE.find(i=>i.id===id);if(!im)return mineList();
+  let sel=null,moving=false;
+  const persist=()=>saveImg(im);
+  const draw=()=>{
+    $('#estage').innerHTML=stage(im,im.pins.map((p,k)=>({x:p.x,y:p.y,n:k+1,cls:k===sel?'sel':''})),'id="eimg"');
+    const p=sel!==null?im.pins[sel]:null;
+    $('#pform').innerHTML=p?`<div class="row sb"><b>Pin ${sel+1}</b><span><button type="button" class="btn sm" id="pMove">${moving?'Tap the new spot…':'Move'}</button> <button type="button" class="btn sm ghost" id="pDel">Delete</button></span></div>
+      <label class="lbl">What is it?</label><input class="ans" id="pA" value="${esc(p.a)}" placeholder="e.g. Greater tubercle">
+      <label class="lbl">Also accept <span class="sm muted">(optional, separate with commas)</span></label><input class="ans" id="pAlt" value="${esc((p.alts||[]).join(', '))}" placeholder="e.g. greater tuberosity">
+      <label class="lbl">Follow-up question <span class="sm muted">(optional)</span></label><input class="ans" id="pFq" value="${esc(p.fq||'')}" placeholder="e.g. What muscle inserts here?">
+      <label class="lbl">Follow-up answer</label><input class="ans" id="pFa" value="${esc(p.fa||'')}" placeholder="e.g. Supraspinatus">`
+      :`<p class="lead" style="margin-top:0">Tap the image to drop a pin.</p><p class="sm muted">Then type what it points to. Add as many pins as you like.</p>`;
+    $('#plist').innerHTML=im.pins.map((p,k)=>`<li><button class="linkbtn sp" data-k="${k}" style="text-decoration:none;color:inherit"><b>${k+1}.</b> ${p.a?esc(p.a):'<span class="badtxt">needs a name</span>'}</button></li>`).join('');
+    if(p){const bind=(id,f)=>{$(id).addEventListener('input',e=>{f(e.target.value);clearTimeout(editImg.t);editImg.t=setTimeout(()=>{persist();const li=$(`.sp[data-k="${sel}"]`);if(li)li.innerHTML=`<b>${sel+1}.</b> ${p.a?esc(p.a):'<span class="badtxt">needs a name</span>'}`},300)})};
+      bind('#pA',v=>p.a=v.trim());bind('#pAlt',v=>p.alts=v.split(',').map(s=>s.trim()).filter(Boolean));bind('#pFq',v=>p.fq=v.trim());bind('#pFa',v=>p.fa=v.trim());
+      $('#pDel').onclick=()=>{im.pins.splice(sel,1);sel=null;moving=false;persist();draw()};$('#pMove').onclick=()=>{moving=!moving;draw()}}
+  };
+  app.innerHTML=`<a class="btn sm ghost" href="#lab/mine">← My images</a>
+  <input class="ans" id="tIn" value="${esc(im.title)}" aria-label="Image title" style="margin:10px 0;font-family:Fredoka,sans-serif;font-size:1.3rem">
+  <div class="station"><div id="estage"></div><div><div class="card" id="pform"></div><div class="card" style="margin-top:12px"><b>Pins</b><ol class="mlist" id="plist" style="list-style:none;padding:0"></ol>${im.pins.length?'':''}<a class="btn sm" href="#lab">Practice these in Practical mode</a></div></div></div>`;
+  $('#tIn').addEventListener('input',e=>{im.title=e.target.value;clearTimeout(editImg.t2);editImg.t2=setTimeout(persist,400)});
+  $('#estage').addEventListener('click',e=>{
+    const pinEl=e.target.closest('.pin');
+    if(pinEl&&!moving){sel=+pinEl.dataset.k;draw();return}
+    const box=$('#eimg').getBoundingClientRect();const x=(e.clientX-box.left)/box.width,y=(e.clientY-box.top)/box.height;if(x<0||x>1||y<0||y>1)return;
+    if(moving&&sel!==null){im.pins[sel].x=x;im.pins[sel].y=y;moving=false}
+    else{im.pins.push({x,y,a:'',alts:[]});sel=im.pins.length-1}
+    persist();draw();const a=$('#pA');if(a)a.focus({preventScroll:window.innerWidth<820})});
+  $('#plist').addEventListener('click',e=>{const b=e.target.closest('.sp');if(b){sel=+b.dataset.k;moving=false;draw()}});
+  draw();
+}
+
 /* ===================== THEME + BOOT ===================== */
 function applyTheme(){if(S.theme)document.documentElement.dataset.theme=S.theme;else delete document.documentElement.dataset.theme}
 $('#themeBtn').onclick=()=>{const sysDark=matchMedia('(prefers-color-scheme: dark)').matches;const cur=S.theme||(sysDark?'dark':'light');S.theme=cur==='dark'?'light':'dark';save();applyTheme()};
-applyTheme();go();
+applyTheme();loadMine().then(go,go);
 })();
 </script>
 </body></html>
