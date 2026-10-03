@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bone Up! Anatomy study lab</title>
+<meta name="description" content="Learn every bone, bone marking and muscle fast with flashcards, quizzes and games.">
+<meta name="theme-color" content="#ff4d6d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* every accent means something: bone = gold, muscle = red, nerve = teal, markings = violet, terms = blue */
+  --bg:#eef3fa;--surface:#ffffff;--surface2:#e6edf7;--text:#1d1b3a;--muted:#5d6280;--line:#d9e2ef;
+  --bone:#e0a823;--muscle:#ff4d6d;--nerve:#00a3a3;--mark:#7c4dff;--term:#2f80ed;
+  --good:#12a150;--bad:#e5294b;
+  --skBone:#f7ebd2;--skEdge:#a88c5c;--skHover:#ffd76e;--skBg:#dbe8fb;
+  --shadow:0 2px 0 var(--line),0 10px 24px rgba(29,27,58,.07);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12122a;--surface:#1d1d3d;--surface2:#28284f;--text:#f2f1ff;--muted:#a9abcf;--line:#33335e;
+  --bone:#f2c14e;--muscle:#ff6b85;--nerve:#2fd0c8;--mark:#a586ff;--term:#62a3ff;--good:#2fcf72;--bad:#ff5c79;
+  --skBone:#f1e3c4;--skEdge:#8a7650;--skHover:#ffd76e;--skBg:#232350;
+  --shadow:0 2px 0 rgba(0,0,0,.35),0 10px 24px rgba(0,0,0,.3);color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#12122a;--surface:#1d1d3d;--surface2:#28284f;--text:#f2f1ff;--muted:#a9abcf;--line:#33335e;
+  --bone:#f2c14e;--muscle:#ff6b85;--nerve:#2fd0c8;--mark:#a586ff;--term:#62a3ff;--good:#2fcf72;--bad:#ff5c79;
+  --skBone:#f1e3c4;--skEdge:#8a7650;--skHover:#ffd76e;--skBg:#232350;
+  --shadow:0 2px 0 rgba(0,0,0,.35),0 10px 24px rgba(0,0,0,.3);color-scheme:dark;}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Nunito,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,.brand,.btn,.chip,.num,.huge,.fname,.mn,.tile b{font-family:Fredoka,Nunito,system-ui,sans-serif}
+h1{font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.08;margin:.15em 0 .45em;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.3rem;line-height:1.2;margin:.2em 0 .5em;font-weight:600}
+h3{font-size:1.08rem;margin:.2em 0 .4em;font-weight:600}
+p{margin:.35em 0 .8em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--term);outline-offset:2px;border-radius:8px}
+button{font:inherit}
+
+/* ---------- chrome ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--bg);border-bottom:2px solid var(--line)}
+.brand{font-weight:700;font-size:1.4rem;text-decoration:none;display:flex;align-items:center;gap:9px;margin-right:auto;letter-spacing:-.01em}
+.logo{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--bone);font-size:1.25rem;transform:rotate(-10deg);box-shadow:3px 3px 0 var(--muscle)}
+.topnav{display:none;gap:4px}
+.topnav a{text-decoration:none;font-weight:800;padding:8px 14px;border-radius:12px;color:var(--muted)}
+.topnav a:hover{color:var(--text)}
+.topnav a.on{background:var(--text);color:var(--bg)}
+.iconbtn{border:2px solid var(--line);background:var(--surface);width:42px;height:42px;border-radius:12px;font-size:1.1rem;cursor:pointer;color:var(--text)}
+main{max-width:1100px;margin:0 auto;padding:18px 16px 120px}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:2px solid var(--line)}
+.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;text-decoration:none;font-size:.72rem;font-weight:800;color:var(--muted);padding:5px 0;border-radius:14px}
+.tabbar a span{font-size:1.35rem;line-height:1.1}
+.tabbar a.on{color:var(--text);background:var(--surface2)}
+@media(min-width:820px){.tabbar{display:none}.topnav{display:flex}main{padding:26px 24px 60px}}
+
+/* ---------- primitives ---------- */
+.card{background:var(--surface);border:2px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sb{justify-content:space-between}
+.center{text-align:center;justify-content:center}
+.sm{font-size:.88rem}.muted{color:var(--muted)}.lead{font-size:1.08rem;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:2px solid var(--line);background:var(--surface);color:var(--text);font-weight:600;font-size:1rem;padding:10px 18px;border-radius:14px;text-decoration:none;cursor:pointer;min-height:46px;box-shadow:0 3px 0 var(--line);transition:transform .08s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
+.btn.primary{background:var(--text);color:var(--bg);border-color:var(--text);box-shadow:0 3px 0 var(--muscle)}
+.btn.big{width:100%;font-size:1.15rem;padding:14px;margin-top:16px}
+.btn.ghost{background:transparent;box-shadow:none}
+.btn.sm{min-height:38px;padding:6px 12px;font-size:.9rem}
+.linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:.85rem;padding:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{border:2px solid var(--line);background:var(--surface);color:var(--text);padding:7px 14px;border-radius:999px;font-weight:600;font-size:.95rem;text-decoration:none;cursor:pointer}
+.chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.chip.sm{font-family:Nunito,sans-serif;font-size:.78rem;font-weight:700;padding:2px 10px;border-width:1px;cursor:default;color:var(--muted)}
+.chips.small{margin:10px 0 0;gap:6px}
+.tag{display:inline-block;font-size:.8rem;font-weight:800;color:var(--accent,var(--mark));background:color-mix(in srgb,var(--accent,var(--mark)) 15%,transparent);padding:2px 10px;border-radius:999px;margin-bottom:8px}
+.pill{display:inline-block;font-size:.75rem;font-weight:800;background:var(--surface2);color:var(--muted);padding:2px 9px;border-radius:999px;vertical-align:middle;font-family:Nunito,sans-serif}
+.bar{height:12px;background:var(--surface2);border-radius:999px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--accent,var(--nerve));border-radius:999px;transition:width .4s}
+.bar.thin{height:8px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.sec{margin-top:30px}
+.huge{font-size:3.2rem;line-height:1.1}
+.empty{text-align:center}
+.lbl{display:block;font-weight:800;margin:16px 0 8px}
+select,input[type=search],input[type=date]{font:inherit;padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--text);min-height:46px;max-width:100%}
+
+/* ---------- home ---------- */
+.hero{display:grid;gap:18px;padding:22px;position:relative;overflow:hidden}
+.hero h1{max-width:15ch}
+.hero .bonestack{display:flex;gap:6px;margin:0 0 12px}
+.hero .bonestack i{height:10px;border-radius:99px;display:block}
+@media(min-width:720px){.hero{grid-template-columns:1fr 230px;align-items:center;padding:30px}}
+.exam{background:var(--surface2);border-radius:18px;padding:16px;text-align:center}
+.exam input{width:100%;margin:8px 0}
+.num{font-size:3.8rem;font-weight:700;line-height:1;color:var(--muscle)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px;text-align:center}
+.stat b{display:block;font-family:Fredoka,sans-serif;font-size:1.55rem;font-weight:600}
+.stat span{font-size:.82rem;color:var(--muted);font-weight:700}
+.deck{text-decoration:none;display:block;border-left:8px solid var(--accent)}
+.deck .emoji{font-size:1.8rem}.deck .pct{font-family:Fredoka,sans-serif;font-weight:700;font-size:1.4rem;color:var(--accent)}
+.tiles{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:760px){.tiles{grid-template-columns:repeat(4,1fr)}}
+.tile{display:flex;flex-direction:column;gap:2px;padding:16px;border-radius:20px;text-decoration:none;color:var(--text);background:color-mix(in srgb,var(--accent) 14%,var(--surface));border:2px solid color-mix(in srgb,var(--accent) 45%,transparent);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 45%,transparent)}
+.tile:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 45%,transparent)}
+.tile .te{font-size:2rem;line-height:1.2}.tile b{font-size:1.15rem;font-weight:600}.tile .ts{font-size:.85rem;color:var(--muted)}
+
+/* ---------- study guide ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.toolbar input[type=search]{flex:1;min-width:200px}
+.seg{display:inline-flex;background:var(--surface2);padding:4px;border-radius:14px}
+.seg a{padding:7px 14px;border-radius:10px;text-decoration:none;font-weight:800;color:var(--muted)}
+.seg a.on{background:var(--surface);color:var(--text)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-weight:700;cursor:pointer}
+.toggle input{width:20px;height:20px;accent-color:var(--mark)}
+.tally{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:4px 0 8px}
+.tally div{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:10px 18px;text-align:center;font-weight:700;color:var(--muted)}
+.tally b{display:block;font-family:Fredoka,sans-serif;font-size:1.9rem;color:var(--text);font-weight:600}
+.tally .op{background:none;border:0;font-size:1.6rem;padding:0 2px}
+.tally .tot b{color:var(--bone)}
+.item{border-left:8px solid var(--accent)}
+.item h2{font-size:1.2rem}
+.oian{display:grid;grid-template-columns:auto 1fr;gap:8px 10px;align-items:start;margin:8px 0;text-align:left}
+.lab{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;color:#fff;font-weight:800;font-size:.85rem}
+.lab.o{background:var(--term)}.lab.i{background:var(--mark)}.lab.a{background:var(--muscle)}.lab.n{background:var(--nerve)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;font-weight:700;color:var(--muted);margin:-4px 0 14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tip{background:var(--surface2);border-radius:12px;padding:8px 12px;font-size:.92rem}
+.mlist{margin:8px 0 0;padding-left:18px}.mlist li{margin:6px 0}
+details.acc{margin-bottom:10px}
+details.acc summary{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:1.05rem;list-style:none}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-family:Fredoka,sans-serif;font-size:1.4rem;color:var(--muted)}
+details.acc[open] summary::after{content:"–"}
+
+/* ---------- flashcards ---------- */
+.flip{perspective:1400px;margin:12px auto;max-width:620px;transition:transform .22s,opacity .22s}
+.flip.flyR{transform:translateX(55%) rotate(8deg);opacity:0}
+.flip.flyL{transform:translateX(-55%) rotate(-8deg);opacity:0}
+.fc{position:relative;height:min(58vh,440px);min-height:300px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,1.35,.5,1);cursor:pointer}
+.fc.on{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:26px;padding:28px 22px 34px;display:flex;flex-direction:column;overflow:auto;background:var(--surface);border:2px solid var(--line);box-shadow:0 6px 0 color-mix(in srgb,var(--accent) 55%,transparent)}
+.face.front{justify-content:center;align-items:center;text-align:center;background:color-mix(in srgb,var(--accent) 13%,var(--surface))}
+.face.back{transform:rotateY(180deg)}
+.fname{font-size:clamp(1.8rem,7vw,2.7rem);font-weight:600;line-height:1.1;margin:0}
+.big{font-size:1.12rem;font-weight:700}
+.hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:.8rem;color:var(--muted);font-weight:700}
+.dots{position:absolute;top:16px;right:18px;display:flex;gap:4px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--good)}
+.fcbtns{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:620px;margin:8px auto}
+.btn.again{background:color-mix(in srgb,var(--bad) 13%,var(--surface));border-color:color-mix(in srgb,var(--bad) 45%,transparent);box-shadow:0 3px 0 color-mix(in srgb,var(--bad) 45%,transparent);font-size:1.1rem;min-height:56px}
+.btn.got{background:color-mix(in srgb,var(--good) 15%,var(--surface));border-color:color-mix(in srgb,var(--good) 45%,transparent);box-shadow:0 3px 0 color-mix(in srgb,var(--good) 45%,transparent);font-size:1.1rem;min-height:56px}
+
+/* ---------- quiz / blitz ---------- */
+.setup{max-width:680px;margin:0 auto}
+.qcard{max-width:720px;margin:14px auto;border-top:8px solid var(--accent)}
+.qsub{font-size:1.06rem;background:var(--surface2);border-radius:14px;padding:12px 14px;font-weight:700}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;width:100%;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--text);font-weight:700;cursor:pointer;min-height:54px;box-shadow:0 3px 0 var(--line)}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .key{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--surface2);font-weight:800;font-size:.85rem}
+.opt.ok{background:var(--good);border-color:var(--good);color:#fff;box-shadow:none}
+.opt.no{background:var(--bad);border-color:var(--bad);color:#fff;box-shadow:none;animation:shake .4s}
+.opt.ok .key,.opt.no .key{background:rgba(255,255,255,.25)}
+.opt:disabled{cursor:default}
+.fb{margin-top:14px;padding:12px 14px;border-radius:14px;font-size:1.05rem}
+.fb.good{background:color-mix(in srgb,var(--good) 15%,transparent)}
+.fb.miss{background:color-mix(in srgb,var(--bad) 13%,transparent)}
+.explain{margin-top:10px;background:var(--surface2);border-radius:14px;padding:10px 14px}
+.explain summary{cursor:pointer;font-weight:800}
+.score{font-family:Fredoka,sans-serif;font-weight:600;font-size:1.15rem}
+.done{text-align:center;max-width:620px;margin:10px auto}
+.bigpct{font-family:Fredoka,sans-serif;font-size:2.6rem;font-weight:700;color:var(--mark)}
+.hud{background:var(--surface);border-radius:16px;padding:10px 16px;border:2px solid var(--line);font-size:1.1rem}
+.timer b{font-family:Fredoka,sans-serif;font-size:1.7rem;color:var(--muscle)}
+.combo{font-weight:800;color:var(--bone);font-family:Fredoka,sans-serif;font-size:1.2rem}
+.timebar i{transition:width .1s linear;background:var(--muscle)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* ---------- match ---------- */
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:720px){.mgrid{grid-template-columns:repeat(4,1fr)}}
+.mt{min-height:96px;padding:10px;border-radius:16px;border:2px solid var(--line);background:var(--surface);color:var(--text);font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 0 var(--line);transition:transform .15s,opacity .3s;overflow-wrap:anywhere}
+.mt.L{font-family:Fredoka,sans-serif;font-weight:600;font-size:1rem;background:color-mix(in srgb,var(--term) 12%,var(--surface))}
+.mt.sel{border-color:var(--bone);background:color-mix(in srgb,var(--bone) 30%,var(--surface));transform:translateY(-3px)}
+.mt.done{background:var(--good);color:#fff;border-color:var(--good);opacity:.3;transform:scale(.94);cursor:default;box-shadow:none}
+.mt.shake{animation:shake .4s;border-color:var(--bad)}
+@media(max-width:400px){.mt{font-size:.8rem;min-height:84px;padding:8px}}
+
+/* ---------- skeleton ---------- */
+.maplay{display:grid;gap:16px}
+@media(min-width:820px){.maplay{grid-template-columns:minmax(280px,430px) 1fr;align-items:start}.panel{position:sticky;top:90px;max-height:calc(100vh - 120px);overflow:auto}}
+.skelwrap{padding:12px;background:var(--skBg)}
+.skel{display:block;width:100%;height:auto;max-height:76vh;margin:0 auto;touch-action:manipulation}
+.skel .bone{fill:var(--skBone);stroke:var(--skEdge);stroke-width:1.3;cursor:pointer;transition:fill .2s,stroke .2s}
+.skel .ln{fill:none;stroke:var(--skBone);stroke-linecap:round}
+.skel .rib{stroke-width:4.5}
+.skel .bone:hover{fill:var(--skHover)}
+.skel .ln:hover{stroke:var(--skHover)}
+.skel .hit{fill:transparent;stroke:none;cursor:pointer}
+.skel .decor{fill:var(--skBg);stroke:var(--skEdge);stroke-width:1;pointer-events:none}
+.skel .bone.hl{fill:var(--bone)}
+.skel .bone.ok{fill:var(--good)}
+.skel .bone.bad{fill:var(--bad)}
+.skel .ln.hl{stroke:var(--bone);fill:none}
+.skel .ln.ok{stroke:var(--good);fill:none}
+.skel .ln.bad{stroke:var(--bad);fill:none}
+.find{font-size:1.7rem;line-height:1.15}
+.find span{color:var(--muscle)}
+.goodtxt{color:var(--good)}.badtxt{color:var(--bad)}
+.mini{padding:10px 0;border-bottom:2px dashed var(--line)}
+
+/* ---------- weak spots / tricks ---------- */
+.wlist{display:grid;gap:10px;margin-top:14px}
+.wrow{padding:12px 16px;border-left:8px solid var(--accent)}
+.wrow summary{display:flex;gap:10px;align-items:center;cursor:pointer;list-style:none}
+.wrow summary::-webkit-details-marker{display:none}
+.wrow summary b{flex:1}
+.wrow[open] summary{margin-bottom:10px}
+.trick{border-top:8px solid var(--accent)}
+.trick .mn{font-size:1.3rem;font-weight:600;color:var(--accent);margin:4px 0 8px;line-height:1.2}
+
+/* ---------- confetti ---------- */
+.cf{position:fixed;top:-16px;width:9px;height:14px;border-radius:2px;z-index:99;pointer-events:none;animation:fall 2s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.cf{display:none}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#home"><span class="logo" aria-hidden="true">🦴</span>Bone Up!</a>
+  <nav class="topnav" aria-label="Main">
+    <a data-nav="home" href="#home">Home</a><a data-nav="learn" href="#learn">Study</a><a data-nav="map" href="#map">Skeleton</a><a data-nav="cards" href="#cards">Flashcards</a><a data-nav="games" href="#games">Games</a>
+  </nav>
+  <button class="iconbtn" id="themeBtn" aria-label="Switch light or dark mode">🌓</button>
+</header>
+<main id="app"></main>
+<nav class="tabbar" aria-label="Main">
+  <a data-nav="home" href="#home"><span>🏠</span>Home</a>
+  <a data-nav="learn" href="#learn"><span>📚</span>Study</a>
+  <a data-nav="map" href="#map"><span>💀</span>Skeleton</a>
+  <a data-nav="cards" href="#cards"><span>🃏</span>Cards</a>
+  <a data-nav="games" href="#games"><span>🎮</span>Games</a>
+</nav>
+<script>
+/* ===================== CONTENT ===================== */
+// [name, region, group, count, nickname, clue, mapPart]
+const BONES = [
+["Frontal","Axial","Cranial bones",1,"Forehead","Forms the forehead and the roofs of the eye orbits; contains the frontal sinuses.","cranium"],
+["Parietal","Axial","Cranial bones",2,"Top and sides of skull","Paired bones forming the roof and upper sides of the cranium; they meet each other at the sagittal suture.","cranium"],
+["Temporal","Axial","Cranial bones",2,"Around the ears","Lower sides of the skull; they house the middle and inner ear and carry the mastoid and styloid processes.","cranium"],
+["Occipital","Axial","Cranial bones",1,"Back of skull","Back and base of the skull; the spinal cord passes through its foramen magnum.","cranium"],
+["Sphenoid","Axial","Cranial bones",1,"Butterfly keystone","Butterfly-shaped keystone of the cranium that touches every other cranial bone; its sella turcica cradles the pituitary gland.","cranium"],
+["Ethmoid","Axial","Cranial bones",1,"Between the eyes","Delicate bone between the orbits; its cribriform plate passes the olfactory nerves and it forms the superior and middle nasal conchae.","cranium"],
+["Nasal","Axial","Facial bones",2,"Bridge of nose","Two small rectangular bones that form the bridge of the nose.","cranium"],
+["Maxilla","Axial","Facial bones",2,"Upper jaw","Upper jaw; holds the upper teeth, forms most of the hard palate, and contains the largest paranasal sinus. The keystone of the face.","cranium"],
+["Zygomatic","Axial","Facial bones",2,"Cheekbone","Cheekbones; form the prominence of the cheek and part of the lateral orbit wall.","cranium"],
+["Mandible","Axial","Facial bones",1,"Lower jaw","Lower jaw: the largest, strongest facial bone and the only movable skull bone (temporomandibular joint).","mandible"],
+["Lacrimal","Axial","Facial bones",2,"Tear-duct bone","Smallest facial bones, in the medial orbit wall; they have a groove for the nasolacrimal (tear) duct.","cranium"],
+["Palatine","Axial","Facial bones",2,"Back of hard palate","L-shaped bones forming the posterior part of the hard palate.","cranium"],
+["Inferior nasal concha","Axial","Facial bones",2,"Lower nasal scroll","Thin, scroll-shaped bones on the lateral walls of the nasal cavity (the only conchae that are separate bones).","cranium"],
+["Vomer","Axial","Facial bones",1,"Plow of the septum","Plow-shaped bone forming the inferior part of the nasal septum.","cranium"],
+["Malleus","Axial","Auditory ossicles",2,"Hammer","The hammer: middle-ear ossicle attached to the eardrum.",null],
+["Incus","Axial","Auditory ossicles",2,"Anvil","The anvil: middle ossicle between the malleus and stapes.",null],
+["Stapes","Axial","Auditory ossicles",2,"Stirrup","The stirrup: the smallest bone in the body; it presses on the oval window of the inner ear.",null],
+["Hyoid","Axial","Hyoid",1,"Floating U in the neck","U-shaped bone in the neck that does not articulate with any other bone; anchors the tongue.",null],
+["Cervical vertebrae","Axial","Vertebral column",7,"Neck, C1–C7","Seven neck vertebrae with transverse foramina. C1 is the atlas, C2 the axis, C7 the vertebra prominens.","cervical"],
+["Thoracic vertebrae","Axial","Vertebral column",12,"Mid-back, T1–T12","Twelve vertebrae with costal facets that articulate with the ribs; long, downward-pointing spinous processes.",null],
+["Lumbar vertebrae","Axial","Vertebral column",5,"Low back, L1–L5","Five vertebrae with the largest, heaviest bodies; they carry the most weight and have short, blunt spinous processes.","lumbar"],
+["Sacrum","Axial","Vertebral column",1,"5 fused, back of pelvis","Five fused vertebrae forming the back wall of the pelvis; joins the ilia at the sacroiliac joints.","sacrum"],
+["Coccyx","Axial","Vertebral column",1,"Tailbone","The tailbone: 3–5 (usually 4) small fused vertebrae.","coccyx"],
+["Sternum","Axial","Thoracic cage",1,"Breastbone","Breastbone made of three parts: manubrium, body, and xiphoid process.","sternum"],
+["True ribs","Axial","Thoracic cage",14,"Ribs 1–7","Pairs 1–7 attach DIRECTLY to the sternum by their own costal cartilage.","ribs"],
+["False ribs","Axial","Thoracic cage",6,"Ribs 8–10","Pairs 8–10 attach INDIRECTLY, joining the costal cartilage of the rib above.","ribs"],
+["Floating ribs","Axial","Thoracic cage",4,"Ribs 11–12","Pairs 11–12 have no anterior attachment at all (technically a subtype of false ribs).","ribs"],
+["Clavicle","Appendicular","Pectoral girdle",2,"Collarbone","S-shaped collarbone acting as a strut between the sternum and scapula; the most commonly fractured bone.","clavicle"],
+["Scapula","Appendicular","Pectoral girdle",2,"Shoulder blade","Triangular shoulder blade; its glenoid cavity forms the shoulder joint with the humerus.","scapula"],
+["Humerus","Appendicular","Upper limb",2,"Arm bone","The only bone of the arm (brachium); its head fits into the glenoid cavity.","humerus"],
+["Radius","Appendicular","Upper limb",2,"Thumb-side forearm","LATERAL forearm bone (thumb side); its head pivots during pronation and supination.","radius"],
+["Ulna","Appendicular","Upper limb",2,"Pinky-side forearm","MEDIAL forearm bone (pinky side); its olecranon forms the point of the elbow.","ulna"],
+["Scaphoid","Appendicular","Carpals",2,"Boat carpal","Boat-shaped proximal carpal on the thumb side; the most frequently fractured carpal (fall on an outstretched hand).","carpals"],
+["Lunate","Appendicular","Carpals",2,"Moon carpal","Moon-shaped proximal carpal next to the scaphoid; the most commonly dislocated carpal.","carpals"],
+["Triquetrum","Appendicular","Carpals",2,"Triangle carpal","Three-cornered proximal carpal on the pinky side, under the pisiform.","carpals"],
+["Pisiform","Appendicular","Carpals",2,"Pea carpal","Pea-shaped sesamoid carpal sitting on the triquetrum; the bump at the base of the palm, pinky side.","carpals"],
+["Trapezium","Appendicular","Carpals",2,"Thumb-base carpal","Distal carpal at the base of the thumb (think trapeziUM = thUMb); forms the thumb's saddle joint.","carpals"],
+["Trapezoid","Appendicular","Carpals",2,"Small wedge carpal","Small wedge-shaped distal carpal between the trapezium and capitate.","carpals"],
+["Capitate","Appendicular","Carpals",2,"Head carpal","Largest carpal, in the center of the distal row; has a rounded head.","carpals"],
+["Hamate","Appendicular","Carpals",2,"Hook carpal","Distal carpal on the pinky side with a hook (hamulus).","carpals"],
+["Metacarpals","Appendicular","Upper limb",10,"Palm bones","Five per hand, numbered I–V starting at the thumb.","metacarpals"],
+["Phalanges (hand)","Appendicular","Upper limb",28,"Finger bones","14 per hand: proximal, middle and distal for each finger; the thumb (pollex) has no middle phalanx.","phalangesH"],
+["Os coxae (hip bone)","Appendicular","Pelvic girdle",2,"Hip bone","Each hip bone forms from three bones (ilium, ischium and pubis) that fuse at the acetabulum.","coxae"],
+["Ilium","Appendicular","Pelvic girdle",0,"Top flare of the hip","Largest, superior part of the os coxae; has the iliac crest you rest your hands on.","coxae"],
+["Ischium","Appendicular","Pelvic girdle",0,"Sit bone","Posteroinferior part of the os coxae; you sit on its ischial tuberosities.","coxae"],
+["Pubis","Appendicular","Pelvic girdle",0,"Front of pelvis","Anterior part of the os coxae; the two pubic bones meet at the pubic symphysis.","coxae"],
+["Femur","Appendicular","Lower limb",2,"Thigh bone","Longest, heaviest, strongest bone in the body.","femur"],
+["Patella","Appendicular","Lower limb",2,"Kneecap","Kneecap: the largest sesamoid bone, sitting inside the quadriceps tendon.","patella"],
+["Tibia","Appendicular","Lower limb",2,"Shin bone","MEDIAL, weight-bearing leg bone (the shin); forms the medial malleolus.","tibia"],
+["Fibula","Appendicular","Lower limb",2,"Thin lateral leg bone","Thin LATERAL leg bone that bears little weight; forms the lateral malleolus.","fibula"],
+["Talus","Appendicular","Tarsals",2,"Ankle bone","Sits on top of the calcaneus and articulates with the tibia and fibula, transferring body weight to the foot.","tarsals"],
+["Calcaneus","Appendicular","Tarsals",2,"Heel bone","Largest tarsal, the heel; the calcaneal (Achilles) tendon attaches here.","tarsals"],
+["Navicular","Appendicular","Tarsals",2,"Boat tarsal","Boat-shaped tarsal on the medial foot, between the talus and the cuneiforms.","tarsals"],
+["Cuboid","Appendicular","Tarsals",2,"Cube tarsal","Cube-shaped tarsal on the lateral side of the foot, in front of the calcaneus.","tarsals"],
+["Medial cuneiform","Appendicular","Tarsals",2,"Wedge #1","Largest cuneiform; articulates with the 1st metatarsal (big-toe side).","tarsals"],
+["Intermediate cuneiform","Appendicular","Tarsals",2,"Wedge #2","Smallest cuneiform, between the medial and lateral cuneiforms; meets the 2nd metatarsal.","tarsals"],
+["Lateral cuneiform","Appendicular","Tarsals",2,"Wedge #3","Wedge-shaped tarsal next to the cuboid; meets the 3rd metatarsal.","tarsals"],
+["Metatarsals","Appendicular","Lower limb",10,"Sole bones","Five per foot, numbered I–V starting at the big toe.","metatarsals"],
+["Phalanges (foot)","Appendicular","Lower limb",28,"Toe bones","14 per foot; the big toe (hallux) has only proximal and distal phalanges.","phalangesF"],
+];
+
+// [term, type, short meaning, definition, example]
+const TERMS = [
+["Tuberosity","Attachment bumps","Large rough bump","Large, rounded projection that may be roughened; a site for muscle or tendon attachment.","Tibial tuberosity; deltoid tuberosity of the humerus"],
+["Crest","Attachment bumps","Prominent ridge","Narrow, usually prominent ridge of bone.","Iliac crest"],
+["Trochanter","Attachment bumps","Huge blunt process, femur only","Very large, blunt, irregularly shaped process. Found ONLY on the femur.","Greater and lesser trochanters"],
+["Line","Attachment bumps","Low ridge","Narrow ridge of bone; less prominent than a crest.","Linea aspera of the femur"],
+["Tubercle","Attachment bumps","Small rounded bump","Small rounded projection or process.","Greater and lesser tubercles of the humerus"],
+["Epicondyle","Attachment bumps","Raised area on a condyle","Raised area on or above a condyle.","Medial and lateral epicondyles of the humerus"],
+["Spine","Attachment bumps","Sharp pointed projection","Sharp, slender, often pointed projection.","Spine of the scapula; ischial spine"],
+["Process","Attachment bumps","Any bony prominence","Any bony prominence (the general term).","Mastoid process; coracoid process"],
+["Head","Joint surfaces","Expanded end on a neck","Bony expansion carried on a narrow neck; forms a joint.","Head of the femur"],
+["Facet","Joint surfaces","Flat smooth joint surface","Smooth, nearly flat articular surface.","Costal facets of thoracic vertebrae"],
+["Condyle","Joint surfaces","Rounded knuckle","Rounded, knuckle-like articular projection.","Occipital condyles; femoral condyles"],
+["Ramus","Joint surfaces","Arm-like bar","Arm-like bar of bone.","Ramus of the mandible; pubic rami"],
+["Trochlea","Joint surfaces","Pulley-shaped surface","Smooth, grooved, pulley-like articular surface.","Trochlea of the humerus"],
+["Meatus","Openings and dents","Canal-like tunnel","Canal-like passageway.","External acoustic meatus"],
+["Sinus","Openings and dents","Air-filled cavity","Cavity within a bone, filled with air and lined with mucous membrane.","Frontal and maxillary sinuses"],
+["Fossa","Openings and dents","Shallow basin","Shallow, basin-like depression, often an articular surface.","Olecranon fossa; mandibular fossa"],
+["Groove (sulcus)","Openings and dents","Furrow","Furrow in a bone, often for a tendon, vessel or nerve.","Intertubercular sulcus of the humerus"],
+["Fissure","Openings and dents","Slit","Narrow, slit-like opening.","Superior orbital fissure"],
+["Foramen","Openings and dents","Round hole","Round or oval opening through a bone for nerves and vessels.","Foramen magnum; obturator foramen"],
+["Notch","Openings and dents","Edge indentation","Indentation at the edge of a structure.","Greater sciatic notch; trochlear notch of the ulna"],
+["Alveolus","Openings and dents","Tooth socket","Socket that holds a tooth.","Alveoli of the mandible and maxilla"],
+["Suture","Joints","Skull seam","Fibrous, immovable joint between skull bones.","Sagittal, coronal, lambdoid and squamous sutures"],
+];
+
+// [marking, bone, description]
+const MARKS = [
+["Coronal suture","Skull (sutures)","Joins the frontal bone to the two parietal bones, running ear to ear over the crown."],
+["Sagittal suture","Skull (sutures)","Joins the two parietal bones along the midline of the skull top."],
+["Lambdoid suture","Skull (sutures)","Joins the parietal bones to the occipital bone; shaped like the Greek letter lambda (λ)."],
+["Squamous suture","Skull (sutures)","Joins each parietal bone to the temporal bone on the side of the skull."],
+["Supraorbital foramen","Frontal","Small hole (or notch) above each orbit for the supraorbital nerve and vessels."],
+["Glabella","Frontal","Smooth area between the eyebrows, above the nose."],
+["Frontal sinus","Frontal","Air-filled cavity behind the brow ridge."],
+["External acoustic meatus","Temporal","Canal of the outer ear leading to the eardrum."],
+["Internal acoustic meatus","Temporal","Opening inside the skull for the facial (VII) and vestibulocochlear (VIII) nerves."],
+["Mastoid process","Temporal","Rounded bump behind the ear; the sternocleidomastoid attaches here."],
+["Styloid process (temporal)","Temporal","Needle-like projection below the ear; anchors neck and tongue muscles and ligaments."],
+["Zygomatic process","Temporal","Bar projecting forward to meet the zygomatic bone, forming the zygomatic arch."],
+["Mandibular fossa","Temporal","Depression that receives the mandibular condyle at the temporomandibular joint (TMJ)."],
+["Carotid canal","Temporal","Passage in the skull base for the internal carotid artery."],
+["Jugular foramen","Temporal","Opening between the temporal and occipital bones for the internal jugular vein and CN IX, X and XI."],
+["Stylomastoid foramen","Temporal","Hole between the styloid and mastoid processes where the facial nerve (VII) exits."],
+["Foramen magnum","Occipital","Large opening at the skull base where the spinal cord joins the brain."],
+["Occipital condyles","Occipital","Rounded knobs beside the foramen magnum that rest on the atlas: the 'yes' nodding joint."],
+["External occipital protuberance","Occipital","Bump on the back of the skull; attachment for the ligamentum nuchae and trapezius."],
+["Hypoglossal canal","Occipital","Canal above each occipital condyle for the hypoglossal nerve (XII)."],
+["Sella turcica","Sphenoid","The 'Turkish saddle' that holds the pituitary gland."],
+["Optic canal","Sphenoid","Passage for the optic nerve (II) and ophthalmic artery into the orbit."],
+["Superior orbital fissure","Sphenoid","Slit in the back of the orbit for CN III, IV, V1 and VI (the eye-movement nerves)."],
+["Foramen rotundum","Sphenoid","Round hole for the maxillary branch of the trigeminal nerve (V2)."],
+["Foramen ovale","Sphenoid","Oval hole for the mandibular branch of the trigeminal nerve (V3)."],
+["Foramen spinosum","Sphenoid","Small hole for the middle meningeal artery."],
+["Greater and lesser wings","Sphenoid","The butterfly wings that spread laterally from the sphenoid body."],
+["Pterygoid processes","Sphenoid","Downward plates that anchor the pterygoid (chewing) muscles."],
+["Crista galli","Ethmoid","'Rooster's comb' ridge that anchors the falx cerebri."],
+["Cribriform plate","Ethmoid","Sieve-like plate whose olfactory foramina let the smell nerves (CN I) through."],
+["Perpendicular plate","Ethmoid","Vertical plate forming the upper part of the nasal septum."],
+["Superior and middle nasal conchae","Ethmoid","Scroll-like projections into the nasal cavity that swirl inhaled air."],
+["Infraorbital foramen","Maxilla","Opening below each orbit for the infraorbital nerve and artery."],
+["Palatine process","Maxilla","Shelf forming the anterior two-thirds of the hard palate."],
+["Alveolar process","Maxilla","Ridge with sockets (alveoli) holding the upper teeth; the mandible has a matching one."],
+["Maxillary sinus","Maxilla","The largest paranasal sinus."],
+["Temporal process","Zygomatic","Projection that meets the temporal bone's zygomatic process to form the zygomatic arch."],
+["Horizontal plate","Palatine","Forms the posterior part of the hard palate."],
+["Ramus of mandible","Mandible","Vertical arm rising from the body of the mandible toward the skull."],
+["Mandibular condyle","Mandible","Rounded top of the ramus that articulates at the TMJ."],
+["Coronoid process (mandible)","Mandible","Anterior projection of the ramus where the temporalis inserts."],
+["Mandibular notch","Mandible","Dip between the coronoid process and the condyle."],
+["Angle of mandible","Mandible","Corner where the body meets the ramus; the masseter inserts here."],
+["Mental foramen","Mandible","Hole on the chin side of the body for the mental nerve and vessels."],
+["Mandibular foramen","Mandible","Hole on the inner ramus for the inferior alveolar nerve, where dentists inject."],
+["Mandibular symphysis","Mandible","Midline ridge where the two halves of the mandible fused."],
+["Vertebral body","Typical vertebra","Thick, weight-bearing, disc-shaped front part of a vertebra."],
+["Vertebral foramen","Typical vertebra","Hole behind the body; stacked together they form the vertebral canal for the spinal cord."],
+["Spinous process","Typical vertebra","Single posterior projection you can feel down your back."],
+["Transverse process","Typical vertebra","Paired lateral projections for muscle and rib attachment."],
+["Pedicle","Typical vertebra","Short feet connecting the body to the transverse processes."],
+["Lamina","Typical vertebra","Flat plates from the transverse to the spinous process; the roof of the vertebral arch."],
+["Superior and inferior articular processes","Typical vertebra","Projections with facets where neighboring vertebrae join."],
+["Intervertebral foramen","Typical vertebra","Side opening between two vertebrae where spinal nerves exit."],
+["Transverse foramen","Cervical vertebrae","Hole in each cervical transverse process for the vertebral artery; unique to cervical vertebrae."],
+["Bifid spinous process","Cervical vertebrae","Split, forked spinous process typical of C2–C6."],
+["Lateral masses (atlas)","Cervical vertebrae (C1 atlas)","Thick sides of the ring-shaped atlas, which has no body or spinous process; they carry the facets for the occipital condyles."],
+["Dens (odontoid process)","Cervical vertebrae (C2 axis)","Tooth-like peg of the axis that the atlas pivots around: the 'no' joint."],
+["Vertebra prominens","Cervical vertebrae","C7: its long, non-bifid spinous process is the bump at the base of your neck."],
+["Costal facets","Thoracic vertebrae","Smooth facets on the bodies and transverse processes where the ribs articulate; unique to thoracic vertebrae."],
+["Sacral promontory","Sacrum","Anterior upper lip of S1; a landmark for measuring the pelvic inlet."],
+["Sacral foramina","Sacrum","Four pairs of holes for the sacral spinal nerves."],
+["Median sacral crest","Sacrum","Ridge on the back of the sacrum formed by fused spinous processes."],
+["Auricular surface (sacrum)","Sacrum","Ear-shaped surface that joins the ilium at the sacroiliac joint."],
+["Sacral hiatus","Sacrum","Lower opening of the sacral canal (site for caudal epidurals)."],
+["Manubrium","Sternum","Upper, broad part of the sternum that articulates with the clavicles and 1st ribs."],
+["Jugular (suprasternal) notch","Sternum","Dip at the top of the manubrium between the clavicles."],
+["Sternal angle","Sternum","Ridge where the manubrium meets the body; landmark for rib 2 (T4/T5 level)."],
+["Xiphoid process","Sternum","Small, pointed lower tip of the sternum; ossifies with age."],
+["Rib head","Ribs","Posterior end that articulates with the vertebral bodies."],
+["Rib tubercle","Ribs","Bump that articulates with a vertebra's transverse process."],
+["Costal groove","Ribs","Groove on the inferior inner surface that shelters the intercostal nerve, artery and vein."],
+["Costal cartilage","Ribs","Hyaline cartilage connecting the ribs to the sternum."],
+["Acromial end","Clavicle","Flattened lateral end that joins the acromion of the scapula."],
+["Sternal end","Clavicle","Rounded medial end that joins the manubrium."],
+["Conoid tubercle","Clavicle","Bump on the underside of the lateral clavicle for the coracoclavicular ligament."],
+["Spine of scapula","Scapula","Prominent ridge across the back of the scapula."],
+["Acromion","Scapula","Flattened end of the scapular spine; the point of the shoulder."],
+["Coracoid process","Scapula","Beak-like anterior projection; attachment for biceps (short head), coracobrachialis and pectoralis minor."],
+["Glenoid cavity","Scapula","Shallow socket that receives the head of the humerus."],
+["Supraspinous fossa","Scapula","Depression above the spine; origin of supraspinatus."],
+["Infraspinous fossa","Scapula","Large depression below the spine; origin of infraspinatus."],
+["Subscapular fossa","Scapula","Concave anterior surface; origin of subscapularis."],
+["Suprascapular notch","Scapula","Notch on the superior border for the suprascapular nerve."],
+["Medial (vertebral) border","Scapula","Edge closest to the spine; rhomboids and serratus anterior attach."],
+["Lateral (axillary) border","Scapula","Edge closest to the armpit; origin of teres minor and teres major."],
+["Inferior angle","Scapula","Bottom point of the scapula (about T7); origin of teres major."],
+["Supraglenoid tubercle","Scapula","Bump above the glenoid cavity; origin of the biceps long head."],
+["Infraglenoid tubercle","Scapula","Bump below the glenoid cavity; origin of the triceps long head."],
+["Head of humerus","Humerus","Smooth hemisphere that fits into the glenoid cavity."],
+["Anatomical neck","Humerus","Slight constriction just below the head."],
+["Surgical neck","Humerus","Narrowing below the tubercles; the common fracture site (risk to the axillary nerve)."],
+["Greater tubercle","Humerus","Large lateral bump; insertion of supraspinatus, infraspinatus and teres minor."],
+["Lesser tubercle","Humerus","Smaller anterior bump; insertion of subscapularis."],
+["Intertubercular sulcus","Humerus","Groove between the tubercles that guides the biceps long-head tendon."],
+["Deltoid tuberosity","Humerus","Roughened V-shaped area midway down the shaft where the deltoid inserts."],
+["Radial groove","Humerus","Spiral groove on the posterior shaft for the radial nerve."],
+["Medial epicondyle of humerus","Humerus","Large inner bump: common flexor origin; the ulnar nerve passes behind it (the funny bone)."],
+["Lateral epicondyle of humerus","Humerus","Outer bump: common extensor origin (tennis elbow)."],
+["Trochlea","Humerus","Spool-shaped medial surface that articulates with the ulna."],
+["Capitulum","Humerus","Ball-like lateral surface that articulates with the radial head."],
+["Olecranon fossa","Humerus","Deep posterior depression that receives the olecranon when the elbow straightens."],
+["Coronoid fossa","Humerus","Anterior depression that receives the ulna's coronoid process when the elbow bends."],
+["Head of radius","Radius","Disc-shaped proximal end that spins against the capitulum and radial notch."],
+["Radial tuberosity","Radius","Bump below the head where the biceps brachii inserts."],
+["Styloid process of radius","Radius","Pointed distal projection on the thumb side; brachioradialis inserts."],
+["Ulnar notch","Radius","Distal concavity where the head of the ulna articulates."],
+["Olecranon","Ulna","Large proximal projection: the point of the elbow, where the triceps inserts."],
+["Coronoid process of ulna","Ulna","Anterior lip below the trochlear notch; brachialis inserts nearby."],
+["Trochlear notch","Ulna","C-shaped 'wrench jaw' that grips the trochlea of the humerus."],
+["Radial notch","Ulna","Small lateral depression where the radial head pivots."],
+["Head of ulna","Ulna","Rounded DISTAL end of the ulna. Yes, its head is at the wrist!"],
+["Styloid process of ulna","Ulna","Small pointed distal projection on the pinky side."],
+["Iliac crest","Os coxae (ilium)","Thick upper rim of the ilium, where you rest your hands on your hips."],
+["Anterior superior iliac spine (ASIS)","Os coxae (ilium)","Front tip of the iliac crest; sartorius and the inguinal ligament attach."],
+["Anterior inferior iliac spine (AIIS)","Os coxae (ilium)","Projection below the ASIS; origin of rectus femoris."],
+["Posterior superior iliac spine (PSIS)","Os coxae (ilium)","Back end of the iliac crest: the dimples above the buttocks."],
+["Iliac fossa","Os coxae (ilium)","Smooth inner bowl of the ilium; origin of iliacus."],
+["Greater sciatic notch","Os coxae (ilium)","Deep notch that the sciatic nerve passes through."],
+["Auricular surface (ilium)","Os coxae (ilium)","Ear-shaped surface that joins the sacrum at the sacroiliac joint."],
+["Ischial tuberosity","Os coxae (ischium)","Rough sit bone; origin of the hamstrings."],
+["Ischial spine","Os coxae (ischium)","Pointed projection between the greater and lesser sciatic notches."],
+["Lesser sciatic notch","Os coxae (ischium)","Smaller notch below the ischial spine."],
+["Ischial ramus","Os coxae (ischium)","Bar of bone that joins the inferior pubic ramus."],
+["Pubic symphysis","Os coxae (pubis)","Fibrocartilage joint where the two pubic bones meet at the midline."],
+["Superior pubic ramus","Os coxae (pubis)","Upper bar of the pubis extending toward the acetabulum."],
+["Inferior pubic ramus","Os coxae (pubis)","Lower bar of the pubis that joins the ischial ramus."],
+["Pubic tubercle","Os coxae (pubis)","Small bump on the pubis; attachment for the inguinal ligament."],
+["Acetabulum","Os coxae","Deep hip socket where the ilium, ischium and pubis meet; receives the femoral head."],
+["Obturator foramen","Os coxae","Largest foramen in the body, ringed by the pubis and ischium; mostly closed by a membrane."],
+["Head of femur","Femur","Ball that fits into the acetabulum."],
+["Fovea capitis","Femur","Small pit in the femoral head for the ligament of the head of the femur."],
+["Neck of femur","Femur","Angled segment below the head; the common 'broken hip' site in older adults."],
+["Greater trochanter","Femur","Large lateral projection; gluteus medius, gluteus minimus and piriformis insert."],
+["Lesser trochanter","Femur","Smaller posteromedial projection; iliopsoas inserts."],
+["Intertrochanteric line","Femur","ANTERIOR ridge between the trochanters."],
+["Intertrochanteric crest","Femur","POSTERIOR ridge between the trochanters."],
+["Gluteal tuberosity","Femur","Rough area on the upper posterior shaft where gluteus maximus inserts."],
+["Linea aspera","Femur","Rough vertical ridge down the posterior shaft; attachment for the adductors and vasti."],
+["Medial and lateral condyles of femur","Femur","Rounded distal ends that articulate with the tibia."],
+["Medial and lateral epicondyles of femur","Femur","Raised areas on the sides of the condyles for ligaments."],
+["Adductor tubercle","Femur","Small bump above the medial epicondyle where adductor magnus inserts."],
+["Intercondylar fossa","Femur","Notch between the condyles posteriorly; houses the cruciate ligaments."],
+["Patellar surface","Femur","Smooth anterior groove where the patella glides."],
+["Base of patella","Patella","Broad SUPERIOR border (yes, the base is on top)."],
+["Apex of patella","Patella","Pointed INFERIOR tip where the patellar ligament attaches."],
+["Medial and lateral condyles of tibia","Tibia","Flat-topped proximal plateaus that articulate with the femoral condyles."],
+["Intercondylar eminence","Tibia","Ridge between the tibial condyles; cruciate ligaments and menisci attach nearby."],
+["Tibial tuberosity","Tibia","Rough bump below the knee where the patellar ligament (quadriceps) inserts."],
+["Anterior border (crest) of tibia","Tibia","Sharp ridge you can feel down your shin."],
+["Medial malleolus","Tibia","Inner ankle bump."],
+["Fibular notch","Tibia","Lateral distal notch where the fibula joins the tibia."],
+["Soleal line","Tibia","Oblique line on the posterior tibia; origin of soleus."],
+["Head of fibula","Fibula","Proximal knob below the lateral knee; biceps femoris inserts."],
+["Lateral malleolus","Fibula","Outer ankle bump; it sits LOWER than the medial malleolus."],
+["Calcaneal tuberosity","Calcaneus","Back of the heel where the calcaneal (Achilles) tendon inserts."],
+["Sustentaculum tali","Calcaneus","Shelf on the medial calcaneus that supports the talus."],
+["Trochlea of talus","Talus","Pulley-shaped top surface that articulates with the tibia."],
+];
+
+// [name, region, origin, insertion, action, nerve, tip]
+const MUSCLES = [
+["Frontalis","Head and face","Epicranial aponeurosis","Skin of the eyebrows","Raises the eyebrows; wrinkles the forehead","Facial nerve (CN VII)","The surprised muscle: front belly of occipitofrontalis."],
+["Orbicularis oculi","Head and face","Medial orbital margin (frontal bone and maxilla)","Skin and tissue around the eye and eyelids","Closes the eye; blinking and squinting","Facial nerve (CN VII)","Orbicularis = circular; oculi = eye."],
+["Orbicularis oris","Head and face","Maxilla and mandible (fibers encircle the mouth)","Skin and muscle of the lips","Closes and protrudes (puckers) the lips","Facial nerve (CN VII)","The kissing muscle."],
+["Zygomaticus major","Head and face","Zygomatic bone","Corner (angle) of the mouth","Elevates and draws the mouth corner laterally: smiling","Facial nerve (CN VII)","Runs from your cheekbone to your smile."],
+["Buccinator","Head and face","Alveolar processes of maxilla and mandible (molar region)","Orbicularis oris at the corner of the mouth","Compresses the cheek; keeps food between the teeth; whistling and blowing","Facial nerve (CN VII)","Latin buccinator = trumpeter."],
+["Platysma","Head and face","Fascia over pectoralis major and deltoid","Mandible and skin of the lower face","Tenses neck skin; depresses the mandible and lower lip","Facial nerve (CN VII)","The grimace sheet over the front of the neck."],
+["Masseter","Head and face","Zygomatic arch","Angle and ramus of the mandible","Elevates the mandible (closes the jaw); prime mover of chewing","Trigeminal nerve (CN V, mandibular branch)","Clench your teeth and feel it bulge at your jaw angle."],
+["Temporalis","Head and face","Temporal fossa","Coronoid process of the mandible","Elevates and retracts the mandible","Trigeminal nerve (CN V, mandibular branch)","Clench and feel it at your temple."],
+["Medial pterygoid","Head and face","Medial surface of the lateral pterygoid plate (sphenoid)","Medial surface of the ramus and angle of the mandible","Elevates the mandible; side-to-side grinding","Trigeminal nerve (CN V, mandibular branch)","Mirrors the masseter on the inside of the jaw."],
+["Lateral pterygoid","Head and face","Greater wing and lateral pterygoid plate of the sphenoid","Neck of the mandibular condyle and TMJ disc","Protrudes and depresses the mandible (opens the jaw); side-to-side grinding","Trigeminal nerve (CN V, mandibular branch)","The only chewing muscle that OPENS the jaw."],
+["Sternocleidomastoid","Neck","Manubrium of the sternum and medial clavicle","Mastoid process of the temporal bone","Both sides: flex the neck. One side: tilts the head to the same side and turns the face to the OPPOSITE side","Accessory nerve (CN XI)","The name is its attachments: sterno + cleido (clavicle) + mastoid."],
+["Scalenes","Neck","Transverse processes of cervical vertebrae","Ribs 1 and 2","Elevate ribs 1–2 (inspiration); flex and laterally flex the neck","Cervical spinal nerves (ventral rami)","Anterior, middle and posterior: they hang the top ribs from the neck."],
+["Splenius capitis","Neck","Ligamentum nuchae and spinous processes C7–T3","Mastoid process and superior nuchal line","Extends the head; rotates and tilts the head to the same side","Dorsal rami of cervical nerves","A bandage-like strap (splenius) on the back of the neck."],
+["Trapezius","Back","External occipital protuberance, ligamentum nuchae, spinous processes C7–T12","Lateral clavicle, acromion and spine of the scapula","Elevates, retracts, depresses and upwardly rotates the scapula; extends the head","Accessory nerve (CN XI)","Both sides together make a trapezoid. Shrugging = upper traps."],
+["Latissimus dorsi","Back","Spinous processes T7–L5 (via thoracolumbar fascia), iliac crest, lower ribs","Floor of the intertubercular sulcus of the humerus","Extends, adducts and medially rotates the arm","Thoracodorsal nerve","The swimmer's muscle: pull-ups and rowing."],
+["Rhomboid major","Back","Spinous processes T2–T5","Medial border of the scapula, below the spine","Retracts (adducts) and downwardly rotates the scapula","Dorsal scapular nerve","Squeeze your shoulder blades together."],
+["Rhomboid minor","Back","Spinous processes C7–T1","Medial border of the scapula, at the root of the spine","Retracts and downwardly rotates the scapula","Dorsal scapular nerve","Minor sits just ABOVE major."],
+["Levator scapulae","Back","Transverse processes C1–C4","Superior angle and upper medial border of the scapula","Elevates the scapula; tilts the neck","Dorsal scapular nerve (and C3–C4)","Levator = lifter. It lifts the scapula."],
+["Erector spinae","Back","Iliac crest, sacrum and lumbar spinous processes","Ribs, vertebrae and mastoid process","Extends and laterally flexes the vertebral column (posture)","Dorsal rami of spinal nerves","Three columns, lateral to medial: Iliocostalis, Longissimus, Spinalis. 'I Love Spaghetti.'"],
+["Quadratus lumborum","Back","Iliac crest","Rib 12 and transverse processes L1–L4","Laterally flexes the lumbar spine; fixes rib 12 during breathing","Ventral rami T12–L4","A square-ish muscle of the low back, the 'hip hiker'."],
+["Pectoralis major","Chest and breathing","Medial clavicle, sternum and costal cartilages 1–6","Lateral lip of the intertubercular sulcus","Flexes, adducts and medially rotates the arm","Medial and lateral pectoral nerves","The push-up and bench-press muscle."],
+["Pectoralis minor","Chest and breathing","Ribs 3–5","Coracoid process of the scapula","Protracts and depresses the scapula; elevates ribs in forced inspiration","Medial pectoral nerve","Small and tucked under pec major, reaching up to the coracoid."],
+["Serratus anterior","Chest and breathing","Lateral surfaces of ribs 1–8","Anterior surface of the medial border of the scapula","Protracts and upwardly rotates the scapula","Long thoracic nerve","The boxer's muscle; damage causes a winged scapula."],
+["External intercostals","Chest and breathing","Inferior border of the rib above","Superior border of the rib below","Elevate the ribs: inspiration","Intercostal nerves","Fibers run like hands in your front pockets (down and forward)."],
+["Internal intercostals","Chest and breathing","Superior border of the rib below","Inferior border of the rib above","Depress the ribs: forced expiration","Intercostal nerves","Run at right angles to the externals."],
+["Diaphragm","Chest and breathing","Xiphoid process, lower 6 costal cartilages and lumbar vertebrae","Central tendon","Contracts and flattens to enlarge the thoracic cavity; prime mover of inspiration","Phrenic nerve","'C3, 4, 5 keeps the diaphragm alive.'"],
+["Rectus abdominis","Abdomen","Pubic crest and pubic symphysis","Xiphoid process and costal cartilages 5–7","Flexes the vertebral column; compresses the abdomen","Intercostal nerves (T7–T12)","The six-pack, divided by tendinous intersections."],
+["External oblique","Abdomen","External surfaces of the lower 8 ribs","Linea alba, pubic tubercle and iliac crest","Compresses the abdomen; flexes the trunk; rotates the trunk to the OPPOSITE side","Intercostal nerves (T7–T12)","Most superficial side abdominal muscle; fibers point down and in, like hands in pockets."],
+["Internal oblique","Abdomen","Thoracolumbar fascia, iliac crest and inguinal ligament","Linea alba, pubic crest and lower 3–4 ribs","Compresses the abdomen; flexes the trunk; rotates the trunk to the SAME side","Intercostal nerves (T7–T12 and L1)","Fibers run at right angles to the external oblique."],
+["Transversus abdominis","Abdomen","Inguinal ligament, iliac crest, thoracolumbar fascia and costal cartilages 7–12","Linea alba and pubic crest","Compresses the abdominal contents","Intercostal nerves (T7–T12 and L1)","Deepest layer: a built-in corset with horizontal fibers."],
+["Deltoid","Shoulder","Lateral clavicle, acromion and spine of the scapula","Deltoid tuberosity of the humerus","Abducts the arm (prime mover); anterior fibers flex and medially rotate, posterior fibers extend and laterally rotate","Axillary nerve","Common IM injection site. Triangular like the Greek letter delta (Δ)."],
+["Supraspinatus","Shoulder","Supraspinous fossa","Greater tubercle of the humerus (top)","Initiates abduction of the arm (first ~15°)","Suprascapular nerve","The first S of SITS, and the rotator cuff tendon most often torn."],
+["Infraspinatus","Shoulder","Infraspinous fossa","Greater tubercle of the humerus (middle)","Laterally rotates the arm","Suprascapular nerve","The I of SITS."],
+["Teres minor","Shoulder","Lateral border of the scapula","Greater tubercle of the humerus (bottom)","Laterally rotates the arm","Axillary nerve","The T of SITS. Minor is IN the cuff; major is not."],
+["Subscapularis","Shoulder","Subscapular fossa","Lesser tubercle of the humerus","Medially rotates the arm","Upper and lower subscapular nerves","The last S of SITS, and the only cuff muscle on the LESSER tubercle."],
+["Teres major","Shoulder","Inferior angle of the scapula","Medial lip of the intertubercular sulcus","Extends, adducts and medially rotates the arm","Lower subscapular nerve","Lat's little helper: same actions as latissimus dorsi."],
+["Coracobrachialis","Arm","Coracoid process","Medial shaft of the humerus","Flexes and adducts the arm","Musculocutaneous nerve","The name says it: coracoid to brachium (arm)."],
+["Biceps brachii","Arm","Short head: coracoid process. Long head: supraglenoid tubercle","Radial tuberosity (and bicipital aponeurosis)","Flexes the elbow; supinates the forearm; weakly flexes the shoulder","Musculocutaneous nerve","Supinate to hold a bowl of soup, then lift it."],
+["Brachialis","Arm","Distal anterior humerus","Coronoid process and tuberosity of the ulna","Flexes the elbow (prime mover, the workhorse)","Musculocutaneous nerve","Lies deep to biceps and flexes no matter how the forearm is turned."],
+["Brachioradialis","Arm","Lateral supracondylar ridge of the humerus","Styloid process of the radius","Flexes the elbow, strongest with the thumb up","Radial nerve","The one elbow FLEXOR supplied by the radial nerve."],
+["Triceps brachii","Arm","Long head: infraglenoid tubercle. Lateral and medial heads: posterior humerus","Olecranon of the ulna","Extends the elbow (prime mover); long head extends the shoulder","Radial nerve","Three heads, one job: straighten the arm."],
+["Anconeus","Arm","Lateral epicondyle of the humerus","Olecranon and posterior proximal ulna","Assists the triceps in elbow extension","Radial nerve","A tiny triangle at the back of the elbow."],
+["Pronator teres","Forearm","Medial epicondyle and coronoid process of the ulna","Lateral shaft of the radius (midway)","Pronates the forearm; weakly flexes the elbow","Median nerve","Teres = round. It rolls the radius over the ulna."],
+["Pronator quadratus","Forearm","Distal anterior ulna","Distal anterior radius","Pronates the forearm (prime mover)","Median nerve (anterior interosseous branch)","A square muscle just above the wrist."],
+["Supinator","Forearm","Lateral epicondyle and supinator crest of the ulna","Proximal lateral radius","Supinates the forearm","Radial nerve (deep branch)","Wraps around the radius to turn the palm up."],
+["Flexor carpi radialis","Forearm","Medial epicondyle (common flexor origin)","Bases of metacarpals II and III","Flexes and abducts the wrist","Median nerve","Its tendon is a landmark for finding the radial pulse."],
+["Palmaris longus","Forearm","Medial epicondyle","Palmar aponeurosis","Weakly flexes the wrist; tenses the palmar fascia","Median nerve","Missing in about 15% of people. Touch thumb to pinky and flex your wrist to check."],
+["Flexor carpi ulnaris","Forearm","Medial epicondyle and olecranon/posterior ulna","Pisiform, hamate and base of metacarpal V","Flexes and adducts the wrist","Ulnar nerve","The ONE wrist flexor on the ulnar nerve."],
+["Flexor digitorum superficialis","Forearm","Medial epicondyle, coronoid process and anterior radius","Middle phalanges of digits 2–5","Flexes the fingers (PIP joints) and the wrist","Median nerve","Superficial splits: its tendons split to let the profundus tendons pass through."],
+["Flexor digitorum profundus","Forearm","Anterior ulna and interosseous membrane","Distal phalanges of digits 2–5","Flexes the fingers (DIP joints) and the wrist","Median (lateral half) and ulnar (medial half) nerves","Profundus goes past, all the way to the DISTAL phalanges."],
+["Flexor pollicis longus","Forearm","Anterior radius and interosseous membrane","Distal phalanx of the thumb","Flexes the thumb","Median nerve (anterior interosseous branch)","Pollicis = thumb."],
+["Extensor carpi radialis longus","Forearm","Lateral supracondylar ridge of the humerus","Base of metacarpal II","Extends and abducts the wrist","Radial nerve","Longus starts higher (on the ridge); brevis starts on the epicondyle."],
+["Extensor carpi radialis brevis","Forearm","Lateral epicondyle (common extensor origin)","Base of metacarpal III","Extends and abducts the wrist","Radial nerve (deep branch)","The muscle most involved in tennis elbow."],
+["Extensor carpi ulnaris","Forearm","Lateral epicondyle and posterior ulna","Base of metacarpal V","Extends and adducts the wrist","Radial nerve (posterior interosseous)","Teams up with flexor carpi ulnaris to adduct the wrist."],
+["Extensor digitorum","Forearm","Lateral epicondyle","Extensor expansions of digits 2–5 (middle and distal phalanges)","Extends the fingers and wrist","Radial nerve (posterior interosseous)","Lift your fingers off a table and watch the tendons pop."],
+["Extensor pollicis longus","Forearm","Posterior ulna and interosseous membrane","Distal phalanx of the thumb","Extends the thumb","Radial nerve (posterior interosseous)","Forms a border of the anatomical snuffbox."],
+["Abductor pollicis longus","Forearm","Posterior radius, ulna and interosseous membrane","Base of metacarpal I","Abducts and extends the thumb","Radial nerve (posterior interosseous)","Also borders the anatomical snuffbox."],
+["Abductor pollicis brevis","Hand","Flexor retinaculum, scaphoid and trapezium","Lateral base of the proximal phalanx of the thumb","Abducts the thumb","Median nerve (recurrent branch)","Part of the thenar eminence (the thumb pad)."],
+["Opponens pollicis","Hand","Flexor retinaculum and trapezium","Lateral side of metacarpal I","Opposes the thumb (thumb to pinky)","Median nerve (recurrent branch)","Opposition is what makes the human hand special."],
+["Adductor pollicis","Hand","Capitate and metacarpals II–III","Medial base of the proximal phalanx of the thumb","Adducts the thumb","Ulnar nerve (deep branch)","The one thumb muscle on the ulnar nerve."],
+["Lumbricals","Hand","Tendons of flexor digitorum profundus","Extensor expansions of digits 2–5","Flex the MCP joints and extend the IP joints","Median (1st and 2nd) and ulnar (3rd and 4th) nerves","Worm-shaped. They make the tabletop hand position."],
+["Dorsal interossei","Hand","Adjacent sides of the metacarpals","Proximal phalanges and extensor expansions","Abduct (spread) the fingers","Ulnar nerve (deep branch)","DAB: Dorsal ABduct."],
+["Palmar interossei","Hand","Metacarpals II, IV and V","Proximal phalanges of the same digits","Adduct the fingers (bring them together)","Ulnar nerve (deep branch)","PAD: Palmar ADduct."],
+["Psoas major","Hip and gluteal","Bodies and transverse processes of T12–L5","Lesser trochanter of the femur","Flexes the hip (prime mover, with iliacus); flexes the trunk","Lumbar plexus (L1–L3 ventral rami)","Psoas major + iliacus = iliopsoas."],
+["Iliacus","Hip and gluteal","Iliac fossa","Lesser trochanter of the femur","Flexes the hip (with psoas major)","Femoral nerve","Lines the inside bowl of the ilium."],
+["Gluteus maximus","Hip and gluteal","Posterior ilium, sacrum and coccyx","Gluteal tuberosity and iliotibial tract","Extends the hip (climbing stairs, standing up); laterally rotates the thigh","Inferior gluteal nerve","The largest, most superficial glute."],
+["Gluteus medius","Hip and gluteal","Outer surface of the ilium","Greater trochanter of the femur","Abducts and medially rotates the thigh; keeps the pelvis level when walking","Superior gluteal nerve","Weakness causes a Trendelenburg gait (the hip drops). A safe IM injection site."],
+["Gluteus minimus","Hip and gluteal","Outer surface of the ilium, below medius","Anterior greater trochanter","Abducts and medially rotates the thigh","Superior gluteal nerve","Smallest and deepest glute; medius's partner."],
+["Tensor fasciae latae","Hip and gluteal","Iliac crest and anterior superior iliac spine (ASIS)","Iliotibial tract","Flexes, abducts and medially rotates the thigh; steadies the knee","Superior gluteal nerve","Tenses the fascia lata, a.k.a. the IT band."],
+["Piriformis","Hip and gluteal","Anterior surface of the sacrum","Greater trochanter of the femur","Laterally rotates the thigh; abducts the flexed thigh","Nerve to piriformis (S1–S2)","Pear-shaped; the sciatic nerve exits just below it."],
+["Sartorius","Thigh","Anterior superior iliac spine (ASIS)","Medial proximal tibia (pes anserinus)","Flexes, abducts and laterally rotates the hip; flexes the knee","Femoral nerve","Longest muscle in the body; the tailor's cross-legged sitting muscle."],
+["Rectus femoris","Thigh","Anterior inferior iliac spine (AIIS) and above the acetabulum","Tibial tuberosity via the patellar ligament","Extends the knee; flexes the hip","Femoral nerve","The only quad that crosses the hip: the kicking muscle."],
+["Vastus lateralis","Thigh","Greater trochanter and lateral lip of the linea aspera","Tibial tuberosity via the patellar ligament","Extends the knee","Femoral nerve","Largest quad; common IM injection site in infants."],
+["Vastus medialis","Thigh","Intertrochanteric line and medial lip of the linea aspera","Tibial tuberosity via the patellar ligament","Extends the knee; stabilizes the patella","Femoral nerve","The teardrop just above the inner knee."],
+["Vastus intermedius","Thigh","Anterior and lateral shaft of the femur","Tibial tuberosity via the patellar ligament","Extends the knee","Femoral nerve","Hidden deep to rectus femoris, in the intermediate spot."],
+["Pectineus","Thigh","Superior pubic ramus (pectineal line)","Pectineal line of the femur, below the lesser trochanter","Adducts and flexes the thigh","Femoral nerve","The adductor supplied by the femoral nerve."],
+["Adductor longus","Thigh","Body of the pubis","Middle of the linea aspera","Adducts and flexes the thigh","Obturator nerve","The classic groin-pull muscle."],
+["Adductor brevis","Thigh","Body and inferior ramus of the pubis","Upper linea aspera","Adducts the thigh","Obturator nerve","The short adductor, deep to longus."],
+["Adductor magnus","Thigh","Ischial tuberosity and ischiopubic ramus","Linea aspera and adductor tubercle","Adducts the thigh; front part flexes, hamstring part extends the hip","Obturator nerve and tibial part of the sciatic nerve","The biggest adductor: part adductor, part hamstring."],
+["Gracilis","Thigh","Body and inferior ramus of the pubis","Medial proximal tibia (pes anserinus)","Adducts the thigh; flexes the knee","Obturator nerve","Gracilis = slender. Pes anserinus: 'Say Grace before Tea.'"],
+["Biceps femoris","Thigh","Long head: ischial tuberosity. Short head: linea aspera","Head of the fibula","Flexes the knee; long head extends the hip","Sciatic nerve (tibial part for long head, common fibular part for short head)","The LATERAL hamstring."],
+["Semitendinosus","Thigh","Ischial tuberosity","Medial proximal tibia (pes anserinus)","Flexes the knee; extends the hip","Sciatic nerve (tibial part)","Long cord-like Tendon; semiTendinosus sits on Top of semimembranosus."],
+["Semimembranosus","Thigh","Ischial tuberosity","Posterior medial condyle of the tibia","Flexes the knee; extends the hip","Sciatic nerve (tibial part)","Flat, membrane-like upper tendon; deep to semitendinosus."],
+["Tibialis anterior","Leg","Lateral condyle and upper lateral shaft of the tibia","Medial cuneiform and base of metatarsal I","Dorsiflexes and inverts the foot","Deep fibular (peroneal) nerve","Tap your toes and feel it on your shin."],
+["Extensor digitorum longus","Leg","Lateral condyle of the tibia and proximal fibula","Middle and distal phalanges of toes 2–5","Extends toes 2–5; dorsiflexes the foot","Deep fibular (peroneal) nerve","The foot's version of the forearm's extensor digitorum."],
+["Extensor hallucis longus","Leg","Middle anterior fibula and interosseous membrane","Distal phalanx of the big toe","Extends the big toe; dorsiflexes the foot","Deep fibular (peroneal) nerve","Hallux = big toe."],
+["Fibularis longus","Leg","Head and upper lateral fibula","Base of metatarsal I and medial cuneiform (under the foot)","Plantarflexes and everts the foot; supports the arches","Superficial fibular (peroneal) nerve","Also called peroneus longus; its tendon crosses under the sole."],
+["Fibularis brevis","Leg","Distal lateral fibula","Tuberosity at the base of metatarsal V","Plantarflexes and everts the foot","Superficial fibular (peroneal) nerve","Also called peroneus brevis; passes behind the lateral malleolus."],
+["Gastrocnemius","Leg","Medial and lateral condyles of the femur","Calcaneus via the calcaneal (Achilles) tendon","Plantarflexes the foot; flexes the knee","Tibial nerve","The two-headed 'belly of the leg' you see as the calf."],
+["Soleus","Leg","Head and proximal fibula; soleal line of the tibia","Calcaneus via the calcaneal (Achilles) tendon","Plantarflexes the foot (key for standing posture)","Tibial nerve","Flat like a sole fish; lies deep to gastrocnemius."],
+["Popliteus","Leg","Lateral condyle of the femur","Posterior proximal tibia, above the soleal line","Unlocks the straightened knee (medially rotates the tibia); flexes the knee","Tibial nerve","The key that unlocks the knee."],
+["Tibialis posterior","Leg","Posterior tibia, fibula and interosseous membrane","Navicular, cuneiforms, cuboid and metatarsals II–IV","Plantarflexes and inverts the foot; supports the medial arch","Tibial nerve","The deepest back-of-leg muscle: 'Tom' in Tom, Dick and Harry."],
+["Flexor digitorum longus","Leg","Posterior tibia","Distal phalanges of toes 2–5","Flexes toes 2–5; plantarflexes the foot","Tibial nerve","'Dick' in Tom, Dick and Harry behind the medial malleolus."],
+["Flexor hallucis longus","Leg","Posterior fibula","Distal phalanx of the big toe","Flexes the big toe; plantarflexes (push-off when walking)","Tibial nerve","'Harry' in Tom, Dick and Harry."],
+];
+
+// [what it covers, the mnemonic, explanation, accent]
+const TRICKS = [
+["Cranial bones (8)","Old People From Texas Eat Spiders","Occipital, Parietal, Frontal, Temporal, Ethmoid, Sphenoid. Parietal and temporal come in pairs, so that's 8 bones.","bone"],
+["Facial bones (14)","Virgil Can Not Make My Pet Zebra Laugh","Vomer, inferior nasal Conchae, Nasal, Maxilla, Mandible, Palatine, Zygomatic, Lacrimal. Only the vomer and mandible are single.","bone"],
+["Carpals, thumb side first","Some Lovers Try Positions That They Can't Handle","Proximal row: Scaphoid, Lunate, Triquetrum, Pisiform. Distal row: Trapezium, Trapezoid, Capitate, Hamate. The trapeziUM sits under the thUMb.","bone"],
+["Tarsals (7)","Tiger Cubs Need MILC","Talus, Calcaneus, Navicular, Medial, Intermediate and Lateral cuneiforms, Cuboid.","bone"],
+["Vertebrae","Breakfast at 7, lunch at 12, dinner at 5","7 cervical, 12 thoracic, 5 lumbar. Then the sacrum (5 fused) and coccyx.","bone"],
+["Ribs (pairs)","7 true, 3 false, 2 floating","True ribs attach directly to the sternum, false ribs borrow rib 7's cartilage, floating ribs don't attach in front at all.","bone"],
+["Radius vs. ulna","The radius rides with the thumb","Give a thumbs-up: the radius is on the thumb (lateral) side. The ulna makes the point of your elbow.","bone"],
+["Tibia vs. fibula","The fibula fibs","It's the little lateral bone pretending to help. The tibia is the big medial one that actually bears your weight.","bone"],
+["Tubercle vs. tuberosity","Tubercle is tiny; tuberosity is tremendous","Tubercle = small rounded bump. Tuberosity = large rough bump. And trochanters exist ONLY on the femur.","mark"],
+["Holes and dents","Foramen = free passage. Fossa = shallow dish. Fissure = slit. Meatus = tunnel.","Openings carry nerves and vessels, which makes them favorite exam questions.","mark"],
+["Rotator cuff","SITS","Supraspinatus, Infraspinatus, Teres minor (all on the greater tubercle), Subscapularis (lesser tubercle). Teres MAJOR is not in the cuff.","muscle"],
+["Musculocutaneous nerve","BBC","Biceps brachii, Brachialis, Coracobrachialis: the front-of-arm flexors.","nerve"],
+["Radial nerve","BEST","The extensor nerve: Brachioradialis, Extensors of wrist and fingers, Supinator, Triceps (plus anconeus).","nerve"],
+["Interossei","PAD and DAB","Palmar interossei ADduct; Dorsal interossei ABduct the fingers.","muscle"],
+["Pes anserinus (inner knee)","Say Grace before Tea","Sartorius, Gracilis and semiTendinosus all insert on the medial proximal tibia.","muscle"],
+["Erector spinae, lateral to medial","I Love Spaghetti","Iliocostalis, Longissimus, Spinalis.","muscle"],
+["Behind the medial malleolus","Tom, Dick And Very Nervous Harry","Tibialis posterior, flexor Digitorum longus, posterior tibial Artery, Vein, tibial Nerve, flexor Hallucis longus.","muscle"],
+["Leg compartments","Front lifts, side turns, back pushes","Anterior (deep fibular n.) dorsiflexes. Lateral (superficial fibular n.) everts. Posterior (tibial n.) plantarflexes.","nerve"],
+["Elbow epicondyles","Medial = flexors, lateral = extensors","Golfer's elbow hurts on the inside; tennis elbow hurts on the outside.","mark"],
+["Head nerves","Face = facial (VII). Chewing = trigeminal (V).","Every muscle of facial expression is CN VII; masseter, temporalis and the pterygoids are CN V.","nerve"],
+["Diaphragm","C3, 4, 5 keeps the diaphragm alive","The phrenic nerve comes from spinal segments C3–C5.","nerve"],
+];
+
+const HOWTO = [
+["Quiz yourself instead of rereading","Pulling an answer out of your head builds memory far faster than reading it again. Use the Study Guide to look things up, then go test yourself."],
+["Short sessions, many times a day","Three 15-minute sessions beat one 45-minute cram. The flashcards keep bringing back what you miss until it sticks."],
+["Mix topics together","Shuffling bones, markings and muscles trains you to tell look-alikes apart, which is exactly what exams test."],
+["Touch it on yourself","Find your own mastoid process, iliac crest and medial malleolus. Contract a muscle while you say its action out loud."],
+["Work out the action","The origin is usually the stable end. A muscle's action is what happens when the insertion gets pulled toward the origin, so you can reason it out instead of memorizing it."],
+["Read the name","Muscle names give away location (temporalis), shape (deltoid), size (maximus, brevis), direction (rectus, oblique), number of heads (biceps), attachments (sternocleidomastoid) or action (flexor, levator)."],
+["Teach it to Dad","Explaining a muscle's origin, insertion, action and nerve out loud to someone else is one of the fastest ways to find the gaps."],
+["Sleep on it","Memories lock in while you sleep. A good night before the exam beats an all-nighter."],
+];
+(function(){
+'use strict';
+/* ===================== HELPERS ===================== */
+const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const uniq=a=>[...new Set(a)];
+const uniqBy=(a,f)=>{const s=new Set();return a.filter(x=>{const k=f(x);if(s.has(k))return false;s.add(k);return true})};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const usedIds=new Set();
+const slug=s=>{const b=String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');let k=b,n=2;while(usedIds.has(k))k=b+'-'+(n++);usedIds.add(k);return k};
+const STOP=new Set(['medial','lateral','greater','lesser','superior','inferior','anterior','posterior','process','surface','major','minor','longus','brevis']);
+function mask(text,name){
+  const base=name.replace(/\s*\(.*?\)\s*/g,' ').trim();
+  const words=[base,...base.split(/\s+/).filter(w=>w.length>4&&!STOP.has(w.toLowerCase()))];
+  let t=text;
+  for(const w of words){t=t.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),'▢▢▢')}
+  return t;
+}
+
+/* ===================== DATA MODEL ===================== */
+const bones=BONES.map(([name,region,group,count,short,clue,map])=>({id:slug('b-'+name),name,region,group,count,short,clue,map}));
+const terms=TERMS.map(([term,type,short,def,ex])=>({id:slug('t-'+term),term,type,short,def,ex}));
+const marks=MARKS.map(([name,bone,desc])=>({id:slug('m-'+name),name,bone,desc}));
+const muscles=MUSCLES.map(([name,region,o,i,a,n,tip])=>({id:slug('x-'+name),name,region,o,i,a,n,tip}));
+const nerveKey=m=>m.n.replace(/\s*\(.*?\)/g,'').trim();
+const boneBase=s=>s.toLowerCase().replace(/\s*\(.*?\)/g,'').trim();
+function marksFor(b){let base=boneBase(b.name);if(/ribs$/.test(base))base='ribs';return marks.filter(m=>m.bone.toLowerCase().includes(base))}
+const chips=list=>list.length?`<div class="chips small">${list.map(x=>`<span class="chip sm">${esc(x)}</span>`).join('')}</div>`:'';
+const oianRows=(m,keys)=>`<div class="oian">${keys.map(k=>`<span class="lab ${k}" title="${{o:'Origin',i:'Insertion',a:'Action',n:'Nerve'}[k]}">${k.toUpperCase()}</span><div>${esc(m[k])}</div>`).join('')}</div>`;
+
+const DECKS={
+  bones:{label:'Bones',emoji:'🦴',color:'var(--bone)',items:bones,topic:b=>b.group,title:b=>b.name,
+    detail:b=>`<div class="tag">${esc(b.group)}</div><h2>${esc(b.name)} <span class="pill">${b.count?'×'+b.count:'fused into os coxae'}</span></h2><p class="lead">${esc(b.short)}</p><p>${esc(b.clue)}</p><div class="sm muted">${esc(b.region)} skeleton</div>${chips(marksFor(b).map(m=>m.name))}`,
+    clue:b=>`<div class="tag">${esc(b.group)}</div><p class="big">${esc(mask(b.clue,b.name))}</p>`},
+  terms:{label:'Marking terms',emoji:'🔍',color:'var(--term)',items:terms,topic:t=>t.type,title:t=>t.term,
+    detail:t=>`<div class="tag">${esc(t.type)}</div><h2>${esc(t.term)}</h2><p class="lead">${esc(t.def)}</p><p><b>Example:</b> ${esc(t.ex)}</p>`,
+    clue:t=>`<div class="tag">${esc(t.type)}</div><p class="big">${esc(t.def)}</p>`},
+  marks:{label:'Bone markings',emoji:'📍',color:'var(--mark)',items:marks,topic:m=>m.bone,title:m=>m.name,
+    detail:m=>`<div class="tag">${esc(m.bone)}</div><h2>${esc(m.name)}</h2><p class="lead">${esc(m.desc)}</p>`,
+    clue:m=>`<div class="tag">${esc(m.bone)}</div><p class="big">${esc(mask(m.desc,m.name))}</p>`},
+  muscles:{label:'Muscles',emoji:'💪',color:'var(--muscle)',items:muscles,topic:m=>m.region,title:m=>m.name,
+    detail:m=>`<div class="tag">${esc(m.region)}</div><h2>${esc(m.name)}</h2>${oianRows(m,['o','i','a','n'])}${m.tip?`<p class="tip">💡 ${esc(m.tip)}</p>`:''}`,
+    clue:m=>`<div class="tag">${esc(m.region)}</div>${oianRows(m,['a','o','i'])}`},
+};
+for(const d of Object.values(DECKS))d.byId=Object.fromEntries(d.items.map(i=>[i.id,i]));
+const itemsFor=(deck,topic)=>DECKS[deck].items.filter(i=>topic==='all'||DECKS[deck].topic(i)===topic);
+
+/* ===================== SAVED PROGRESS ===================== */
+const KEY='boneup_v1';
+const S=(()=>{let d={};try{d=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+  return Object.assign({srs:{},missed:{},stats:{answered:0,correct:0,xp:0,streak:0,lastDay:null},best:{},daily:{day:null,n:0},examDate:'',theme:'',qprefs:null},d)})();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const fmt=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>fmt(new Date());
+function touch(){const t=today(),st=S.stats;if(st.lastDay!==t){const y=new Date();y.setDate(y.getDate()-1);st.streak=st.lastDay===fmt(y)?(st.streak||0)+1:1;st.lastDay=t}if(S.daily.day!==t)S.daily={day:t,n:0}}
+function grade(d,id,ok){
+  touch();const box=S.srs[d]||(S.srs[d]={});const c=box[id]||{b:0};c.b=ok?Math.min(5,c.b+1):1;box[id]=c;
+  const k=d+':'+id;if(!ok)S.missed[k]=(S.missed[k]||0)+1;else if(S.missed[k]){S.missed[k]--;if(S.missed[k]<=0)delete S.missed[k]}
+  S.stats.answered++;if(ok)S.stats.correct++;S.stats.xp+=ok?10:2;S.daily.n++;save();
+}
+const boxOf=(d,id)=>(S.srs[d]&&S.srs[d][id]&&S.srs[d][id].b)||0;
+const mastered=d=>DECKS[d].items.filter(i=>boxOf(d,i.id)>=3).length;
+function examDays(){if(!S.examDate)return null;const [y,m,d]=S.examDate.split('-').map(Number);const ex=new Date(y,m-1,d);const n=new Date();const t0=new Date(n.getFullYear(),n.getMonth(),n.getDate());return Math.round((ex-t0)/864e5)}
+
+/* ===================== QUESTION ENGINE ===================== */
+function options(correct,pref,fallback=[]){const out=[],seen=new Set([String(correct).toLowerCase()]);for(const p of [...shuffle(pref),...shuffle(fallback)]){const k=String(p).toLowerCase();if(seen.has(k))continue;seen.add(k);out.push(p);if(out.length===3)break}return shuffle([correct,...out])}
+const NUMS=['1','2','3','4','5','6','7','8','10','12','14','16','24','26','28'];
+function makeQ(d,it,focus){
+  let q,sub='',ans,opts;
+  if(d==='bones'){
+    const r=Math.random(),others=bones.filter(b=>b.id!==it.id);
+    if(r<.7||!it.count){q='Which bone is this?';sub=mask(it.clue,it.name);ans=it.name;opts=options(ans,others.filter(b=>b.group===it.group).map(b=>b.name),others.map(b=>b.name))}
+    else if(r<.85||it.count<=2){q=`The ${it.name.toLowerCase()} belong${it.count===1?'s':''} to which group?`;ans=it.group;opts=options(ans,uniq(bones.map(b=>b.group)))}
+    else{q=`How many ${it.name.toLowerCase()} are in the adult skeleton?`;ans=String(it.count);opts=options(ans,NUMS)}
+  }else if(d==='terms'){
+    const others=terms.filter(t=>t.id!==it.id);
+    if(Math.random()<.65){q='Which bone-marking term fits this description?';sub=it.def;ans=it.term;opts=options(ans,others.filter(t=>t.type===it.type).map(t=>t.term),others.map(t=>t.term))}
+    else{q=`Which is an example of a ${it.term.toLowerCase()}?`;ans=it.ex;opts=options(ans,others.map(t=>t.ex))}
+  }else if(d==='marks'){
+    const others=marks.filter(m=>m.id!==it.id);
+    const lowName=it.name.toLowerCase();
+    const giveaway=[boneBase(it.bone),...((it.bone.match(/\((.*?)\)/)||[])[1]||'').toLowerCase().split(/\s+/).filter(w=>w.length>3)].some(w=>w&&lowName.includes(w));
+    if(Math.random()<.5&&!giveaway){q=`The ${it.name} is found on which bone?`;ans=it.bone;opts=options(ans,uniq(marks.map(m=>m.bone)))}
+    else{q=`Name this marking on the ${it.bone.replace(/\s*\(.*?\)/,'').toLowerCase()}:`;sub=mask(it.desc,it.name);ans=it.name;opts=options(ans,others.filter(m=>m.bone===it.bone).map(m=>m.name),others.map(m=>m.name))}
+  }else{
+    const others=muscles.filter(m=>m.id!==it.id),reg=others.filter(m=>m.region===it.region);
+    let t=focus;if(!t||t==='mix')t=pick(['who','whoOI','a','n','o','i']);else if(t==='who')t=pick(['who','whoOI']);
+    if(t==='who'){q='Which muscle has this action?';sub=it.a;ans=it.name;opts=options(ans,reg.filter(m=>m.a!==it.a).map(m=>m.name),others.filter(m=>m.a!==it.a).map(m=>m.name))}
+    else if(t==='whoOI'){q='Which muscle is this?';sub=`Origin: ${it.o}. Insertion: ${it.i}.`;ans=it.name;opts=options(ans,reg.map(m=>m.name),others.map(m=>m.name))}
+    else{const F={a:'action',n:'nerve supply',o:'origin',i:'insertion'}[t];q=`What is the ${F} of the ${it.name.toLowerCase()}?`;ans=it[t];opts=options(ans,t==='n'?others.map(m=>m.n):reg.map(m=>m[t]),others.map(m=>m[t]))}
+  }
+  return {d,id:it.id,q,sub,ans,opts};
+}
+function buildQs(deck,topic,focus,n){
+  let pool=deck==='mix'?Object.keys(DECKS).flatMap(d=>DECKS[d].items.map(it=>({d,it}))):itemsFor(deck,topic).map(it=>({d:deck,it}));
+  pool=shuffle(pool);const out=[];
+  for(let i=0;out.length<n&&pool.length;i++){const {d,it}=pool[i%pool.length];out.push(makeQ(d,it,d==='muscles'?focus:'mix'))}
+  return out;
+}
+const PRAISE=['Nailed it! 🎯','Bone-afide genius 🦴','Textbook! 📖','Muscle memory 💪','You make this look easy ✨','Correct, and stylishly so 😎','Ossome! 💀','Your professor would be proud 🎓'];
+
+/* ===================== FX ===================== */
+function confetti(n=90){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cols=['#ff4d6d','#e0a823','#00a3a3','#7c4dff','#2f80ed','#ff9fb2'];
+  for(let i=0;i<n;i++){const d=document.createElement('i');d.className='cf';d.style.left=Math.random()*100+'vw';d.style.background=pick(cols);d.style.animationDelay=Math.random()*.5+'s';d.style.animationDuration=(1.6+Math.random()*1.4)+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),3800)}
+}
+function chipGroup(el,cb){el.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;$$('[data-v]',el).forEach(x=>x.classList.toggle('on',x===b));cb(b.dataset.v)})}
+
+/* ===================== ROUTER ===================== */
+const app=$('#app');
+let cleanup=null;
+const setClean=f=>{cleanup=f};
+function go(){
+  if(cleanup){try{cleanup()}catch(e){}cleanup=null}
+  const parts=(location.hash.replace(/^#/,'')||'home').split('/');const r=parts[0];
+  const R={home,learn,map:mapView,cards,games,quiz,match,blitz,weak,tricks};
+  (R[r]||home)(parts.slice(1));
+  const nav={quiz:'games',match:'games',blitz:'games',weak:'games',tricks:'learn'}[r]||(R[r]?r:'home');
+  $$('[data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===nav));
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',go);
+
+/* ===================== HOME ===================== */
+const TILES=[['#cards','🃏','Flashcards','Cards that come back until you know them','var(--muscle)'],['#quiz','⚡','Quiz','Multiple choice with instant explanations','var(--term)'],['#match','🧩','Match-up','Pair them up against the clock','var(--mark)'],['#blitz','⏱️','Bone Blitz','60 seconds, as many as you can','var(--bone)'],['#map/find','💀','Find the bone','Tap the right bone on the skeleton','var(--nerve)'],['#weak','🎯','Weak spots','Drill only what you keep missing','var(--muscle)'],['#learn','📚','Study guide','Every bone, marking and muscle','var(--term)'],['#tricks','🧠','Memory tricks','Mnemonics that stick','var(--mark)']];
+const tilesHTML=(list=TILES)=>`<div class="tiles">${list.map(([h,e,t,s,c])=>`<a class="tile" href="${h}" style="--accent:${c}"><span class="te">${e}</span><b>${t}</b><span class="ts">${s}</span></a>`).join('')}</div>`;
+function home(){
+  const st=S.stats,acc=st.answered?Math.round(100*st.correct/st.answered):0;
+  const totM=Object.keys(DECKS).reduce((s,d)=>s+mastered(d),0),totI=Object.values(DECKS).reduce((s,d)=>s+d.items.length,0);
+  const dn=S.daily.day===today()?S.daily.n:0,goal=60,ed=examDays();
+  const examBox=ed===null
+    ?`<div class="lead">When's the exam?</div><input type="date" id="examIn" aria-label="Exam date"><div class="sm muted">Set it to get a countdown.</div>`
+    :`<div class="num">${ed<0?'✓':ed===0?'🔥':ed}</div><div class="lead">${ed<0?'Exam done. Proud of you!':ed===0?'Exam day. You got this!':ed===1?'day until the exam':'days until the exam'}</div><button class="linkbtn" id="examClr">Change date</button>`;
+  app.innerHTML=`
+  <section class="hero card">
+    <div>
+      <div class="bonestack" aria-hidden="true"><i style="width:46px;background:var(--bone)"></i><i style="width:30px;background:var(--muscle)"></i><i style="width:22px;background:var(--nerve)"></i><i style="width:14px;background:var(--mark)"></i></div>
+      <h1>206 bones, ${marks.length} markings, ${muscles.length} muscles. Let's own them.</h1>
+      <p>Flashcards that bring back what you miss, quizzes that explain every answer, and games for when your brain needs a break from being a textbook.</p>
+      <div class="row"><a class="btn primary" href="#cards">🃏 Start flashcards</a><a class="btn" href="#quiz">⚡ Quick quiz</a></div>
+    </div>
+    <div class="exam">${examBox}</div>
+  </section>
+  <div class="stats">
+    <div class="stat"><b>${st.xp}</b><span>XP earned</span></div>
+    <div class="stat"><b>${st.streak||0} 🔥</b><span>day streak</span></div>
+    <div class="stat"><b>${acc}%</b><span>accuracy</span></div>
+    <div class="stat"><b>${totM}/${totI}</b><span>mastered</span></div>
+  </div>
+  <div class="card" style="--accent:var(--nerve)"><div class="row sb"><b>🎯 Today's goal: ${goal} answers</b><span class="score">${Math.min(dn,goal)}/${goal}</span></div><div class="bar"><i style="width:${Math.min(100,dn/goal*100)}%"></i></div>${dn>=goal?'<div class="sm">Goal crushed. Everything from here is bonus XP. 🏆</div>':''}</div>
+  <h2 class="sec">Your progress</h2>
+  <div class="grid">${Object.entries(DECKS).map(([k,d])=>{const m=mastered(k),t=d.items.length;return `<a class="card deck" href="#cards/${k}" style="--accent:${d.color}"><div class="row sb"><span class="emoji">${d.emoji}</span><span class="pct">${Math.round(m/t*100)}%</span></div><h3>${d.label}</h3><div class="bar"><i style="width:${m/t*100}%"></i></div><div class="sm muted">${m} of ${t} mastered (3 correct in a row)</div></a>`}).join('')}</div>
+  <h2 class="sec">Pick a way to study</h2>
+  ${tilesHTML()}`;
+  const ei=$('#examIn');if(ei)ei.addEventListener('change',()=>{S.examDate=ei.value;save();home()});
+  const ec=$('#examClr');if(ec)ec.onclick=()=>{S.examDate='';save();home()};
+}
+function games(){
+  const n=Object.keys(S.missed).length;
+  app.innerHTML=`<h1>🎮 Games</h1><p class="lead">Pick your challenge. Every answer counts toward your progress.</p>${tilesHTML(TILES.slice(0,6))}
+  <div class="card sec"><div class="row sb"><span><b>🎯 Weak spots:</b> ${n?`${n} item${n===1?'':'s'} to fix`:'nothing yet'}</span><a class="btn sm" href="#weak">Open</a></div></div>`;
+}
+
+/* ===================== STUDY GUIDE ===================== */
+function learn([tab='bones',sub]){
+  if(!['bones','marks','muscles'].includes(tab))tab='bones';
+  const subs=tab==='marks'?[['terms','Terms'],['bybone','By bone']]:tab==='muscles'?[['region','By region'],['nerve','By nerve']]:null;
+  if(!sub||!subs||!subs.some(s=>s[0]===sub))sub=subs?subs[0][0]:'';
+  app.innerHTML=`<h1>📚 Study guide</h1>
+  <div class="chips">${['bones','marks','muscles'].map(t=>`<a class="chip ${t===tab?'on':''}" href="#learn/${t}">${DECKS[t].emoji} ${DECKS[t].label}</a>`).join('')}<a class="chip" href="#tricks">🧠 Memory tricks</a></div>
+  <div class="toolbar"><input id="q" type="search" placeholder="${tab==='muscles'?'Search muscles, actions, nerves…':tab==='marks'?'Search markings…':'Search bones…'}" autocomplete="off" aria-label="Search">${subs?`<div class="seg">${subs.map(([k,l])=>`<a class="${k===sub?'on':''}" href="#learn/${tab}/${k}">${l}</a>`).join('')}</div>`:''}</div>
+  ${tab==='muscles'?`<div class="legend"><span><i class="lab o">O</i>Origin</span><span><i class="lab i">I</i>Insertion</span><span><i class="lab a">A</i>Action</span><span><i class="lab n">N</i>Nerve</span></div>`:''}
+  <div id="list"></div>`;
+  const draw=()=>{$('#list').innerHTML=learnList(tab,sub,$('#q').value.trim().toLowerCase())};
+  $('#q').addEventListener('input',draw);draw();
+}
+const emptyMsg=()=>`<div class="card empty"><div class="huge">🔎</div><p>Nothing matches that. Try a shorter word, like "flex" or "femur".</p></div>`;
+function learnList(tab,sub,q){
+  const has=(...f)=>!q||f.join(' ').toLowerCase().includes(q);
+  let h='';
+  if(tab==='bones'){
+    const ax=bones.filter(b=>b.region==='Axial').reduce((s,b)=>s+b.count,0),ap=bones.filter(b=>b.region==='Appendicular').reduce((s,b)=>s+b.count,0);
+    if(!q)h+=`<div class="tally"><div><b>${ax}</b>axial</div><div class="op">+</div><div><b>${ap}</b>appendicular</div><div class="op">=</div><div class="tot"><b>${ax+ap}</b>bones</div></div>`;
+    for(const g of uniq(bones.map(b=>b.group))){
+      const items=bones.filter(b=>b.group===g&&has(b.name,b.short,b.clue,b.group));if(!items.length)continue;
+      const n=bones.filter(b=>b.group===g).reduce((s,b)=>s+b.count,0);
+      h+=`<h2 class="sec">${esc(g)} <span class="pill">${n} bones</span></h2><div class="grid">${items.map(b=>`<div class="card item" style="--accent:var(--bone)">${DECKS.bones.detail(b)}</div>`).join('')}</div>`;
+    }
+  }else if(tab==='marks'&&sub==='terms'){
+    for(const t of uniq(terms.map(t=>t.type))){
+      const items=terms.filter(x=>x.type===t&&has(x.term,x.def,x.ex,x.short));if(!items.length)continue;
+      h+=`<h2 class="sec">${esc(t)}</h2><div class="grid">${items.map(x=>`<div class="card item" style="--accent:var(--term)">${DECKS.terms.detail(x)}</div>`).join('')}</div>`;
+    }
+  }else if(tab==='marks'){
+    for(const b of uniq(marks.map(m=>m.bone))){
+      const items=marks.filter(m=>m.bone===b&&has(m.name,m.desc,m.bone));if(!items.length)continue;
+      h+=`<details class="card acc" style="--accent:var(--mark)" ${q?'open':''}><summary><b>${esc(b)} <span class="pill">${items.length}</span></b></summary><ul class="mlist">${items.map(m=>`<li><b>${esc(m.name)}</b>: ${esc(m.desc)}</li>`).join('')}</ul></details>`;
+    }
+  }else{
+    const key=sub==='nerve'?nerveKey:(m=>m.region);
+    for(const g of uniq(muscles.map(key))){
+      const items=muscles.filter(m=>key(m)===g&&has(m.name,m.o,m.i,m.a,m.n,m.region,m.tip));if(!items.length)continue;
+      h+=`<h2 class="sec">${esc(g)} <span class="pill">${items.length}</span></h2><div class="grid">${items.map(m=>`<div class="card item" style="--accent:${sub==='nerve'?'var(--nerve)':'var(--muscle)'}">${DECKS.muscles.detail(m)}</div>`).join('')}</div>`;
+    }
+  }
+  return h||emptyMsg();
+}
+
+/* ===================== FLASHCARDS ===================== */
+let FC=null,busy=false;
+function newFC(deck,topic,rev,order){
+  let items=shuffle(itemsFor(deck,topic));
+  const rank=b=>b===1?0:b===0?1:b; // missed first, then new, then known
+  if(order==='smart')items.sort((a,b)=>rank(boxOf(deck,a.id))-rank(boxOf(deck,b.id)));
+  return {deck,topic,rev,order,queue:items.map(i=>i.id),total:items.length,got:0,again:0,missed:new Set()};
+}
+function cards([deck]){
+  if(!DECKS[deck])deck=FC?FC.deck:'bones';
+  if(!FC||FC.deck!==deck)FC=newFC(deck,'all',false,'smart');
+  drawCards();
+  const key=e=>{if(e.target.matches('input,select,textarea'))return;
+    if(e.key===' '||e.key==='Enter'){if(e.target.closest('button,a'))return;e.preventDefault();flip()}
+    else if(e.key==='ArrowRight'||e.key==='2')answerCard(true);
+    else if(e.key==='ArrowLeft'||e.key==='1')answerCard(false)};
+  document.addEventListener('keydown',key);setClean(()=>document.removeEventListener('keydown',key));
+}
+function drawCards(){
+  const D=DECKS[FC.deck],topics=uniq(D.items.map(D.topic));
+  app.innerHTML=`<h1>🃏 Flashcards</h1>
+  <div class="chips">${Object.entries(DECKS).map(([k,d])=>`<a class="chip ${k===FC.deck?'on':''}" href="#cards/${k}">${d.emoji} ${d.label}</a>`).join('')}</div>
+  <div class="toolbar">
+    <select id="topic" aria-label="Topic"><option value="all">All ${D.label.toLowerCase()} (${D.items.length})</option>${topics.map(t=>`<option ${t===FC.topic?'selected':''}>${esc(t)}</option>`).join('')}</select>
+    <select id="order" aria-label="Order"><option value="smart" ${FC.order==='smart'?'selected':''}>Misses first</option><option value="shuffle" ${FC.order==='shuffle'?'selected':''}>Shuffled</option></select>
+    <label class="toggle"><input type="checkbox" id="rev" ${FC.rev?'checked':''}> Show the clue first</label>
+  </div>
+  <div id="zone"></div>`;
+  const reset=()=>{FC=newFC(FC.deck,$('#topic').value,$('#rev').checked,$('#order').value);drawZone()};
+  $('#topic').onchange=reset;$('#order').onchange=reset;$('#rev').onchange=()=>{FC.rev=$('#rev').checked;drawZone()};
+  drawZone();
+}
+function drawZone(){
+  const z=$('#zone'),D=DECKS[FC.deck];if(!z)return;
+  if(!FC.queue.length){
+    z.innerHTML=`<div class="card done"><div class="huge">🎉</div><h2>Deck complete!</h2><p>${FC.got} right on the first try, ${FC.again} do-overs.</p><div class="row center">${FC.missed.size?`<button class="btn primary" id="redoMiss">Redo the ${FC.missed.size} I missed</button>`:''}<button class="btn" id="redo">Restart deck</button><a class="btn" href="#quiz">Take a quiz</a></div></div>`;
+    confetti();
+    $('#redo').onclick=()=>{FC=newFC(FC.deck,FC.topic,FC.rev,FC.order);drawZone()};
+    const rm=$('#redoMiss');if(rm)rm.onclick=()=>{const ids=shuffle([...FC.missed]);FC={...FC,queue:ids,total:ids.length,got:0,again:0,missed:new Set()};drawZone()};
+    return;
+  }
+  const it=D.byId[FC.queue[0]],b=boxOf(FC.deck,it.id),done=FC.total-FC.queue.length;
+  z.innerHTML=`<div class="row sb sm muted"><span>${done} of ${FC.total} done</span><span>✅ ${FC.got}  🔁 ${FC.again}</span></div>
+  <div class="bar thin" style="--accent:${D.color}"><i style="width:${done/FC.total*100}%"></i></div>
+  <div class="flip" id="flipw"><div class="fc" id="fc" tabindex="0" role="button" aria-label="Flip card" style="--accent:${D.color}">
+    <div class="face front"><div class="dots" title="Times you've gotten it right in a row">${[1,2,3,4,5].map(n=>`<i class="${n<=b?'on':''}"></i>`).join('')}</div>${FC.rev?D.clue(it):`<div class="tag">${esc(D.topic(it))}</div><h2 class="fname">${esc(D.title(it))}</h2>`}<div class="hint">Tap to flip</div></div>
+    <div class="face back">${D.detail(it)}</div>
+  </div></div>
+  <div class="fcbtns"><button class="btn again" id="bAgain">😬 Again</button><button class="btn got" id="bGot">😎 Got it</button></div>
+  <p class="sm muted center">Swipe the card right if you knew it, left to see it again. On a keyboard: space flips, arrow keys answer.</p>`;
+  const fc=$('#fc');fc.addEventListener('click',flip);
+  $('#bAgain').onclick=()=>answerCard(false);$('#bGot').onclick=()=>answerCard(true);
+  let sx=null;
+  fc.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+  fc.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>70){e.preventDefault();answerCard(dx>0)}});
+}
+function flip(){const fc=$('#fc');if(fc)fc.classList.toggle('on')}
+function answerCard(ok){
+  if(!FC||!FC.queue.length||busy||!$('#fc'))return;busy=true;
+  const id=FC.queue[0];grade(FC.deck,id,ok);$('#flipw').classList.add(ok?'flyR':'flyL');
+  setTimeout(()=>{busy=false;if(!FC||FC.queue[0]!==id)return;FC.queue.shift();
+    if(ok){if(!FC.missed.has(id))FC.got++}else{FC.again++;FC.missed.add(id);FC.queue.splice(Math.min(3,FC.queue.length),0,id)}
+    drawZone()},220);
+}
+
+/* ===================== QUIZ ===================== */
+let Q=null;
+function quiz([sub]){
+  const key=e=>{if(location.hash!=='#quiz/run'||!Q||e.target.matches('input,select'))return;
+    if(Q.answered&&(e.key==='Enter'||e.key===' ')){e.preventDefault();nextQ();return}
+    const k='1234'.indexOf(e.key)>=0?'1234'.indexOf(e.key):'abcd'.indexOf(e.key.toLowerCase());
+    if(k>=0&&!Q.answered&&Q.qs[Q.i]&&k<Q.qs[Q.i].opts.length)pickOpt(k)};
+  document.addEventListener('keydown',key);setClean(()=>document.removeEventListener('keydown',key));
+  if(sub==='run'&&Q)return drawQ();
+  const P=Object.assign({deck:'mix',topic:'all',focus:'mix',n:10},S.qprefs);
+  app.innerHTML=`<h1>⚡ Quiz</h1>
+  <div class="card setup">
+    <span class="lbl" style="margin-top:0">What do you want to be quizzed on?</span>
+    <div class="chips" id="qDeck">${[['mix','🌈 Everything mixed'],...Object.entries(DECKS).map(([k,d])=>[k,d.emoji+' '+d.label])].map(([k,l])=>`<button class="chip ${k===P.deck?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>
+    <div id="qOpts"></div>
+    <span class="lbl">How many questions?</span>
+    <div class="chips" id="qN">${[10,20,40].map(n=>`<button class="chip ${n===P.n?'on':''}" data-v="${n}">${n}</button>`).join('')}</div>
+    <button class="btn primary big" id="qGo">Start quiz 🚀</button>
+  </div>`;
+  const drawOpts=()=>{const w=$('#qOpts');if(P.deck==='mix'){w.innerHTML='';return}
+    const D=DECKS[P.deck],topics=uniq(D.items.map(D.topic));if(!topics.includes(P.topic))P.topic='all';
+    w.innerHTML=`<span class="lbl">Narrow it down</span><select id="qTopic" aria-label="Topic"><option value="all">All ${esc(D.label.toLowerCase())}</option>${topics.map(t=>`<option ${t===P.topic?'selected':''}>${esc(t)}</option>`).join('')}</select>
+    ${P.deck==='muscles'?`<span class="lbl">Question type</span><div class="chips" id="qFocus">${[['mix','🌈 Mixed'],['who','🏷️ Name the muscle'],['a','🏃 Actions'],['n','⚡ Nerves'],['o','📌 Origins'],['i','🎯 Insertions']].map(([k,l])=>`<button class="chip ${k===P.focus?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>`:''}`;
+    $('#qTopic').onchange=e=>{P.topic=e.target.value};const f=$('#qFocus');if(f)chipGroup(f,v=>{P.focus=v})};
+  chipGroup($('#qDeck'),v=>{P.deck=v;P.topic='all';drawOpts()});
+  chipGroup($('#qN'),v=>{P.n=+v});
+  drawOpts();
+  $('#qGo').onclick=()=>{S.qprefs=P;save();const label=(P.deck==='mix'?'Everything mixed':DECKS[P.deck].label)+(P.deck!=='mix'&&P.topic!=='all'?': '+P.topic:'');startQuiz(buildQs(P.deck,P.topic,P.focus,P.n),label)};
+}
+function startQuiz(qs,label){Q={qs,i:0,score:0,streak:0,best:0,answered:false,missed:[],label};if(location.hash!=='#quiz/run')location.hash='#quiz/run';else go()}
+const optsHTML=q=>`<div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}"><span class="key">${'ABCD'[k]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
+function drawQ(){
+  if(Q.i>=Q.qs.length)return quizDone();
+  const q=Q.qs[Q.i],D=DECKS[q.d];Q.answered=false;
+  app.innerHTML=`<div class="row sb"><a class="btn sm ghost" href="#quiz">✕ Quit</a><span class="score">⭐ ${Q.score}${Q.streak>=3?`  🔥 ${Q.streak}`:''}</span></div>
+  <div class="bar thin" style="--accent:${D.color}"><i style="width:${Q.i/Q.qs.length*100}%"></i></div>
+  <div class="card qcard" style="--accent:${D.color}">
+    <div class="row sb sm muted"><span>${D.emoji} ${D.label}</span><span>Question ${Q.i+1} of ${Q.qs.length}</span></div>
+    <h2>${esc(q.q)}</h2>${q.sub?`<p class="qsub">${esc(q.sub)}</p>`:''}${optsHTML(q)}<div id="fb"></div>
+  </div>`;
+  $$('.opt').forEach(b=>b.onclick=()=>pickOpt(+b.dataset.k));
+}
+function pickOpt(k){
+  if(Q.answered)return;Q.answered=true;const q=Q.qs[Q.i],ok=q.opts[k]===q.ans;grade(q.d,q.id,ok);
+  $$('.opt').forEach((b,j)=>{b.disabled=true;if(q.opts[j]===q.ans)b.classList.add('ok');else if(j===k)b.classList.add('no')});
+  if(ok){Q.score++;Q.streak++;Q.best=Math.max(Q.best,Q.streak)}else{Q.streak=0;Q.missed.push(q)}
+  const D=DECKS[q.d];
+  $('#fb').innerHTML=`<div class="fb ${ok?'good':'miss'}"><b>${ok?pick(PRAISE):'Not quite. The answer is: '+esc(q.ans)}</b>${ok&&Q.streak>=5&&Q.streak%5===0?` ${Q.streak} in a row!`:''}</div>
+  <details class="explain" ${ok?'':'open'}><summary>See the full card</summary>${D.detail(D.byId[q.id])}</details>
+  <button class="btn primary big" id="next">${Q.i+1<Q.qs.length?'Next question':'See my results 🏁'}</button>`;
+  if(ok&&Q.streak>=5&&Q.streak%5===0)confetti(40);
+  $('#next').onclick=nextQ;
+}
+function nextQ(){Q.i++;drawQ();window.scrollTo(0,0)}
+function quizDone(){
+  const n=Q.qs.length,p=Math.round(Q.score/n*100);
+  const msg=p===100?'Perfect score. Your professor should be nervous. 🏆':p>=90?"Outstanding. That's an A! 🌟":p>=80?"Solid! Clean up the misses and you're golden. 💪":p>=70?'Getting there. Review the misses below, then retry them. 📈':'Every miss shows you exactly what to study. Retry them now while they are fresh. 🔁';
+  if(p>=80)confetti();
+  app.innerHTML=`<div class="card done"><div class="huge">${p>=90?'🏆':p>=70?'🎉':'💪'}</div><h1>${Q.score} / ${n}</h1><div class="bigpct">${p}%</div><p>${msg}</p><p class="sm muted">Best streak: ${Q.best} 🔥</p>
+  <div class="row center">${Q.missed.length?`<button class="btn primary" id="redo">🔁 Retry my ${uniqBy(Q.missed,q=>q.d+q.id).length} misses</button>`:''}<a class="btn" href="#quiz">New quiz</a><a class="btn" href="#cards">Flashcards</a></div></div>
+  ${Q.missed.length?`<h2 class="sec">Review what you missed</h2><div class="grid">${uniqBy(Q.missed,q=>q.d+q.id).map(q=>`<div class="card item" style="--accent:${DECKS[q.d].color}">${DECKS[q.d].detail(DECKS[q.d].byId[q.id])}</div>`).join('')}</div>`:''}`;
+  const r=$('#redo');if(r)r.onclick=()=>{const items=uniqBy(Q.missed,q=>q.d+q.id);startQuiz(shuffle(items).map(q=>makeQ(q.d,DECKS[q.d].byId[q.id])),'Retry misses')};
+}
+
+/* ===================== MATCH-UP ===================== */
+const MMODES={terms:['🔍','Term and meaning'],bones:['🦴','Bone and nickname'],marks:['📍','Marking and bone'],nerves:['⚡','Muscle and nerve']};
+let M=null;
+function match([mode]){if(!MMODES[mode])mode=M?M.mode:'terms';newMatch(mode);setClean(()=>{if(M)clearInterval(M.tick)})}
+function pairsFor(mode){
+  const take=(arr,kf,mf)=>{const seen=new Set(),out=[];for(const x of shuffle(arr)){const k=kf(x);if(seen.has(k))continue;seen.add(k);out.push(mf(x));if(out.length===6)break}return out};
+  if(mode==='terms')return take(terms,t=>t.short,t=>[t.term,t.short]);
+  if(mode==='bones')return take(bones,b=>b.short,b=>[b.name,b.short]);
+  if(mode==='marks')return take(marks,m=>m.bone,m=>[m.name,m.bone]);
+  return take(muscles,nerveKey,m=>[m.name,nerveKey(m)]);
+}
+function newMatch(mode){
+  if(M)clearInterval(M.tick);
+  const pairs=pairsFor(mode),tiles=shuffle(pairs.flatMap((p,i)=>[{i,s:'L',t:p[0]},{i,s:'R',t:p[1]}]));
+  M={mode,tiles,sel:null,found:0,miss:0,start:0,tick:null,lock:false};
+  const best=S.best['match_'+mode];
+  app.innerHTML=`<h1>🧩 Match-up</h1>
+  <div class="chips">${Object.entries(MMODES).map(([k,[e,l]])=>`<a class="chip ${k===mode?'on':''}" href="#match/${k}">${e} ${l}</a>`).join('')}</div>
+  <div class="row sb hud" style="margin-bottom:12px"><span>⏱️ <b id="mt">0.0</b>s</span><span>Pairs <b id="mf">0</b>/6</span><span class="sm">Best: <b>${best?best.toFixed(1)+'s':'none yet'}</b></span></div>
+  <div class="mgrid">${tiles.map((t,k)=>`<button class="mt ${t.s}" data-k="${k}">${esc(t.t)}</button>`).join('')}</div>
+  <p class="sm muted center">Tap a card, then its partner. Blue cards are the names.</p>
+  <div class="row center"><button class="btn" id="mNew">🔀 New board</button></div>`;
+  $('#mNew').onclick=()=>newMatch(mode);
+  $$('.mt').forEach(b=>b.onclick=()=>tapTile(+b.dataset.k,b));
+}
+function tapTile(k,el){
+  if(M.lock||el.classList.contains('done'))return;
+  if(!M.start){M.start=Date.now();M.tick=setInterval(()=>{const e=$('#mt');if(e)e.textContent=((Date.now()-M.start)/1000).toFixed(1)},100)}
+  const t=M.tiles[k];
+  if(M.sel===null){M.sel=k;el.classList.add('sel');return}
+  if(M.sel===k){M.sel=null;el.classList.remove('sel');return}
+  const a=M.tiles[M.sel],ael=$(`.mt[data-k="${M.sel}"]`);
+  if(a.s===t.s){ael.classList.remove('sel');M.sel=k;el.classList.add('sel');return}
+  if(a.i===t.i){ael.classList.remove('sel');ael.classList.add('done');el.classList.add('done');ael.disabled=el.disabled=true;M.sel=null;M.found++;$('#mf').textContent=M.found;S.stats.xp+=5;if(M.found===6)matchWin()}
+  else{M.miss++;M.lock=true;ael.classList.add('shake');el.classList.add('shake','sel');setTimeout(()=>{ael.classList.remove('shake','sel');el.classList.remove('shake','sel');M.sel=null;M.lock=false},450)}
+}
+function matchWin(){
+  clearInterval(M.tick);const t=(Date.now()-M.start)/1000,key='match_'+M.mode,prev=S.best[key],rec=!prev||t<prev;
+  if(rec)S.best[key]=t;touch();save();confetti();
+  const box=document.createElement('div');box.className='card done';
+  box.innerHTML=`<div class="huge">${rec?'🏆':'🎉'}</div><h2>${t.toFixed(1)} seconds${rec?', a new record!':''}</h2><p>${M.miss} mismatch${M.miss===1?'':'es'}</p><div class="row center"><button class="btn primary" id="mAgain">Play again</button><a class="btn" href="#games">More games</a></div>`;
+  $('.mgrid').replaceWith(box);$('#mAgain').onclick=()=>newMatch(M.mode);
+}
+
+/* ===================== BONE BLITZ ===================== */
+let B=null;
+function blitz(){
+  const best=S.best.blitz||0;
+  app.innerHTML=`<h1>⏱️ Bone Blitz</h1><div class="card setup center"><p class="lead">60 seconds of rapid-fire questions. Every 3 right in a row bumps your multiplier, up to ×4.</p><p>Your best: <b class="score">${best}</b></p>
+  <span class="lbl">Question pool</span><div class="chips center" id="bDeck">${[['mix','🌈 Everything'],...Object.entries(DECKS).map(([k,d])=>[k,d.emoji+' '+d.label])].map(([k,l],i)=>`<button class="chip ${i===0?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>
+  <button class="btn primary big" id="bGo">Start the clock 🚀</button></div>`;
+  let deck='mix';chipGroup($('#bDeck'),v=>{deck=v});$('#bGo').onclick=()=>runBlitz(deck);
+  setClean(()=>{if(B)clearInterval(B.tick);B=null});
+}
+function runBlitz(deck){
+  B={deck,score:0,combo:0,ok:0,bad:0,end:Date.now()+60000,missed:[],lock:false,q:null,tick:null};
+  app.innerHTML=`<div class="row sb hud"><span class="score">⭐ <b id="bS">0</b></span><span id="bC" class="combo"></span><span class="timer"><b id="bT">60</b>s</span></div><div class="bar thin timebar"><i id="bBar" style="width:100%"></i></div><div id="bQ"></div>`;
+  B.tick=setInterval(()=>{if(!B)return;const left=Math.max(0,B.end-Date.now()),t=$('#bT');if(!t)return;t.textContent=Math.ceil(left/1000);$('#bBar').style.width=(left/600)+'%';if(left<=0)blitzDone()},100);
+  nextBlitz();
+}
+function nextBlitz(){
+  if(!B||!$('#bQ'))return;const d=B.deck==='mix'?pick(Object.keys(DECKS)):B.deck;const q=B.q=makeQ(d,pick(DECKS[d].items));const D=DECKS[q.d];B.lock=false;
+  $('#bQ').innerHTML=`<div class="card qcard" style="--accent:${D.color}"><div class="sm muted">${D.emoji} ${D.label}</div><h2>${esc(q.q)}</h2>${q.sub?`<p class="qsub">${esc(q.sub)}</p>`:''}${optsHTML(q)}</div>`;
+  $$('#bQ .opt').forEach(b=>b.onclick=()=>blitzPick(+b.dataset.k));
+}
+function blitzPick(k){
+  if(!B||B.lock)return;B.lock=true;const q=B.q,ok=q.opts[k]===q.ans;grade(q.d,q.id,ok);
+  $$('#bQ .opt').forEach((b,j)=>{b.disabled=true;if(q.opts[j]===q.ans)b.classList.add('ok');else if(j===k)b.classList.add('no')});
+  if(ok){B.combo++;B.ok++;B.score+=10*Math.min(4,1+Math.floor((B.combo-1)/3))}else{B.combo=0;B.bad++;B.missed.push(q)}
+  const m=Math.min(4,1+Math.floor(B.combo/3));$('#bS').textContent=B.score;$('#bC').textContent=m>1?`🔥 ×${m}`:'';
+  setTimeout(nextBlitz,ok?350:1100);
+}
+function blitzDone(){
+  if(!B)return;clearInterval(B.tick);const b=B;B=null;const prev=S.best.blitz||0,rec=b.score>prev;
+  if(rec){S.best.blitz=b.score;save();confetti()}
+  const missed=uniqBy(b.missed,q=>q.d+q.id);
+  app.innerHTML=`<div class="card done"><div class="huge">${rec?'🏆':'⏱️'}</div><h1>${b.score} points</h1><p class="lead">${rec?'New personal record!':'Best so far: '+prev}</p><p>✅ ${b.ok} correct, ❌ ${b.bad} missed</p><div class="row center"><button class="btn primary" id="bAgain">Go again</button><a class="btn" href="#weak">Drill weak spots</a></div></div>
+  ${missed.length?`<h2 class="sec">What you missed</h2><div class="grid">${missed.map(q=>`<div class="card item" style="--accent:${DECKS[q.d].color}"><div class="sm muted">${esc(q.q)}</div>${q.sub?`<p class="sm">${esc(q.sub)}</p>`:''}<p><b>Answer:</b> ${esc(q.ans)}</p></div>`).join('')}</div>`:''}`;
+  $('#bAgain').onclick=()=>runBlitz(b.deck);
+}
+
+/* ===================== WEAK SPOTS ===================== */
+function weak(){
+  const list=Object.entries(S.missed).map(([k,n])=>{const i=k.indexOf(':'),d=k.slice(0,i),id=k.slice(i+1);const it=DECKS[d]&&DECKS[d].byId[id];return it?{d,it,n}:null}).filter(Boolean).sort((a,b)=>b.n-a.n);
+  app.innerHTML=`<h1>🎯 Weak spots</h1><p class="lead">Everything you miss lands here. Answer it right and it drops off the list.</p>
+  ${list.length?`<div class="row"><button class="btn primary" id="wGo">🔁 Drill my top ${Math.min(20,list.length)}</button><button class="btn ghost" id="wClr">Clear the list</button></div>
+  <div class="wlist">${list.map(x=>`<details class="card wrow" style="--accent:${DECKS[x.d].color}"><summary><span>${DECKS[x.d].emoji}</span><b>${esc(DECKS[x.d].title(x.it))}</b><span class="pill">missed ${x.n}×</span></summary>${DECKS[x.d].detail(x.it)}</details>`).join('')}</div>`
+  :`<div class="card empty"><div class="huge">✨</div><p>No weak spots yet. Take a quiz or play Bone Blitz, and anything you miss will show up here.</p><a class="btn primary" href="#quiz">Take a quiz</a></div>`}`;
+  const g=$('#wGo');if(g)g.onclick=()=>{const top=list.slice(0,20);startQuiz(shuffle([...top,...top.slice(0,10)]).map(x=>makeQ(x.d,x.it)),'Weak-spot drill')};
+  const c=$('#wClr');if(c)c.onclick=()=>{if(confirm('Clear your weak-spot list?')){S.missed={};save();weak()}};
+}
+
+/* ===================== MEMORY TRICKS ===================== */
+function tricks(){
+  const acc={bone:'var(--bone)',mark:'var(--mark)',muscle:'var(--muscle)',nerve:'var(--nerve)'};
+  app.innerHTML=`<h1>🧠 Memory tricks</h1><p class="lead">Silly sentences are easier to remember than lists. That's the whole trick.</p>
+  <div class="grid">${TRICKS.map(([t,m,d,c])=>`<div class="card trick" style="--accent:${acc[c]}"><div class="sm muted"><b>${esc(t)}</b></div><div class="mn">${esc(m)}</div><p class="sm">${esc(d)}</p></div>`).join('')}</div>
+  <h2 class="sec">How to learn this fast</h2>
+  <div class="grid">${HOWTO.map(([t,d])=>`<div class="card"><h3>${esc(t)}</h3><p class="sm">${esc(d)}</p></div>`).join('')}</div>`;
+}
+
+/* ===================== SKELETON ===================== */
+const PARTS={cranium:'Skull (cranium and face)',mandible:'Mandible',cervical:'Cervical vertebrae',clavicle:'Clavicle',scapula:'Scapula',sternum:'Sternum',ribs:'Ribs',humerus:'Humerus',radius:'Radius',ulna:'Ulna',carpals:'Carpals',metacarpals:'Metacarpals',phalangesH:'Phalanges (hand)',lumbar:'Lumbar vertebrae',sacrum:'Sacrum',coccyx:'Coccyx',coxae:'Os coxae (hip bone)',femur:'Femur',patella:'Patella',tibia:'Tibia',fibula:'Fibula',tarsals:'Tarsals',metatarsals:'Metatarsals',phalangesF:'Phalanges (foot)'};
+function skeleton(){
+  const L=x=>x,R=x=>300-x,sides=[L,R];
+  const shape=(tag,p,a,c='bone')=>`<${tag} class="${c}" data-part="${p}" ${a}><title>${PARTS[p]}</title></${tag}>`;
+  const ln=(p,x1,y1,x2,y2,w)=>shape('line',p,`x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${w}"`,'bone ln');
+  const hit=(p,f,xa,xb,y,h)=>{const a=f(xa),b=f(xb);return shape('rect',p,`x="${Math.min(a,b)}" y="${y}" width="${Math.abs(b-a)}" height="${h}"`,'hit')};
+  let s='';
+  for(const f of sides)s+=shape('polygon','scapula',`points="${f(88)},160 ${f(122)},166 ${f(104)},226"`);
+  for(let i=0;i<9;i++){const y=170+i*9.5,ex=104+Math.abs(i-4)*2.4;for(const f of sides)s+=shape('path','ribs',`d="M${f(145)} ${y} C${f(116)} ${y-10} ${f(97)} ${y+3} ${f(ex)} ${y+22}"`,'bone ln rib')}
+  s+=shape('rect','sternum','x="143" y="162" width="14" height="68" rx="6"');
+  s+=shape('ellipse','cranium','cx="150" cy="58" rx="40" ry="46"');
+  s+='<ellipse class="decor" cx="135" cy="60" rx="10" ry="9"/><ellipse class="decor" cx="165" cy="60" rx="10" ry="9"/><path class="decor" d="M150 70 L144 84 L156 84 Z"/>';
+  s+=shape('path','mandible','d="M114 78 Q118 112 150 120 Q182 112 186 78 L176 82 Q172 104 150 108 Q128 104 124 82 Z"');
+  for(let i=0;i<4;i++)s+=shape('rect','cervical',`x="142" y="${124+i*8}" width="16" height="6" rx="2.5"`);
+  for(let i=0;i<5;i++)s+=shape('rect','lumbar',`x="139" y="${250+i*11}" width="22" height="9" rx="3"`);
+  for(const f of sides){
+    s+=ln('clavicle',f(146),158,f(94),153,8);
+    s+=ln('humerus',f(98),168,f(86),270,11);
+    s+=ln('radius',f(80),278,f(68),366,6);
+    s+=ln('ulna',f(92),278,f(86),368,6);
+    s+=shape('ellipse','carpals',`cx="${f(77)}" cy="380" rx="13" ry="8"`);
+    s+=hit('metacarpals',f,56,100,389,27);s+=hit('phalangesH',f,52,102,417,32);
+    for(let k=0;k<5;k++){const x0=f(66+k*5.5),x1=f(60+k*8.5);s+=ln('metacarpals',x0,390,x1,413,3.6);s+=ln('phalangesH',x1,419,f(57+k*9.2),k===0?436:k===4?440:447,3)}
+    s+=ln('femur',f(120),350,f(130),476,13);
+  }
+  for(const f of sides){
+    s+=shape('path','coxae',`d="M${f(141)} 304 C${f(118)} 290 ${f(94)} 292 ${f(93)} 310 C${f(93)} 330 ${f(106)} 346 ${f(116)} 356 L${f(130)} 374 C${f(138)} 376 ${f(147)} 372 ${f(148)} 364 L${f(141)} 344 C${f(135)} 336 ${f(137)} 324 ${f(141)} 316 Z"`);
+    s+=`<ellipse class="decor" cx="${f(129)}" cy="357" rx="5" ry="8"/>`;
+  }
+  s+=shape('path','sacrum','d="M137 306 L163 306 L156 346 L144 346 Z"');
+  s+=shape('path','coccyx','d="M143 348 L157 348 L150 366 Z"');
+  for(const f of sides){
+    s+=shape('circle','patella',`cx="${f(131)}" cy="486" r="7"`);
+    s+=ln('fibula',f(121),498,f(123),598,6);
+    s+=ln('tibia',f(137),496,f(139),600,11);
+    s+=shape('ellipse','tarsals',`cx="${f(131)}" cy="612" rx="14" ry="8"`);
+    s+=hit('metatarsals',f,108,150,619,23);s+=hit('phalangesF',f,106,152,642,18);
+    for(let k=0;k<5;k++){const x0=f(122+k*4.5),x1=f(114+k*7.5);s+=ln('metatarsals',x0,620,x1,640,k===4?4.5:3.4);s+=ln('phalangesF',x1,644,f(112+k*8.2),k===4?657:655,k===4?4.5:3)}
+  }
+  return s;
+}
+function hl(part,cls){$$('#skel .'+cls).forEach(e=>e.classList.remove(cls));if(part)$$(`#skel [data-part="${part}"]`).forEach(e=>e.classList.add(cls))}
+function partInfo(p){
+  const bs=bones.filter(b=>b.map===p),ms=uniqBy(bs.flatMap(marksFor),m=>m.id);
+  return `<h2>${esc(PARTS[p])}</h2>${bs.map(b=>`<div class="mini"><b>${esc(b.name)}</b> <span class="pill">${b.count?'×'+b.count:'fused'}</span><div class="sm muted">${esc(b.clue)}</div></div>`).join('')}
+  ${ms.length?`<h3 class="sec">Markings to know</h3><ul class="mlist">${ms.map(m=>`<li><b>${esc(m.name)}</b>: ${esc(m.desc)}</li>`).join('')}</ul>`:''}
+  <div class="row" style="margin-top:14px"><a class="btn sm" href="#cards/bones">Drill bones</a>${ms.length?'<a class="btn sm" href="#cards/marks">Drill markings</a>':''}</div>`;
+}
+let F=null;
+function mapView([mode]){
+  const find=mode==='find';
+  app.innerHTML=`<h1>💀 Skeleton explorer</h1>
+  <div class="chips"><a class="chip ${find?'':'on'}" href="#map">🔎 Explore</a><a class="chip ${find?'on':''}" href="#map/find">🎯 Find the bone</a></div>
+  <div class="maplay"><div class="card skelwrap"><svg class="skel" id="skel" viewBox="0 0 300 664" role="img" aria-label="Interactive skeleton, front view">${skeleton()}</svg><div class="sm muted center">Front view in anatomical position. The skeleton's right side is on your left.</div></div><div class="card panel" id="panel"></div></div>`;
+  const svg=$('#skel');
+  setClean(()=>{F=null});
+  if(find){startFind();svg.addEventListener('click',e=>{const p=e.target.closest('[data-part]');if(p)findTap(p.dataset.part)})}
+  else{
+    $('#panel').innerHTML=`<h2>Tap any bone</h2><p>You'll see what it is, how many you have, and the markings you need to know on it.</p><p class="sm muted">Not shown on the drawing: the auditory ossicles, the hyoid, and the thoracic vertebrae (hidden behind the ribs). They're all in the study guide.</p>`;
+    svg.addEventListener('click',e=>{const p=e.target.closest('[data-part]');if(!p)return;hl(p.dataset.part,'hl');$('#panel').innerHTML=partInfo(p.dataset.part);if(window.innerWidth<820)$('#panel').scrollIntoView({behavior:'smooth',block:'start'})});
+  }
+}
+function startFind(){F={order:shuffle(Object.keys(PARTS)).slice(0,12),i:0,score:0,lock:false};hl(null,'ok');hl(null,'bad');drawFind()}
+function drawFind(){
+  const p=$('#panel');if(!p||!F)return;
+  if(F.i>=F.order.length){const pct=F.score/F.order.length;if(pct>=.75)confetti();touch();save();
+    p.innerHTML=`<div class="center"><div class="huge">${pct===1?'🏆':pct>=.75?'🎉':'💪'}</div><h2>${F.score} / ${F.order.length}</h2><p>${pct===1?'Flawless!':pct>=.75?'Great eye!':'Spend a few minutes in Explore mode, then try again.'}</p><button class="btn primary" id="fAgain">Play again</button></div>`;
+    $('#fAgain').onclick=startFind;return}
+  p.innerHTML=`<div class="sm muted">Round ${F.i+1} of ${F.order.length}, ⭐ ${F.score}</div><h2 class="find">Tap the<br><span>${esc(PARTS[F.order[F.i]])}</span></h2><div id="fFb" class="sm"></div>`;
+}
+function findTap(part){
+  if(!F||F.lock||F.i>=F.order.length)return;const t=F.order[F.i],ok=part===t;F.lock=true;
+  if(ok){F.score++;S.stats.xp+=5;hl(t,'ok');$('#fFb').innerHTML='<b class="goodtxt">Yes! 🎯</b>'}
+  else{hl(part,'bad');hl(t,'ok');$('#fFb').innerHTML=`<b class="badtxt">That's the ${esc(PARTS[part].toLowerCase())}.</b> The ${esc(PARTS[t].toLowerCase())} is glowing green.`}
+  setTimeout(()=>{if(!F)return;hl(null,'ok');hl(null,'bad');F.i++;F.lock=false;drawFind()},ok?700:1900);
+}
+
+/* ===================== THEME + BOOT ===================== */
+function applyTheme(){if(S.theme)document.documentElement.dataset.theme=S.theme;else delete document.documentElement.dataset.theme}
+$('#themeBtn').onclick=()=>{const sysDark=matchMedia('(prefers-color-scheme: dark)').matches;const cur=S.theme||(sysDark?'dark':'light');S.theme=cur==='dark'?'light':'dark';save();applyTheme()};
+applyTheme();go();
+})();
+</script>
+</body></html>
